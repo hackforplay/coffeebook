@@ -1,0 +1,25 @@
+{
+  "name": "@hackforplay/coffeebook",
+  "version": "1.0.0",
+  "description": "[Experimental] HackforPlay IDE, CoffeeScript, Notebook and Smart Snippets",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc --outDir lib",
+    "start": "parcel index.html",
+    "test": "prettier -c 'src/**/*.{ts,tsx}'"
+  },
+  "author": "teramotodaiki",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^1.12.3",
+    "prettier": "^1.18.2",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "@types/react": "^16.9.3",
+    "@types/react-dom": "^16.9.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "remark-parse": "^7.0.1"
+  }
+}
