@@ -18,8 +18,11 @@
   "dependencies": {
     "@types/react": "^16.9.3",
     "@types/react-dom": "^16.9.1",
+    "monaco-editor": "^0.18.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "remark-parse": "^7.0.1"
+    "remark-parse": "^7.0.1",
+    "requestidlecallback": "^0.3.0",
+    "unified": "^8.4.0"
   }
 }
