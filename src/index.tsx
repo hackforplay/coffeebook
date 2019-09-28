@@ -24,6 +24,7 @@ This is also markdown.
 text text text \`code\`
 
 `;
+console.log(code);
 
 let container = document.querySelector('#code');
 render(<Page code={code}></Page>, container);
