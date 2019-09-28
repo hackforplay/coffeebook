@@ -26,6 +26,7 @@ export function Page({ code }: PageProps) {
   let cursor = 0;
   for (const block of node.children as Node[]) {
     if (block.type === 'thematicBreak') {
+      if (cells[cursor].length === 0) continue; // Avoid empty block
       cursor++;
       cells[cursor] = [];
     } else {

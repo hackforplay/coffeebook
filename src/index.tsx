@@ -8,9 +8,13 @@ let code = `
 text text text
 
 ---
+
+---
+
 \`\`\`coffeescript
 document.write 'Hello!'
 \`\`\`
+
 ---
 
 This is also markdown.
