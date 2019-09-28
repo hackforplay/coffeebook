@@ -1,7 +1,7 @@
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import markdown from 'remark-parse';
-import { cancel, request } from 'requestidlecallback';
+import 'requestidlecallback';
 import unified from 'unified';
 import { Node } from 'unist';
 
@@ -110,8 +110,8 @@ function MonacoEditor({ value }: MonacoEditorProps) {
     });
     let timerId = 0;
     const disposer = editor.onDidChangeModelDecorations(() => {
-      cancel(timerId);
-      timerId = request(
+      window.cancelIdleCallback(timerId);
+      timerId = window.requestIdleCallback(
         timeout => {
           if (timeout.didTimeout) return; // busy ならスキップ
           const root = rootRef.current;
