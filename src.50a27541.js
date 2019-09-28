@@ -1289,4 +1289,4 @@ module.exports=function(e){return new Promise(function(n,o){var r=document.creat
 },{}],0:[function(require,module,exports) {
 var b=require("wl3f");b.register("js",require("PrmA"));b.register("css",require("ozQW"));
 },{}]},{},[0,"OGgv"], null)
-//# sourceMappingURL=/src.50a27541.js.map
+//# sourceMappingURL=/coffeebook/src.50a27541.js.map
