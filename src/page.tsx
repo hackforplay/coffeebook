@@ -113,7 +113,7 @@ function MonacoEditor({ value }: MonacoEditorProps) {
     });
     editorRef.current = editor;
     let resizeTimerId = 0;
-    const disposer = editor.onDidChangeModelDecorations(() => {
+    const resizeTask = editor.onDidChangeModelDecorations(() => {
       window.cancelIdleCallback(resizeTimerId);
       resizeTimerId = window.requestIdleCallback(
         () => {
@@ -135,26 +135,36 @@ function MonacoEditor({ value }: MonacoEditorProps) {
         { timeout: 2000 }
       );
     });
-    return () => disposer.dispose();
-  }, []);
-
-  const run = React.useCallback(() => {
-    const iframe = document.querySelector('iframe');
-    if (!iframe) return;
-    const editor = editorRef.current;
-    if (!editor) return;
-    const coffee = editor.getValue();
-    const js = CoffeeScript.compile(coffee);
-    iframe.contentWindow && iframe.contentWindow.postMessage(js, '*');
+    let replTimerId = 0;
+    const inputTask = editor.onDidChangeModelContent(() => {
+      window.clearTimeout(replTimerId);
+      replTimerId = window.setTimeout(() => {
+        const coffee = editor.getValue();
+        run(coffee);
+      }, 250);
+    });
+    run(value);
+    return () => {
+      resizeTask.dispose();
+      inputTask.dispose();
+    };
   }, []);
 
   return (
-    <>
-      <div
-        ref={rootRef}
-        style={{ height: lineCountRef.current * lineHeight }}
-      ></div>
-      <button onClick={run}>Run</button>
-    </>
+    <div
+      ref={rootRef}
+      style={{ height: lineCountRef.current * lineHeight }}
+    ></div>
   );
+}
+
+function run(coffee: string) {
+  try {
+    const iframe = document.querySelector('iframe');
+    if (!iframe || !iframe.contentWindow) return;
+    const js = CoffeeScript.compile(coffee);
+    iframe.contentWindow.postMessage(js, '*');
+  } catch (error) {
+    console.error(error);
+  }
 }

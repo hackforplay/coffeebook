@@ -12,7 +12,8 @@ text text text
 ---
 
 \`\`\`coffeescript
-document.write 'Hello!'
+app = document.querySelector '#app'
+app.textContent = 'Hello!'
 \`\`\`
 
 ---
