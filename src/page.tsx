@@ -1,3 +1,4 @@
+import { CoffeeScript } from 'coffeescript';
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import markdown from 'remark-parse';
@@ -142,8 +143,9 @@ function MonacoEditor({ value }: MonacoEditorProps) {
     if (!iframe) return;
     const editor = editorRef.current;
     if (!editor) return;
-    const code = editor.getValue();
-    iframe.contentWindow && iframe.contentWindow.postMessage(code, '*');
+    const coffee = editor.getValue();
+    const js = CoffeeScript.compile(coffee);
+    iframe.contentWindow && iframe.contentWindow.postMessage(js, '*');
   }, []);
 
   return (

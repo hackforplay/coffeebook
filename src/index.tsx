@@ -9,7 +9,7 @@ text text text
 
 ---
 \`\`\`coffeescript
-document.write('Hello!')
+document.write 'Hello!'
 \`\`\`
 ---
 
