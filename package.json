@@ -4,6 +4,7 @@
   "description": "[Experimental] HackforPlay IDE, CoffeeScript, Notebook and Smart Snippets",
   "main": "lib/index.js",
   "scripts": {
+    "gh-pages": "parcel build index.html && gh-pages -d dist",
     "build": "tsc --outDir lib",
     "start": "parcel index.html",
     "test": "prettier -c 'src/**/*.{ts,tsx}'"
@@ -11,6 +12,7 @@
   "author": "teramotodaiki",
   "license": "ISC",
   "devDependencies": {
+    "gh-pages": "^2.1.1",
     "parcel": "^1.12.3",
     "prettier": "^1.18.2",
     "typescript": "^3.6.3"
