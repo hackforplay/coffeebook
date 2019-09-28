@@ -112,12 +112,11 @@ function MonacoEditor({ value }: MonacoEditorProps) {
       lineHeight
     });
     editorRef.current = editor;
-    let timerId = 0;
+    let resizeTimerId = 0;
     const disposer = editor.onDidChangeModelDecorations(() => {
-      window.cancelIdleCallback(timerId);
-      timerId = window.requestIdleCallback(
-        timeout => {
-          if (timeout.didTimeout) return; // busy ならスキップ
+      window.cancelIdleCallback(resizeTimerId);
+      resizeTimerId = window.requestIdleCallback(
+        () => {
           const root = rootRef.current;
           if (!root) return;
           const viewLines = root.querySelector('.view-lines');
@@ -133,7 +132,7 @@ function MonacoEditor({ value }: MonacoEditorProps) {
           root.style.height = `${height}px`; // -> automaticLayout
           editor.layout();
         },
-        { timeout: 500 }
+        { timeout: 2000 }
       );
     });
     return () => disposer.dispose();
