@@ -12,7 +12,8 @@ text text text
 ---
 
 \`\`\`coffeescript
-app = document.querySelector '#app'
+app = document.querySelector '#enchant-stage'
+app.style.color = 'white'
 app.textContent = 'Hello!'
 \`\`\`
 

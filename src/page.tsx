@@ -5,6 +5,7 @@ import markdown from 'remark-parse';
 import 'requestidlecallback';
 import unified from 'unified';
 import { Node } from 'unist';
+import { Sandbox } from './sandbox';
 
 export interface PageProps {
   code: string;
@@ -158,12 +159,19 @@ function MonacoEditor({ value }: MonacoEditorProps) {
   );
 }
 
+let sandbox = new Sandbox();
+
 function run(coffee: string) {
   try {
     const iframe = document.querySelector('iframe');
     if (!iframe || !iframe.contentWindow) return;
     const js = CoffeeScript.compile(coffee);
-    iframe.contentWindow.postMessage(js, '*');
+    sandbox.run([
+      {
+        name: 'test.js',
+        code: js
+      }
+    ]);
   } catch (error) {
     console.error(error);
   }
