@@ -95,6 +95,7 @@ function MonacoEditor({ value }: MonacoEditorProps) {
   const rootRef = React.useRef<HTMLDivElement>(null);
   const lineCountRef = React.useRef(0);
   lineCountRef.current = value.split('\n').length;
+  const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor>();
 
   React.useEffect(() => {
     if (!rootRef.current) return;
@@ -108,6 +109,7 @@ function MonacoEditor({ value }: MonacoEditorProps) {
       },
       lineHeight
     });
+    editorRef.current = editor;
     let timerId = 0;
     const disposer = editor.onDidChangeModelDecorations(() => {
       window.cancelIdleCallback(timerId);
@@ -135,10 +137,22 @@ function MonacoEditor({ value }: MonacoEditorProps) {
     return () => disposer.dispose();
   }, []);
 
+  const run = React.useCallback(() => {
+    const iframe = document.querySelector('iframe');
+    if (!iframe) return;
+    const editor = editorRef.current;
+    if (!editor) return;
+    const code = editor.getValue();
+    iframe.contentWindow && iframe.contentWindow.postMessage(code, '*');
+  }, []);
+
   return (
-    <div
-      ref={rootRef}
-      style={{ height: lineCountRef.current * lineHeight }}
-    ></div>
+    <>
+      <div
+        ref={rootRef}
+        style={{ height: lineCountRef.current * lineHeight }}
+      ></div>
+      <button onClick={run}>Run</button>
+    </>
   );
 }

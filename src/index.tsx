@@ -9,7 +9,7 @@ text text text
 
 ---
 \`\`\`coffeescript
-console.log 'This is coffeescript'
+document.write('Hello!')
 \`\`\`
 ---
 
@@ -19,10 +19,5 @@ text text text \`code\`
 
 `;
 
-let container = document.body;
-render(
-  <div>
-    <Page code={code}></Page>
-  </div>,
-  container
-);
+let container = document.querySelector('#code');
+render(<Page code={code}></Page>, container);
