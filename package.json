@@ -4,7 +4,7 @@
   "description": "[Experimental] HackforPlay IDE, CoffeeScript, Notebook and Smart Snippets",
   "main": "lib/index.js",
   "scripts": {
-    "gh-pages": "parcel build index.html && gh-pages -d dist",
+    "gh-pages": "parcel build --public-url /coffeebook index.html && gh-pages -d dist",
     "build": "tsc --outDir lib",
     "start": "parcel index.html",
     "test": "prettier -c 'src/**/*.{ts,tsx}'"
