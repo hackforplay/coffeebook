@@ -4,10 +4,12 @@
   "description": "[Experimental] HackforPlay IDE, CoffeeScript, Notebook and Smart Snippets",
   "main": "lib/index.js",
   "scripts": {
-    "gh-pages": "parcel build --public-url /coffeebook index.html && gh-pages -d dist",
-    "build": "tsc --outDir lib",
+    "build": "npm run build:editor && npm run build:html",
+    "build:editor": "parcel build $PWD/node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps --log-level 1",
+    "build:html": "parcel build --public-url /coffeebook index.html",
+    "gh-pages": "npm run build && gh-pages -d dist",
     "start": "parcel index.html",
-    "test": "prettier -c 'src/**/*.{ts,tsx}'"
+    "test": "prettier -c 'src/**/*.{ts,tsx}' && tsc --outDir lib "
   },
   "author": "teramotodaiki",
   "license": "ISC",
