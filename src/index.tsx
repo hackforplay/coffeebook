@@ -10,11 +10,11 @@ text text text
 ---
 
 ---
-
 \`\`\`coffeescript
 require '../game'
 window.__sandbox_context_name = 'プレイヤー' # おまじない
-
+\`\`\`
+\`\`\`coffeescript
 rule.つくられたとき ->
 	Player.set @
 	await @costume 'ゆうしゃ男' # 見た目をきめる
@@ -22,74 +22,56 @@ rule.つくられたとき ->
 	@n 'たいりょく', 'イコール', 3 # 体力をきめる
 	@n 'こうげきりょく', 'イコール', 1 # こうげき力をきめる
 	# つくられたとき
-
+\`\`\`
+\`\`\`coffeescript
 rule.たおされたとき ->
 	# たおされたとき
-
-
+\`\`\`
+\`\`\`coffeescript
 rule.こうげきするとき ->
 	# こうげきするとき
-
-
+\`\`\`
+\`\`\`coffeescript
 rule.じかんがすすんだとき ->
 	# じかんがすすんだとき
-
-
-# ここから こうげきされたとき
+\`\`\`
+\`\`\`coffeescript
 rule.item = Rule.Anyone
 rule.こうげきされたとき (item) ->
 	# こうげきされたとき
-
-# ここまで こうげきされたとき
-
-# ここから ぶつかったとき
+\`\`\`
+\`\`\`coffeescript
 rule.item = Rule.Anyone
 rule.ぶつかったとき (item) ->
 	# ぶつかったとき
-
-# ここまで ぶつかったとき
-
-# ここから メッセージされたとき
+\`\`\`
+\`\`\`coffeescript
 rule.item = Rule.Anyone
 rule.メッセージされたとき (item) ->
 	# メッセージされたとき
-
-# ここまで メッセージされたとき
-
-# ここから すすめなかったとき
+\`\`\`
+\`\`\`coffeescript
 rule.すすめなかったとき ->
 	# すすめなかったとき
-
-# ここまで すすめなかったとき
-
-# ここから みつけたとき
+\`\`\`
+\`\`\`coffeescript
 rule.item = Rule.Anyone
 rule.みつけたとき (item) ->
 	# みつけたとき
-
-# ここまで みつけたとき
-
-# ここから しょうかんされたとき
+\`\`\`
+\`\`\`coffeescript
 rule.item = Rule.Anyone
 rule.しょうかんされたとき (item) ->
 	# しょうかんされたとき
-
-# ここまで しょうかんされたとき
-
-# ここから つねに
+\`\`\`
+\`\`\`coffeescript
 rule.つねに ->
 	# つねに
-
-# ここまで つねに
-
-# ここから タップされたとき
+\`\`\`
+\`\`\`coffeescript
 rule.タップされたとき ->
 	# タップされたとき
-
-# ここまで タップされたとき
-
 \`\`\`
-
 ---
 
 This is also markdown.

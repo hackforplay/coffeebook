@@ -1,10 +1,9 @@
 import { CoffeeScript } from 'coffeescript';
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
-import markdown from 'remark-parse';
 import 'requestidlecallback';
-import unified from 'unified';
 import { Node } from 'unist';
+import { cellify } from './cellify';
 import { Sandbox } from './sandbox';
 
 export interface PageProps {
@@ -12,80 +11,46 @@ export interface PageProps {
 }
 
 export function Page({ code }: PageProps) {
-  const node = unified()
-    .use(markdown)
-    .parse(code);
-
-  console.log(node);
-
-  if (node.type !== 'root' || !Array.isArray(node.children)) {
-    return <div>Invalid markdown. See console</div>;
-  }
-
-  // Chunking each cells separated by the Thematic break. https://spec.commonmark.org/0.29/#thematic-breaks
-  const cells = [[]] as Node[][];
-  let cursor = 0;
-  for (const block of node.children as Node[]) {
-    if (block.type === 'thematicBreak') {
-      if (cells[cursor].length === 0) continue; // Avoid empty block
-      cursor++;
-      cells[cursor] = [];
-    } else {
-      cells[cursor].push(block);
-    }
-  }
+  const cells = cellify(code);
 
   return (
     <div style={{ width: '50vw' }}>
-      {cells.map((blocks, i) => (
-        <Cell key={i} blocks={blocks} />
+      {cells.map(cell => (
+        <div
+          key={cell.id}
+          style={{
+            boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px ',
+            padding: 8,
+            margin: 8
+          }}
+        >
+          {cell.type === 'code' ? (
+            <MonacoEditor value={cell.value} />
+          ) : (
+            <BlockOrContentNode nodes={cell.nodes} />
+          )}
+        </div>
       ))}
-    </div>
-  );
-}
-
-export interface CellProps {
-  blocks: Node[];
-}
-
-export function Cell({ blocks }: CellProps) {
-  const [first] = blocks;
-
-  return (
-    <div
-      style={{
-        boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px ',
-        padding: 8,
-        margin: 8
-      }}
-    >
-      {first && first.type === 'code' ? (
-        <MonacoEditor value={first.value as string} />
-      ) : (
-        <>
-          {blocks.map((node, i) => (
-            <BlockOrContentNode key={i} node={node} />
-          ))}
-        </>
-      )}
     </div>
   );
 }
 
 export interface BlockOrContentNodeProps {
-  node: Node;
+  nodes: Node[];
 }
 
-function BlockOrContentNode({ node }: BlockOrContentNodeProps) {
-  return Array.isArray(node.children) ? (
+function BlockOrContentNode({ nodes }: BlockOrContentNodeProps) {
+  return (
     <>
-      {node.children.map((child, i) => (
-        <BlockOrContentNode key={i} node={child} />
-      ))}
+      {nodes.map((node, i) =>
+        Array.isArray(node.children) ? (
+          <BlockOrContentNode key={i} nodes={node.children} />
+        ) : typeof node.value === 'string' ? (
+          <p key={i}>{node.value}</p>
+        ) : null
+      )}
     </>
-  ) : typeof node.value === 'string' ? (
-    <p>{node.value}</p>
-  ) : null;
+  );
 }
 
 export interface MonacoEditorProps {
