@@ -168,7 +168,8 @@ function run(coffee: string) {
     const js = CoffeeScript.compile(coffee);
     sandbox.run([
       {
-        name: 'test.js',
+        name: 'modules/プレイヤー.js',
+        type: 'application/javascript',
         code: js
       }
     ]);
