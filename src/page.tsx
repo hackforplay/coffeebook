@@ -101,18 +101,26 @@ function MonacoEditor({ value }: MonacoEditorProps) {
         { timeout: 2000 }
       );
     });
-    let replTimerId = 0;
-    const inputTask = editor.onDidChangeModelContent(() => {
-      window.clearTimeout(replTimerId);
-      replTimerId = window.setTimeout(() => {
-        const coffee = editor.getValue();
-        run(coffee);
-      }, 250);
+    let previousCode = value;
+    let blurTimerHandle = 0;
+    const blurTask = editor.onDidBlurEditorText(() => {
+      window.cancelIdleCallback(blurTimerHandle);
+      blurTimerHandle = window.requestIdleCallback(
+        () => {
+          const e = document.activeElement;
+          if (!e || e.tagName !== 'IFRAME') return;
+          const coffee = editor.getValue();
+          if (previousCode === coffee) return;
+          run(coffee);
+          previousCode = coffee;
+        },
+        { timeout: 2000 }
+      );
     });
     run(value);
     return () => {
       resizeTask.dispose();
-      inputTask.dispose();
+      blurTask.dispose();
     };
   }, []);
 
