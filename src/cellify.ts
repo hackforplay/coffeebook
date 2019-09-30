@@ -1,8 +1,8 @@
 import markdown from 'remark-parse';
+import stringify from 'remark-stringify';
 import 'requestidlecallback';
 import unified from 'unified';
 import { Node } from 'unist';
-import stringify from 'remark-stringify';
 
 export interface ICodeCell {
   id: string;
@@ -38,17 +38,10 @@ export type ICell = ICodeCell | ITextCell;
  * @param text Markdown text
  */
 export function cellify(text: string) {
-  const node = unified()
-    .use(markdown)
-    .parse(text);
-
-  if (node.type !== 'root' || !Array.isArray(node.children)) {
-    console.error(text);
-    throw new Error('Invalid markdown. See console');
-  }
+  const children = blockify(text);
 
   // Chunking each nodes
-  return Array.from(chunk(node.children));
+  return Array.from(chunk(children));
 }
 
 function* chunk(nodes: Node[]): Generator<ICell, number> {
@@ -90,4 +83,21 @@ function* chunk(nodes: Node[]): Generator<ICell, number> {
     }
   }
   return chunkNum;
+}
+
+/**
+ * Parse text written in Markdown and return children of root node as an array.
+ * @param text Markdown text
+ */
+export function blockify(text: string) {
+  const root = unified()
+    .use(markdown)
+    .parse(text);
+
+  if (root.type !== 'root' || !Array.isArray(root.children)) {
+    console.error(text);
+    throw new Error('Invalid markdown. See console');
+  }
+
+  return root.children as Node[];
 }

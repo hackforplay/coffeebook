@@ -3,19 +3,59 @@ import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import 'requestidlecallback';
 import { Node } from 'unist';
-import { cellify } from './cellify';
+import { build } from './build';
+import { blockify, cellify } from './cellify';
 import { Sandbox } from './sandbox';
 
 export interface PageProps {
   code: string;
 }
 
+export type OnUpdate = (payload: { id: string; value: string }) => void;
+
+let sandbox = new Sandbox();
 export function Page({ code }: PageProps) {
-  const cells = cellify(code);
+  const cellsRef = React.useRef(cellify(code)); // Notice: mutable
+
+  const onUpdate = React.useCallback<OnUpdate>(({ id, value }) => {
+    // Test && Save
+    try {
+      CoffeeScript.compile(value); // syntax check
+    } catch (error) {
+      return console.warn(error);
+    }
+
+    // Update cells
+    const cells = cellsRef.current;
+    const cell = cells.find(cell => cell.id === id);
+    if (!cell) throw new Error(`Cell not found. cell=${id}`);
+    if (cell.type === 'code') {
+      cell.value = value;
+    } else if (cell.type === 'text') {
+      cell.value = value;
+      cell.nodes = blockify(value);
+    }
+  }, []);
+
+  const onGame = React.useCallback(() => {
+    // Build && Run
+    sandbox.update([
+      {
+        name: 'modules/プレイヤー.js',
+        type: 'application/javascript',
+        code: build(cellsRef.current)
+      }
+    ]);
+    sandbox.run();
+  }, []);
+
+  React.useEffect(() => {
+    onGame();
+  }, []);
 
   return (
     <div style={{ width: '50vw' }}>
-      {cells.map(cell => (
+      {cellsRef.current.map(cell => (
         <div
           key={cell.id}
           style={{
@@ -25,9 +65,18 @@ export function Page({ code }: PageProps) {
           }}
         >
           {cell.type === 'code' ? (
-            <MonacoEditor value={cell.value} />
+            <MonacoEditor
+              id={cell.id}
+              value={cell.value}
+              onUpdate={onUpdate}
+              onGame={onGame}
+            />
           ) : (
-            <BlockOrContentNode nodes={cell.nodes} />
+            <BlockOrContentNode
+              id={cell.id}
+              nodes={cell.nodes}
+              onUpdate={onUpdate}
+            />
           )}
         </div>
       ))}
@@ -36,15 +85,22 @@ export function Page({ code }: PageProps) {
 }
 
 export interface BlockOrContentNodeProps {
+  id: string;
   nodes: Node[];
+  onUpdate: OnUpdate;
 }
 
-function BlockOrContentNode({ nodes }: BlockOrContentNodeProps) {
+function BlockOrContentNode({ nodes, onUpdate }: BlockOrContentNodeProps) {
   return (
     <>
       {nodes.map((node, i) =>
         Array.isArray(node.children) ? (
-          <BlockOrContentNode key={i} nodes={node.children} />
+          <BlockOrContentNode
+            key={i}
+            id=""
+            nodes={node.children}
+            onUpdate={onUpdate}
+          />
         ) : typeof node.value === 'string' ? (
           <p key={i}>{node.value}</p>
         ) : null
@@ -54,12 +110,15 @@ function BlockOrContentNode({ nodes }: BlockOrContentNodeProps) {
 }
 
 export interface MonacoEditorProps {
+  id: string;
   value: string;
+  onUpdate: OnUpdate;
+  onGame: () => void;
 }
 
 const lineHeight = 18;
 
-function MonacoEditor({ value }: MonacoEditorProps) {
+function MonacoEditor({ id, value, onUpdate, onGame }: MonacoEditorProps) {
   const rootRef = React.useRef<HTMLDivElement>(null);
   const lineCountRef = React.useRef(0);
   lineCountRef.current = value.split('\n').length;
@@ -111,26 +170,18 @@ function MonacoEditor({ value }: MonacoEditorProps) {
           if (!e || e.tagName !== 'IFRAME') return;
           const coffee = editor.getValue();
           if (previousCode === coffee) return;
-          save(coffee);
-          sandbox.run();
+          onGame();
           previousCode = coffee;
         },
         { timeout: 2000 }
       );
     });
-    save(value);
-    sandbox.run();
 
     let replTimerId = 0;
     const inputTask = editor.onDidChangeModelContent(() => {
       window.clearTimeout(replTimerId);
       replTimerId = window.setTimeout(() => {
-        try {
-          const coffee = editor.getValue();
-          save(coffee);
-        } catch (error) {
-          console.warn(error);
-        }
+        onUpdate({ id, value: editor.getValue() });
       }, 250);
     });
 
@@ -147,20 +198,4 @@ function MonacoEditor({ value }: MonacoEditorProps) {
       style={{ height: lineCountRef.current * lineHeight }}
     ></div>
   );
-}
-
-let sandbox = new Sandbox();
-
-function save(coffee: string) {
-  try {
-    sandbox.update([
-      {
-        name: 'modules/プレイヤー.js',
-        type: 'application/javascript',
-        code: CoffeeScript.compile(coffee)
-      }
-    ]);
-  } catch (error) {
-    console.error(error);
-  }
 }
