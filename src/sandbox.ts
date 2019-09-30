@@ -185,5 +185,15 @@ async function fetchRpgKit2() {
     };
   });
   const result = await Promise.all(files);
+  for (const file of result) {
+    if (file.name === 'game.js') {
+      // game.js に書かれた「ゲームがつくられたとき」を物理的に消さない限り、定義を上書きできない
+      file.code = file.code
+        .split('\n')
+        .slice(0, 9)
+        .join('\n');
+    }
+  }
+
   return result;
 }

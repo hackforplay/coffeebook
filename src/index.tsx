@@ -3,17 +3,28 @@ import { render } from 'react-dom';
 import { Page } from './page';
 
 let code = `
-# This is Markdown
-
-text text text
+まずは、プレイヤーをどこに出すかを決めましょう！
 
 ---
 
----
+\`\`\`coffeescript
+rule.ゲームがはじまったとき ->
+	await Hack.changeMap 'map1'
+	rule.つくる 'プレイヤー', 3, 5, 'map1', Dir.した
+\`\`\`
 \`\`\`coffeescript
 require '../game'
 window.__sandbox_context_name = 'プレイヤー' # おまじない
 \`\`\`
+
+---
+
+# プレイヤーの中身
+
+ここからは、プレイヤーの強さや動きについて書かれています
+
+---
+
 \`\`\`coffeescript
 rule.つくられたとき ->
 	Player.set @
@@ -72,12 +83,6 @@ rule.つねに ->
 rule.タップされたとき ->
 	# タップされたとき
 \`\`\`
----
-
-This is also markdown.
-
-text text text \`code\`
-
 `;
 
 let container = document.querySelector('#code');
