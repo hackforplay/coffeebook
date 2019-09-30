@@ -25,8 +25,10 @@ export class Sandbox {
     this.userFiles = options && options.userFiles;
   }
 
-  public async run(userFiles: IFile[]) {
-    this.userFiles = userFiles;
+  public async run(userFiles?: IFile[]) {
+    if (userFiles) {
+      this.userFiles = userFiles;
+    }
     if (this.isRunning) {
       this.reload();
     } else if (this.port) {
@@ -36,6 +38,10 @@ export class Sandbox {
         value: await this.entryPoints
       });
     }
+  }
+
+  public async update(userFiles: IFile[]) {
+    this.userFiles = userFiles;
   }
 
   /**

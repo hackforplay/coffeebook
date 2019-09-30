@@ -111,16 +111,33 @@ function MonacoEditor({ value }: MonacoEditorProps) {
           if (!e || e.tagName !== 'IFRAME') return;
           const coffee = editor.getValue();
           if (previousCode === coffee) return;
-          run(coffee);
+          save(coffee);
+          sandbox.run();
           previousCode = coffee;
         },
         { timeout: 2000 }
       );
     });
-    run(value);
+    save(value);
+    sandbox.run();
+
+    let replTimerId = 0;
+    const inputTask = editor.onDidChangeModelContent(() => {
+      window.clearTimeout(replTimerId);
+      replTimerId = window.setTimeout(() => {
+        try {
+          const coffee = editor.getValue();
+          save(coffee);
+        } catch (error) {
+          console.warn(error);
+        }
+      }, 250);
+    });
+
     return () => {
       resizeTask.dispose();
       blurTask.dispose();
+      inputTask.dispose();
     };
   }, []);
 
@@ -134,16 +151,13 @@ function MonacoEditor({ value }: MonacoEditorProps) {
 
 let sandbox = new Sandbox();
 
-function run(coffee: string) {
+function save(coffee: string) {
   try {
-    const iframe = document.querySelector('iframe');
-    if (!iframe || !iframe.contentWindow) return;
-    const js = CoffeeScript.compile(coffee);
-    sandbox.run([
+    sandbox.update([
       {
         name: 'modules/プレイヤー.js',
         type: 'application/javascript',
-        code: js
+        code: CoffeeScript.compile(coffee)
       }
     ]);
   } catch (error) {
