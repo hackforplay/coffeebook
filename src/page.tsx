@@ -61,7 +61,8 @@ export function Page({ code }: PageProps) {
           style={{
             boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px ',
             padding: 8,
-            margin: 8
+            margin: 8,
+            borderRadius: 2
           }}
         >
           {cell.type === 'code' ? (
