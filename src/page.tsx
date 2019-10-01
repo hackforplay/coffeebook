@@ -5,6 +5,7 @@ import 'requestidlecallback';
 import { Node } from 'unist';
 import { build } from './build';
 import { blockify, cellify, htmlify } from './cellify';
+import './completion';
 import { Sandbox } from './sandbox';
 
 export interface PageProps {
