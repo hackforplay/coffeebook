@@ -4,7 +4,7 @@ import * as React from 'react';
 import 'requestidlecallback';
 import { Node } from 'unist';
 import { build } from './build';
-import { blockify, cellify } from './cellify';
+import { blockify, cellify, htmlify } from './cellify';
 import { Sandbox } from './sandbox';
 
 export interface PageProps {
@@ -92,22 +92,9 @@ export interface BlockOrContentNodeProps {
 }
 
 function BlockOrContentNode({ nodes, onUpdate }: BlockOrContentNodeProps) {
-  return (
-    <>
-      {nodes.map((node, i) =>
-        Array.isArray(node.children) ? (
-          <BlockOrContentNode
-            key={i}
-            id=""
-            nodes={node.children}
-            onUpdate={onUpdate}
-          />
-        ) : typeof node.value === 'string' ? (
-          <p key={i}>{node.value}</p>
-        ) : null
-      )}
-    </>
-  );
+  const [html, setHtml] = React.useState(() => htmlify(nodes));
+
+  return <div dangerouslySetInnerHTML={html}></div>;
 }
 
 export interface MonacoEditorProps {

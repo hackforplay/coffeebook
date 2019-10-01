@@ -101,3 +101,18 @@ export function blockify(text: string) {
 
   return root.children as Node[];
 }
+
+export function htmlify(nodes: Node[]) {
+  const html = unified()
+    .use(markdown)
+    .use(require('remark-rehype'))
+    .runSync({
+      type: 'root',
+      children: nodes
+    });
+  const __html = unified()
+    .use(require('rehype-sanitize'))
+    .use(require('rehype-stringify'))
+    .stringify(html);
+  return { __html };
+}
