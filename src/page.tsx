@@ -2,11 +2,11 @@ import { CoffeeScript } from 'coffeescript';
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import 'requestidlecallback';
-import { Node } from 'unist';
 import { build } from './build';
-import { blockify, cellify, htmlify } from './cellify';
+import { blockify, cellify } from './cellify';
 import './completion';
 import { Sandbox } from './sandbox';
+import { TextCell } from './text-cell';
 
 export interface PageProps {
   code: string;
@@ -74,28 +74,12 @@ export function Page({ code }: PageProps) {
               onGame={onGame}
             />
           ) : (
-            <BlockOrContentNode
-              id={cell.id}
-              nodes={cell.nodes}
-              onUpdate={onUpdate}
-            />
+            <TextCell id={cell.id} nodes={cell.nodes} onUpdate={onUpdate} />
           )}
         </div>
       ))}
     </div>
   );
-}
-
-export interface BlockOrContentNodeProps {
-  id: string;
-  nodes: Node[];
-  onUpdate: OnUpdate;
-}
-
-function BlockOrContentNode({ nodes, onUpdate }: BlockOrContentNodeProps) {
-  const [html, setHtml] = React.useState(() => htmlify(nodes));
-
-  return <div dangerouslySetInnerHTML={html}></div>;
 }
 
 export interface MonacoEditorProps {
