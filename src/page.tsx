@@ -5,6 +5,7 @@ import 'requestidlecallback';
 import { build } from './build';
 import { blockify, cellify } from './cellify';
 import './completion';
+import { beFlexible, lineHeight } from './monaco-flexible';
 import { Sandbox } from './sandbox';
 import { TextCell } from './text-cell';
 
@@ -89,12 +90,10 @@ export interface MonacoEditorProps {
   onGame: () => void;
 }
 
-const lineHeight = 18;
-
 function MonacoEditor({ id, value, onUpdate, onGame }: MonacoEditorProps) {
   const rootRef = React.useRef<HTMLDivElement>(null);
-  const lineCountRef = React.useRef(0);
-  lineCountRef.current = value.split('\n').length;
+  const lineCount = value.split('\n').length;
+  const height = lineHeight * lineCount;
   const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor>();
 
   React.useEffect(() => {
@@ -102,12 +101,6 @@ function MonacoEditor({ id, value, onUpdate, onGame }: MonacoEditorProps) {
     const editor = monaco.editor.create(rootRef.current, {
       value,
       language: 'coffeescript',
-      scrollBeyondLastLine: false,
-      scrollbar: {
-        vertical: 'hidden',
-        horizontal: 'hidden'
-      },
-      lineHeight,
       minimap: { enabled: false },
       lineNumbersMinChars: 3,
       renderWhitespace: 'all'
@@ -120,29 +113,9 @@ function MonacoEditor({ id, value, onUpdate, onGame }: MonacoEditorProps) {
         trimAutoWhitespace: false
       });
     editorRef.current = editor;
-    let resizeTimerId = 0;
-    const resizeTask = editor.onDidChangeModelDecorations(() => {
-      window.cancelIdleCallback(resizeTimerId);
-      resizeTimerId = window.requestIdleCallback(
-        () => {
-          const root = rootRef.current;
-          if (!root) return;
-          const viewLines = root.querySelector('.view-lines');
-          if (!viewLines) return;
-          let model = editor.getModel();
-          if (!model) return;
-          let lineCount = model.getLineCount();
-          const height =
-            lineCountRef.current <= lineCount
-              ? viewLines.getBoundingClientRect().height // 行が同じか増えたとき => view-line 全体の高さの総和が viewLines の高さよりも上回り, viewLines が伸びる => 伸びた後の高さが必要な高さ
-              : lineCount * lineHeight; // 行が減ったとき => viewLines の高さは root の高さに依存する => 子要素の数と lineHeight から推測するしかない
-          lineCountRef.current = lineCount;
-          root.style.height = `${height}px`; // -> automaticLayout
-          editor.layout();
-        },
-        { timeout: 2000 }
-      );
-    });
+
+    beFlexible(editor);
+
     let previousCode = value;
     let blurTimerHandle = 0;
     const blurTask = editor.onDidBlurEditorText(() => {
@@ -169,16 +142,10 @@ function MonacoEditor({ id, value, onUpdate, onGame }: MonacoEditorProps) {
     });
 
     return () => {
-      resizeTask.dispose();
       blurTask.dispose();
       inputTask.dispose();
     };
   }, []);
 
-  return (
-    <div
-      ref={rootRef}
-      style={{ height: lineCountRef.current * lineHeight }}
-    ></div>
-  );
+  return <div ref={rootRef} style={{ height }}></div>;
 }
