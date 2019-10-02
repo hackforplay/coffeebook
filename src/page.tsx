@@ -123,8 +123,18 @@ function MonacoEditor({ id, value, onUpdate, onGame }: MonacoEditorProps) {
         vertical: 'hidden',
         horizontal: 'hidden'
       },
-      lineHeight
+      lineHeight,
+      minimap: { enabled: false },
+      lineNumbersMinChars: 3,
+      renderWhitespace: 'all'
     });
+    const model = editor.getModel();
+    model &&
+      model.updateOptions({
+        insertSpaces: true,
+        tabSize: 2,
+        trimAutoWhitespace: false
+      });
     editorRef.current = editor;
     let resizeTimerId = 0;
     const resizeTask = editor.onDidChangeModelDecorations(() => {
