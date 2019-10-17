@@ -1,8 +1,9 @@
 import { CoffeeScript } from 'coffeescript';
 import * as React from 'react';
 import 'requestidlecallback';
+import { appendEmptyLine } from './append-empty-line';
 import { build } from './build';
-import { blockify, cellify } from './cellify';
+import { blockify, cellify, ICodeCell } from './cellify';
 import { CodeCell } from './code-cell';
 import './completion';
 import { Sandbox } from './sandbox';
@@ -17,6 +18,12 @@ export type OnUpdate = (payload: { id: string; value: string }) => void;
 let sandbox = new Sandbox();
 export function Page({ code }: PageProps) {
   const cellsRef = React.useRef(cellify(code)); // Notice: mutable
+
+  for (let cell of cellsRef.current) {
+    if (cell.type === 'code') {
+      formatCodeCell(cell);
+    }
+  }
 
   const onUpdate = React.useCallback<OnUpdate>(({ id, value }) => {
     const cells = cellsRef.current;
@@ -73,4 +80,8 @@ export function Page({ code }: PageProps) {
       )}
     </div>
   );
+}
+
+function formatCodeCell(codeCell: ICodeCell) {
+  codeCell.value = appendEmptyLine(codeCell.value);
 }
