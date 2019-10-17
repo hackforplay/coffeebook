@@ -15,7 +15,7 @@ export function beFlexible(editor: monaco.editor.IStandaloneCodeEditor) {
   let previousLineCount = 0;
   let resizeTimerId = 0;
 
-  const callback = () => {
+  const relayout = () => {
     window.cancelIdleCallback(resizeTimerId);
     resizeTimerId = window.requestIdleCallback(
       () => {
@@ -41,7 +41,26 @@ export function beFlexible(editor: monaco.editor.IStandaloneCodeEditor) {
       { timeout: 2000 }
     );
   };
+  relayout();
+  const disposer = editor.onDidChangeModelDecorations(relayout);
 
-  callback();
-  return editor.onDidChangeModelDecorations(callback);
+  let previousWidth = window.innerWidth;
+  const windowResized = () => {
+    window.cancelIdleCallback(resizeTimerId);
+    resizeTimerId = window.requestIdleCallback(
+      () => {
+        if (window.innerWidth !== previousWidth) {
+          previousWidth = window.innerWidth;
+          relayout();
+        }
+      },
+      { timeout: 2000 }
+    );
+  };
+  window.addEventListener('resize', windowResized, { passive: true });
+
+  return () => {
+    disposer.dispose();
+    window.removeEventListener('resize', windowResized);
+  };
 }
