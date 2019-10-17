@@ -10,6 +10,32 @@ function createRPGObjectMembers(
       documentation: "Hit point of this charactor. In other words, it's life.",
       insertText: '@hp = 1\n',
       range
+    },
+    {
+      label: '@walk',
+      kind: monaco.languages.CompletionItemKind.Method,
+      documentation: 'Move to forward.',
+      insertText: 'await @walk 1\n',
+      range
+    },
+    {
+      label: 'await walk',
+      kind: monaco.languages.CompletionItemKind.Method,
+      documentation: 'Move to forward.',
+      insertText: 'await @walk 1\n',
+      range
+    }
+  ];
+}
+
+function createOthers(range: monaco.Range): monaco.languages.CompletionItem[] {
+  return [
+    {
+      label: 'create',
+      kind: monaco.languages.CompletionItemKind.Method,
+      documentation: 'Create new object',
+      insertText: 'create x: 7, y: 5, m: 1, f: 0\n',
+      range
     }
   ];
 }
@@ -17,24 +43,19 @@ function createRPGObjectMembers(
 monaco.languages.registerCompletionItemProvider('coffeescript', {
   triggerCharacters: ['@'],
   provideCompletionItems(model, position, context) {
-    // find out if we are completing a property in the 'dependencies' object.
-    // var textUntilPosition = model.getValueInRange({
-    //   startLineNumber: 1,
-    //   startColumn: 1,
-    //   endLineNumber: position.lineNumber,
-    //   endColumn: position.column
-    // });
-    // console.log(textUntilPosition);
-    // TODO: @ で補完できるのは関数の中だけなので、インデントのない文では @ のサジェストを出さない
     const wordUntilPosition = model.getWordUntilPosition(position);
-    const wordRange = new monaco.Range(
+    const range = new monaco.Range(
       position.lineNumber,
-      wordUntilPosition.startColumn - 1, // "@".length
+      wordUntilPosition.startColumn -
+        (context.triggerCharacter === '@' ? 1 : 0), // "@".length
       position.lineNumber,
       wordUntilPosition.endColumn
     );
     return {
-      suggestions: createRPGObjectMembers(wordRange)
+      suggestions:
+        position.column >= 4 // @ で補完できるのは関数の中だけなので、インデントのない文では @ のサジェストを出さない
+          ? createRPGObjectMembers(range)
+          : createOthers(range)
     };
   }
 });
