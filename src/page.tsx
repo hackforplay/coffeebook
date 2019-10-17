@@ -5,7 +5,7 @@ import 'requestidlecallback';
 import { build } from './build';
 import { blockify, cellify } from './cellify';
 import './completion';
-import { beFlexible, lineHeight } from './monaco-flexible';
+import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { Sandbox } from './sandbox';
 import { TextCell } from './text-cell';
 
@@ -92,8 +92,6 @@ export interface MonacoEditorProps {
 
 function MonacoEditor({ id, value, onUpdate, onGame }: MonacoEditorProps) {
   const rootRef = React.useRef<HTMLDivElement>(null);
-  const lineCount = value.split('\n').length;
-  const height = lineHeight * lineCount;
   const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor>();
 
   React.useEffect(() => {
@@ -147,5 +145,5 @@ function MonacoEditor({ id, value, onUpdate, onGame }: MonacoEditorProps) {
     };
   }, []);
 
-  return <div ref={rootRef} style={{ height }}></div>;
+  return <div ref={rootRef} style={{ height: getInitialHeight(value) }}></div>;
 }

@@ -2,6 +2,11 @@ import * as monaco from 'monaco-editor';
 
 export const lineHeight = 18;
 
+export function getInitialHeight(code: string) {
+  const lineCount = code.split('\n').length;
+  return lineHeight * lineCount;
+}
+
 export function beFlexible(editor: monaco.editor.IStandaloneCodeEditor) {
   editor.updateOptions({
     scrollBeyondLastLine: false,
