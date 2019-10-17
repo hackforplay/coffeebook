@@ -20,17 +20,20 @@ export function Page({ code }: PageProps) {
   const cellsRef = React.useRef(cellify(code)); // Notice: mutable
 
   const onUpdate = React.useCallback<OnUpdate>(({ id, value }) => {
+    const cells = cellsRef.current;
+    const cell = cells.find(cell => cell.id === id);
+    if (!cell) throw new Error(`Cell not found. cell=${id}`);
+
     // Test && Save
     try {
-      CoffeeScript.compile(value); // syntax check
+      if (cell.type === 'code') {
+        CoffeeScript.compile(value); // syntax check
+      }
     } catch (error) {
       return console.warn(error);
     }
 
     // Update cells
-    const cells = cellsRef.current;
-    const cell = cells.find(cell => cell.id === id);
-    if (!cell) throw new Error(`Cell not found. cell=${id}`);
     if (cell.type === 'code') {
       cell.value = value;
     } else if (cell.type === 'text') {

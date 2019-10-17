@@ -116,3 +116,23 @@ export function htmlify(nodes: Node[]) {
     .stringify(html);
   return { __html };
 }
+
+export function markdownify(nodes: Node[]) {
+  return unified()
+    .use(stringify)
+    .stringify({
+      type: 'root',
+      children: nodes
+    });
+}
+
+export function md2html(text: string) {
+  const __html = unified()
+    .use(markdown)
+    .use(require('remark-rehype'))
+    .use(require('rehype-sanitize'))
+    .use(require('rehype-stringify'))
+    .processSync(text)
+    .toString();
+  return { __html };
+}
