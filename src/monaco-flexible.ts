@@ -32,6 +32,10 @@ export function beFlexible(editor: monaco.editor.IStandaloneCodeEditor) {
             : lineCount * lineHeight; // 行が減ったとき => viewLines の高さは root の高さに依存する => 子要素の数と lineHeight から推測するしかない
         previousLineCount = lineCount;
         root.style.height = `${height}px`;
+        const parent = root.parentElement;
+        if (parent) {
+          parent.style.height = root.style.height;
+        }
         editor.layout();
       },
       { timeout: 2000 }
