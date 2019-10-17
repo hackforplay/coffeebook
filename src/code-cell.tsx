@@ -4,6 +4,7 @@ import 'requestidlecallback';
 import './completion';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { OnUpdate } from './page';
+import { Paper } from './paper';
 
 export interface CodeCellProps {
   id: string;
@@ -15,6 +16,7 @@ export interface CodeCellProps {
 export function CodeCell({ id, value, onUpdate, onGame }: CodeCellProps) {
   const rootRef = React.useRef<HTMLDivElement>(null);
   const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor>();
+  const [floating, setFloating] = React.useState(false);
 
   React.useEffect(() => {
     if (!rootRef.current) return;
@@ -36,9 +38,13 @@ export function CodeCell({ id, value, onUpdate, onGame }: CodeCellProps) {
 
     beFlexible(editor);
 
+    editor.onDidFocusEditorText(() => {
+      setFloating(true);
+    });
+
     let previousCode = value;
     let blurTimerHandle = 0;
-    const blurTask = editor.onDidBlurEditorText(() => {
+    editor.onDidBlurEditorText(() => {
       window.cancelIdleCallback(blurTimerHandle);
       blurTimerHandle = window.requestIdleCallback(
         () => {
@@ -51,10 +57,11 @@ export function CodeCell({ id, value, onUpdate, onGame }: CodeCellProps) {
         },
         { timeout: 2000 }
       );
+      setFloating(false);
     });
 
     let replTimerId = 0;
-    const inputTask = editor.onDidChangeModelContent(() => {
+    editor.onDidChangeModelContent(() => {
       window.clearTimeout(replTimerId);
       replTimerId = window.setTimeout(() => {
         onUpdate({ id, value: editor.getValue() });
@@ -62,10 +69,13 @@ export function CodeCell({ id, value, onUpdate, onGame }: CodeCellProps) {
     });
 
     return () => {
-      blurTask.dispose();
-      inputTask.dispose();
+      editor.dispose();
     };
   }, []);
 
-  return <div ref={rootRef} style={{ height: getInitialHeight(value) }}></div>;
+  return (
+    <Paper floating={floating}>
+      <div ref={rootRef} style={{ height: getInitialHeight(value) }}></div>
+    </Paper>
+  );
 }

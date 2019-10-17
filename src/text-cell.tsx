@@ -4,6 +4,7 @@ import { Node } from 'unist';
 import { htmlify, markdownify, md2html } from './cellify';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { OnUpdate } from './page';
+import { Paper } from './paper';
 
 export interface TextCellProps {
   id: string;
@@ -43,7 +44,7 @@ export function TextCell({ id, nodes, onUpdate }: TextCellProps) {
   }, [editable]);
 
   return (
-    <>
+    <Paper floating={editable}>
       <div
         dangerouslySetInnerHTML={editable ? undefined : html}
         onClick={() => setEditable(true)}
@@ -52,6 +53,6 @@ export function TextCell({ id, nodes, onUpdate }: TextCellProps) {
         ref={rootRef}
         style={{ height: editable ? getInitialHeight(md) : 0 }}
       ></div>
-    </>
+    </Paper>
   );
 }

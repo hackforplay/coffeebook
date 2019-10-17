@@ -59,28 +59,18 @@ export function Page({ code }: PageProps) {
 
   return (
     <div style={{ width: '50vw' }}>
-      {cellsRef.current.map(cell => (
-        <div
-          key={cell.id}
-          style={{
-            boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px ',
-            padding: 8,
-            margin: 8,
-            borderRadius: 2
-          }}
-        >
-          {cell.type === 'code' ? (
-            <CodeCell
-              id={cell.id}
-              value={cell.value}
-              onUpdate={onUpdate}
-              onGame={onGame}
-            />
-          ) : (
-            <TextCell id={cell.id} nodes={cell.nodes} onUpdate={onUpdate} />
-          )}
-        </div>
-      ))}
+      {cellsRef.current.map(cell =>
+        cell.type === 'code' ? (
+          <CodeCell
+            id={cell.id}
+            value={cell.value}
+            onUpdate={onUpdate}
+            onGame={onGame}
+          />
+        ) : (
+          <TextCell id={cell.id} nodes={cell.nodes} onUpdate={onUpdate} />
+        )
+      )}
     </div>
   );
 }
