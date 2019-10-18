@@ -33,6 +33,13 @@ rule.つくられたとき ->
   @hp = 3 # 体力をきめる
   @atk = 1 # こうげき力をきめる
   # つくられたとき
+  if @hp < 1
+    if @atk < 1
+      @hp
+    else
+      @atk
+  else
+    @family
 \`\`\`
 \`\`\`coffeescript
 rule.たおされたとき ->
