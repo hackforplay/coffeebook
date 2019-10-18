@@ -69,13 +69,19 @@ export function Page({ code }: PageProps) {
       {cellsRef.current.map(cell =>
         cell.type === 'code' ? (
           <CodeCell
+            key={cell.id}
             id={cell.id}
             value={cell.value}
             onUpdate={onUpdate}
             onGame={onGame}
           />
         ) : (
-          <TextCell id={cell.id} nodes={cell.nodes} onUpdate={onUpdate} />
+          <TextCell
+            key={cell.id}
+            id={cell.id}
+            nodes={cell.nodes}
+            onUpdate={onUpdate}
+          />
         )
       )}
     </div>
