@@ -27,6 +27,10 @@ export function CodeCell({ id, value, onUpdate, onGame }: CodeCellProps) {
       minimap: { enabled: false },
       lineNumbersMinChars: 3,
       folding: false,
+      scrollbar: {
+        horizontal: 'hidden',
+        vertical: 'hidden'
+      },
       renderWhitespace: 'all'
     });
     const model = editor.getModel();
