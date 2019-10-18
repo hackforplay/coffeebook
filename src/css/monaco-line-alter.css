@@ -15,3 +15,6 @@
 .monaco_line_alter {
   z-index: 100;
 }
+.monaco_line_alter_line {
+  background-color: rgba(0, 0, 0, 0.1);
+}

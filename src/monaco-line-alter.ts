@@ -13,7 +13,8 @@ export function showLineAlter(editor: monaco.editor.IStandaloneCodeEditor) {
     selectOnLineNumbers: false
   });
 
-  const decorations = editor.deltaDecorations(
+  // TODO: dispose
+  editor.deltaDecorations(
     [],
     [
       {
@@ -26,6 +27,24 @@ export function showLineAlter(editor: monaco.editor.IStandaloneCodeEditor) {
     ]
   );
 
+  let previous: string[] = [];
+  const move = (lineNumber: number) => {
+    const len = model.getLineLength(lineNumber);
+    previous = editor.deltaDecorations(previous, [
+      {
+        range: new monaco.Range(lineNumber, 1, lineNumber, 1 + len), // whole code
+        options: {
+          isWholeLine: true,
+          className: 'monaco_line_alter_line'
+        }
+      }
+    ]);
+  };
+  const hide = () => {
+    editor.deltaDecorations(previous, []);
+    previous = [];
+  };
+
   let hold: monaco.Range | null = null;
 
   editor.onMouseDown(e => {
@@ -33,9 +52,11 @@ export function showLineAlter(editor: monaco.editor.IStandaloneCodeEditor) {
     if (!element || !element.classList.contains(className)) return;
     if (!range) return;
     hold = range;
+    move(hold.startLineNumber);
   });
   editor.onMouseUp(() => {
     hold = null;
+    hide();
   });
 
   let taskId = 0;
@@ -87,6 +108,7 @@ export function showLineAlter(editor: monaco.editor.IStandaloneCodeEditor) {
           range.startLineNumber,
           1 + indentText.length
         );
+        move(range.startLineNumber);
       },
       { timeout: 1000 }
     );
