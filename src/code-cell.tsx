@@ -3,6 +3,7 @@ import * as React from 'react';
 import 'requestidlecallback';
 import './completion';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
+import { showLineAlter } from './monaco-line-alter';
 import { OnUpdate } from './page';
 import { Paper } from './paper';
 
@@ -25,6 +26,7 @@ export function CodeCell({ id, value, onUpdate, onGame }: CodeCellProps) {
       language: 'coffeescript',
       minimap: { enabled: false },
       lineNumbersMinChars: 3,
+      folding: false,
       renderWhitespace: 'all'
     });
     const model = editor.getModel();
@@ -37,6 +39,7 @@ export function CodeCell({ id, value, onUpdate, onGame }: CodeCellProps) {
     editorRef.current = editor;
 
     beFlexible(editor);
+    showLineAlter(editor);
 
     editor.onDidFocusEditorText(() => {
       setFloating(true);
