@@ -53,7 +53,7 @@ monaco.languages.registerCompletionItemProvider('coffeescript', {
     );
     return {
       suggestions:
-        position.column >= 4 // @ で補完できるのは関数の中だけなので、インデントのない文では @ のサジェストを出さない
+        position.column >= 3 // @ で補完できるのは関数の中だけなので、インデントのない文では @ のサジェストを出さない
           ? createRPGObjectMembers(range)
           : createOthers(range)
     };
