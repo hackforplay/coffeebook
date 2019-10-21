@@ -32,7 +32,7 @@ export function showSuggestButtons(
             options: {
               isWholeLine: true,
               afterContentClassName:
-                className + (isFirstButton ? ' emphasize' : '')
+                className + (isFirstButton ? '_emphasize' : '')
             }
           }
         ]);
