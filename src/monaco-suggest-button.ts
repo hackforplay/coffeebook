@@ -2,6 +2,7 @@ import * as monaco from 'monaco-editor';
 import { isEmptyLine, indent } from './append-empty-line';
 
 const className = 'monaco_suggest_button';
+const classNameEmphasize = className + '_emphasize';
 let isFirstButton = true;
 
 export function showSuggestButtons(
@@ -31,8 +32,9 @@ export function showSuggestButtons(
             range: new monaco.Range(lineNumber, 1, lineNumber, 1),
             options: {
               isWholeLine: true,
-              afterContentClassName:
-                className + (isFirstButton ? '_emphasize' : '')
+              afterContentClassName: isFirstButton
+                ? classNameEmphasize
+                : className
             }
           }
         ]);
@@ -48,6 +50,7 @@ export function showSuggestButtons(
     const { type, position } = e.target;
     if (!position || type !== monaco.editor.MouseTargetType.CONTENT_EMPTY)
       return;
+    if (!editor.hasTextFocus()) return;
     moveButton(position.lineNumber);
   });
 
@@ -56,8 +59,14 @@ export function showSuggestButtons(
     if (!position || !element) return;
     const isButtonClicked =
       type === monaco.editor.MouseTargetType.CONTENT_EMPTY &&
-      element.classList.contains(className);
-    if (!isButtonClicked) return;
+      (element.classList.contains(className) ||
+        element.classList.contains(classNameEmphasize));
+    const isEmptyLineClicked =
+      type === monaco.editor.MouseTargetType.CONTENT_EMPTY &&
+      position.column === 1;
+    // If line is empty, "afterContentClassName" decoration won't given the button element
+    // Avoid this problem, isEmptyLineClicked will be true when a line is empty
+    if (!isButtonClicked && !isEmptyLineClicked) return;
     // Show suggestion
     let cursor = new monaco.Position(
       position.lineNumber,
