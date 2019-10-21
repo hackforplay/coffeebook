@@ -4,6 +4,7 @@ import 'requestidlecallback';
 import './completion';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { showLineAlter } from './monaco-line-alter';
+import { showSuggestButtons } from './monaco-suggest-button';
 import { OnUpdate } from './page';
 import { Paper } from './paper';
 
@@ -44,6 +45,7 @@ export function CodeCell({ id, value, onUpdate, onGame }: CodeCellProps) {
 
     beFlexible(editor);
     showLineAlter(editor);
+    showSuggestButtons(editor);
 
     editor.onDidFocusEditorText(() => {
       setFloating(true);
