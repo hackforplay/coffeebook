@@ -65,8 +65,16 @@ export function showSuggestButtons(
     );
     const content = model.getLineContent(cursor.lineNumber);
     if (!isEmptyLine(content)) {
+      const spaces = model
+        .getFullModelRange()
+        .containsPosition(new monaco.Position(cursor.lineNumber + 1, 1))
+        ? Math.max(
+            indent(content),
+            indent(model.getLineContent(cursor.lineNumber + 1))
+          )
+        : indent(content);
       // Add empty line
-      const text = '\n' + ' '.repeat(indent(content));
+      const text = '\n' + ' '.repeat(spaces);
       model.pushEditOperations(
         [],
         [
