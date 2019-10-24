@@ -83,7 +83,7 @@ export function CodeCell({ id, value, onUpdate, onGame }: CodeCellProps) {
   }, []);
 
   return (
-    <Paper floating={floating}>
+    <Paper elevated={floating}>
       <div ref={rootRef} style={{ height: getInitialHeight(value) }}></div>
     </Paper>
   );

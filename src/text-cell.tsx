@@ -44,7 +44,7 @@ export function TextCell({ id, nodes, onUpdate }: TextCellProps) {
   }, [editable]);
 
   return (
-    <Paper floating={editable}>
+    <Paper elevated={editable}>
       <div
         dangerouslySetInnerHTML={editable ? undefined : html}
         onClick={() => setEditable(true)}
