@@ -12,6 +12,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: npm install
+      run: npm install
     - name: npm test
       run: npm test
     - name: Deploy to GitHub Pages with gh-pages
