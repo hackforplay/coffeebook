@@ -1,1 +1,0 @@
-{"version":3,"sources":["src/css/line-decorations.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","file":"line-decorations.3e8f2234.css","sourceRoot":"..","sourcesContent":[".monaco_line_alter:hover {\n  background-color: rgba(0, 0, 0, 0.1);\n}\n.monaco_line_alter {\n  /* background-color: gray; */\n  z-index: 100;\n}\n"]}
