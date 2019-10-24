@@ -1,6 +1,5 @@
 import { CoffeeScript } from 'coffeescript';
 import * as React from 'react';
-import 'requestidlecallback';
 import { appendEmptyLine } from './append-empty-line';
 import { build } from './build';
 import { blockify, cellify, ICodeCell } from './cellify';
@@ -10,13 +9,14 @@ import { Sandbox } from './sandbox';
 import { TextCell } from './text-cell';
 
 export interface PageProps {
+  className?: string;
   code: string;
 }
 
 export type OnUpdate = (payload: { id: string; value: string }) => void;
 
 let sandbox = new Sandbox();
-export function Page({ code }: PageProps) {
+export function Page({ className, code }: PageProps) {
   const cellsRef = React.useRef(cellify(code)); // Notice: mutable
 
   for (let cell of cellsRef.current) {
@@ -65,7 +65,7 @@ export function Page({ code }: PageProps) {
   }, []);
 
   return (
-    <div style={{ width: '50vw' }}>
+    <div className={className} style={{ width: '50vw' }}>
       {cellsRef.current.map(cell =>
         cell.type === 'code' ? (
           <CodeCell
