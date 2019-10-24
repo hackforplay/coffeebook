@@ -1,0 +1,21 @@
+@import 'color';
+@import 'text';
+
+.line:after {
+  color: #ffffff !important; /* Override color of .vs-whitespace" */
+  background-color: $primary;
+  content: $insertCode;
+  border-radius: 2px;
+  cursor: pointer;
+  padding-left: 8px;
+  padding-right: 8px;
+  position: absolute;
+  right: 16px;
+  bottom: 0px;
+}
+
+.emphasized:after {
+  @extend .line;
+  transform: scale(2);
+  transform-origin: bottom right;
+}

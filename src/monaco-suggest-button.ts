@@ -1,8 +1,7 @@
 import * as monaco from 'monaco-editor';
 import { isEmptyLine, indent } from './append-empty-line';
+import styles from './css/monaco-suggest-button.scss';
 
-const className = 'monaco_suggest_button';
-const classNameEmphasize = className + '_emphasize';
 let isFirstButton = true;
 
 export function showSuggestButtons(
@@ -33,8 +32,8 @@ export function showSuggestButtons(
             options: {
               isWholeLine: true,
               afterContentClassName: isFirstButton
-                ? classNameEmphasize
-                : className
+                ? styles.emphasized
+                : styles.line
             }
           }
         ]);
@@ -44,23 +43,19 @@ export function showSuggestButtons(
       { timeout: 1000 }
     );
   };
-  moveButton(model.getLineCount());
 
-  editor.onMouseMove(e => {
-    const { type, position } = e.target;
-    if (!position || type !== monaco.editor.MouseTargetType.CONTENT_EMPTY)
-      return;
-    if (!editor.hasTextFocus()) return;
-    moveButton(position.lineNumber);
+  editor.onDidChangeCursorPosition(e => {
+    moveButton(e.position.lineNumber);
   });
+  editor.setPosition(new monaco.Position(model.getLineCount(), 1));
 
   editor.onMouseDown(e => {
     const { element, position, type } = e.target;
     if (!position || !element) return;
     const isButtonClicked =
       type === monaco.editor.MouseTargetType.CONTENT_EMPTY &&
-      (element.classList.contains(className) ||
-        element.classList.contains(classNameEmphasize));
+      (element.classList.contains(styles.line) ||
+        element.classList.contains(styles.emphasized));
     const isEmptyLineClicked =
       type === monaco.editor.MouseTargetType.CONTENT_EMPTY &&
       position.column === 1;
