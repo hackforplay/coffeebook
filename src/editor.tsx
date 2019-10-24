@@ -1,6 +1,6 @@
 import * as React from 'react';
 import 'requestidlecallback';
-import editor from './css/editor.css';
+import editor from './css/editor.scss';
 import { Page } from './page';
 
 export interface EditorProps {
