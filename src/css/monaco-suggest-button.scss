@@ -1,3 +1,4 @@
+@import 'cards';
 @import 'color';
 @import 'text';
 
@@ -16,6 +17,7 @@
 
 .emphasized:after {
   @extend .line;
+  @include shadow(1);
   transform: scale(2);
   transform-origin: bottom right;
 }
