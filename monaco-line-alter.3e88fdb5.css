@@ -1,0 +1,23 @@
+.monaco_line_alter:hover {
+  color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.monaco_line_alter:hover:before {
+  content: '▲';
+  position: absolute;
+  top: -16px;
+}
+.monaco_line_alter:hover:after {
+  content: '▼';
+  position: absolute;
+  top: 16px;
+}
+.monaco_line_alter {
+  z-index: 100;
+}
+.monaco_line_alter_line {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+/*# sourceMappingURL=/monaco-line-alter.3e88fdb5.css.map */
