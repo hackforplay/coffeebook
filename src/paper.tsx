@@ -1,4 +1,5 @@
 import * as React from 'react';
+import cards from './css/cards.css';
 
 export interface PaperProps {
   floating: boolean;
@@ -7,16 +8,7 @@ export interface PaperProps {
 
 export function Paper({ floating, children }: PaperProps) {
   return (
-    <div
-      style={{
-        boxShadow: floating
-          ? '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px '
-          : undefined,
-        padding: 8,
-        margin: 8,
-        borderRadius: 2
-      }}
-    >
+    <div className={floating ? cards.card1 : cards.card0} style={{ margin: 8 }}>
       {children}
     </div>
   );
