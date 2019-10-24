@@ -35,9 +35,9 @@ export function beFlexible(editor: monaco.editor.IStandaloneCodeEditor) {
         const height =
           previousLineCount <= lineCount
             ? viewLines.getBoundingClientRect().height // 行が同じか増えたとき => view-line 全体の高さの総和が viewLines の高さよりも上回り, viewLines が伸びる => 伸びた後の高さが必要な高さ
-            : lineCount * lineHeight; // 行が減ったとき => viewLines の高さは root の高さに依存する => 子要素の数と lineHeight から推測するしかない
+            : lineCount * lineHeight + paddingBottom; // 行が減ったとき => viewLines の高さは root の高さに依存する => 子要素の数と lineHeight から推測するしかない
         previousLineCount = lineCount;
-        root.style.height = `${height + paddingBottom}px`;
+        root.style.height = `${height}px`;
         const parent = root.parentElement;
         if (parent) {
           parent.style.height = root.style.height;
