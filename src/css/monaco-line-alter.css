@@ -1,20 +1,24 @@
-.monaco_line_alter:hover {
+.widget {
+  z-index: 100;
+}
+
+.widget:hover {
   color: rgba(0, 0, 0, 0.2);
   background-color: rgba(0, 0, 0, 0.1);
 }
-.monaco_line_alter:hover:before {
+
+.widget:hover:before {
   content: '▲';
   position: absolute;
   top: -16px;
 }
-.monaco_line_alter:hover:after {
+
+.widget:hover:after {
   content: '▼';
   position: absolute;
   top: 16px;
 }
-.monaco_line_alter {
-  z-index: 100;
-}
-.monaco_line_alter_line {
+
+.line {
   background-color: rgba(0, 0, 0, 0.1);
 }

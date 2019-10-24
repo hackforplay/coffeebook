@@ -1,7 +1,6 @@
 import * as monaco from 'monaco-editor';
 import { indent } from './append-empty-line';
-
-const className = 'monaco_line_alter';
+import css from './css/monaco-line-alter.css';
 
 export function showLineAlter(editor: monaco.editor.IStandaloneCodeEditor) {
   const model = editor.getModel();
@@ -21,7 +20,7 @@ export function showLineAlter(editor: monaco.editor.IStandaloneCodeEditor) {
         range: new monaco.Range(1, 1, 100000, 1), // whole code
         options: {
           isWholeLine: true,
-          marginClassName: className
+          marginClassName: css.widget
         }
       }
     ]
@@ -35,7 +34,7 @@ export function showLineAlter(editor: monaco.editor.IStandaloneCodeEditor) {
         range: new monaco.Range(lineNumber, 1, lineNumber, 1 + len), // whole code
         options: {
           isWholeLine: true,
-          className: 'monaco_line_alter_line'
+          className: css.line
         }
       }
     ]);
@@ -49,7 +48,7 @@ export function showLineAlter(editor: monaco.editor.IStandaloneCodeEditor) {
 
   editor.onMouseDown(e => {
     const { element, range } = e.target;
-    if (!element || !element.classList.contains(className)) return;
+    if (!element || !element.classList.contains(css.widget)) return;
     if (!range) return;
     hold = range;
     move(hold.startLineNumber);
@@ -63,7 +62,7 @@ export function showLineAlter(editor: monaco.editor.IStandaloneCodeEditor) {
   editor.onMouseMove(e => {
     if (!hold) return;
     const { element, range } = e.target;
-    if (!element || !element.classList.contains(className)) return;
+    if (!element || !element.classList.contains(css.widget)) return;
     if (!range) return;
     const direction = range.startLineNumber - hold.startLineNumber;
     if (Math.abs(direction) !== 1) return;
