@@ -6,16 +6,23 @@ import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { showLineAlter } from './monaco-line-alter';
 import { showSuggestButtons } from './monaco-suggest-button';
 import { OnUpdate } from './page';
-import { Paper } from './paper';
+import { Divider, Paper } from './paper';
 
 export interface CodeCellProps {
   id: string;
   value: string;
+  title?: string;
   onUpdate: OnUpdate;
   onGame: () => void;
 }
 
-export function CodeCell({ id, value, onUpdate, onGame }: CodeCellProps) {
+export function CodeCell({
+  id,
+  value,
+  title,
+  onUpdate,
+  onGame
+}: CodeCellProps) {
   const rootRef = React.useRef<HTMLDivElement>(null);
   const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor>();
   const [floating, setFloating] = React.useState(false);
@@ -84,7 +91,11 @@ export function CodeCell({ id, value, onUpdate, onGame }: CodeCellProps) {
 
   return (
     <Paper elevated={floating}>
+      <span>{title || 'NO TITLE'}</span>
+      <Divider />
       <div ref={rootRef} style={{ height: getInitialHeight(value) }}></div>
+      <Divider />
+      <span>Undo</span>
     </Paper>
   );
 }

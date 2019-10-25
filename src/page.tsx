@@ -72,6 +72,7 @@ export function Page({ className, code }: PageProps) {
             key={cell.id}
             id={cell.id}
             value={cell.value}
+            title={cell.meta}
             onUpdate={onUpdate}
             onGame={onGame}
           />

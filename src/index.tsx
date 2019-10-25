@@ -7,7 +7,7 @@ let code = `
 
 ---
 
-\`\`\`coffeescript
+\`\`\`coffeescript キャラクターをステージに出す
 rule.ゲームがはじまったとき ->
   await Hack.changeMap 'map1'
   rule.つくる 'プレイヤー', 3, 5, 'map1', Dir.した
