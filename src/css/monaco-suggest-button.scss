@@ -4,7 +4,7 @@
 
 .line:after {
   color: #ffffff !important; /* Override color of .vs-whitespace" */
-  background-color: $primary;
+  background-color: $primaryColor;
   content: $insertCode;
   border-radius: 2px;
   cursor: pointer;

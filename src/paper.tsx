@@ -16,3 +16,7 @@ export function Paper({ elevated, children }: PaperProps) {
     </div>
   );
 }
+
+export function Divider() {
+  return <div className={cards.divider}></div>;
+}
