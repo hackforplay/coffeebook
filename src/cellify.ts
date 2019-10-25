@@ -15,6 +15,10 @@ export interface ICodeCell {
    * e.g. "coffescript"
    */
   lang: string;
+  /**
+   * Title of the cell
+   */
+  meta?: string;
 }
 export interface ITextCell {
   id: string;
@@ -57,7 +61,8 @@ function* chunk(nodes: Node[]): Generator<ICell, number> {
         id: '' + chunkNum++,
         type: 'code',
         value: current.value as string,
-        lang: current.lang as string
+        lang: current.lang as string,
+        meta: current.meta as string | undefined
       };
       continue;
     }
