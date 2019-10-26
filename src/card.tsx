@@ -17,10 +17,6 @@ export function Card({ elevated, children }: PaperProps) {
   );
 }
 
-export function Divider() {
+export function CardDivider() {
   return <div className={cards.divider}></div>;
-}
-
-export function CardFooter({ children }: { children: React.ReactNode }) {
-  return <div className={cards.footer}>{children}</div>;
 }
