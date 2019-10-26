@@ -3,6 +3,7 @@ import * as React from 'react';
 import 'requestidlecallback';
 import { Card, CardDivider } from './card';
 import './completion';
+import element from './css/element.scss';
 import { IconButton } from './icon';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { showLineAlter } from './monaco-line-alter';
@@ -94,7 +95,11 @@ export function CodeCell({
     <Card elevated={floating}>
       <span>{title || 'NO TITLE'}</span>
       <CardDivider />
-      <div ref={rootRef} style={{ height: getInitialHeight(value) }}></div>
+      <div
+        ref={rootRef}
+        className={element.code}
+        style={{ height: getInitialHeight(value) }}
+      ></div>
       <CardDivider />
       <div>
         <IconButton name="undo">Undo</IconButton>
