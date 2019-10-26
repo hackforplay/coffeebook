@@ -1,16 +1,22 @@
+@import 'color';
+
 .button {
   background-color: transparent;
   border: none;
   display: flex;
   flex-direction: row;
   align-items: center;
-  cursor: pointer;
-  color: rgba(#000000, 0.54);
   transition: background-color 150ms ease-in-out;
   padding: 0px 4px;
-
-  &:hover {
-    background-color: rgba(#000000, 0.12);
+  color: $activeColor;
+  &.disabled {
+    color: $inactiveColor;
+  }
+  &:hover:not(.disabled) {
+    background-color: $hoverColor;
+  }
+  &:not(.disabled) {
+    cursor: pointer;
   }
 
   i {

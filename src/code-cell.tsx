@@ -103,7 +103,9 @@ export function CodeCell({
       ></div>
       <CardDivider />
       <div className={flex.horizontal}>
-        <IconButton name="undo">Undo</IconButton>
+        <IconButton disabled name="undo">
+          Undo
+        </IconButton>
         <div className={flex.blank}></div>
         <IconButton name="note_add"></IconButton>
         <IconButton name="file_copy"></IconButton>
