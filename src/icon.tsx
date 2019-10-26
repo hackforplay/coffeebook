@@ -6,7 +6,7 @@ export interface IconProps {
 }
 
 export interface IconButtonProps extends IconProps {
-  children: string;
+  children?: string;
 }
 
 /**
@@ -20,7 +20,7 @@ export function IconButton({ name, children }: IconButtonProps) {
   return (
     <button className={icons.button}>
       <Icon name={name} />
-      <span>{children}</span>
+      {children ? <span>{children}</span> : null}
     </button>
   );
 }

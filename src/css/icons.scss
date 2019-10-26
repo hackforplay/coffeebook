@@ -7,6 +7,7 @@
   cursor: pointer;
   color: rgba(#000000, 0.54);
   transition: background-color 150ms ease-in-out;
+  padding: 0px 4px;
 
   &:hover {
     background-color: rgba(#000000, 0.12);
@@ -14,6 +15,8 @@
 
   i {
     font-size: 18px;
-    margin-right: 2px;
+  }
+  span {
+    margin-left: 2px;
   }
 }
