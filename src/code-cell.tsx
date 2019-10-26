@@ -4,6 +4,7 @@ import 'requestidlecallback';
 import { Card, CardDivider } from './card';
 import './completion';
 import element from './css/element.scss';
+import flex from './css/flex.scss';
 import { IconButton } from './icon';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { showLineAlter } from './monaco-line-alter';
@@ -101,8 +102,13 @@ export function CodeCell({
         style={{ height: getInitialHeight(value) }}
       ></div>
       <CardDivider />
-      <div>
+      <div className={flex.horizontal}>
         <IconButton name="undo">Undo</IconButton>
+        <div className={flex.blank}></div>
+        <IconButton name="note_add"></IconButton>
+        <IconButton name="file_copy"></IconButton>
+        <IconButton name="arrow_upward"></IconButton>
+        <IconButton name="arrow_downward"></IconButton>
       </div>
     </Card>
   );
