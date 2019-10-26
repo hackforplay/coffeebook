@@ -1,5 +1,7 @@
 @import 'color';
 
+$dividerWidth: 4px;
+
 $shadow_sizes: (
   0: 0px 0px 0px 0px 0px 0px 0px 0px 0px 0px 0px 0px,
   1: 0px 2px 1px -1px 0px 1px 1px 0px 0px 1px 3px 0px,
@@ -44,8 +46,12 @@ $shadow_sizes: (
   .divider {
     height: 0px;
     width: calc(100% + #{$padding * 2});
-    margin: 4px 0px - $padding;
+    margin: $dividerWidth 0px - $padding;
     border-top: 1px solid $borderColor;
+  }
+
+  .footer {
+    margin: 0px - $dividerWidth 0px - $padding 0px - $padding 0px - $padding;
   }
 }
 

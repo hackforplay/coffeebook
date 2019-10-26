@@ -1,12 +1,13 @@
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import 'requestidlecallback';
+import { Card, CardFooter, Divider } from './card';
 import './completion';
+import { IconButton } from './icon';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { showLineAlter } from './monaco-line-alter';
 import { showSuggestButtons } from './monaco-suggest-button';
 import { OnUpdate } from './page';
-import { Divider, Paper } from './paper';
 
 export interface CodeCellProps {
   id: string;
@@ -90,12 +91,14 @@ export function CodeCell({
   }, []);
 
   return (
-    <Paper elevated={floating}>
+    <Card elevated={floating}>
       <span>{title || 'NO TITLE'}</span>
       <Divider />
       <div ref={rootRef} style={{ height: getInitialHeight(value) }}></div>
       <Divider />
-      <span>Undo</span>
-    </Paper>
+      <CardFooter>
+        <IconButton name="undo">Undo</IconButton>
+      </CardFooter>
+    </Card>
   );
 }
