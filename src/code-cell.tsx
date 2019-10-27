@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import 'requestidlecallback';
@@ -94,7 +95,11 @@ export function CodeCell({
 
   return (
     <Card elevated={floating}>
-      <span>{title || 'NO TITLE'}</span>
+      <div className={classNames(flex.horizontal, element.codeCellHeader)}>
+        <span>{title || 'NO TITLE'}</span>
+        <div className={flex.blank}></div>
+        <IconButton name="clear" />
+      </div>
       <CardDivider />
       <div
         ref={rootRef}
@@ -107,10 +112,10 @@ export function CodeCell({
           Undo
         </IconButton>
         <div className={flex.blank}></div>
-        <IconButton name="note_add"></IconButton>
-        <IconButton name="file_copy"></IconButton>
-        <IconButton name="arrow_upward"></IconButton>
-        <IconButton name="arrow_downward"></IconButton>
+        <IconButton name="note_add" />
+        <IconButton name="file_copy" />
+        <IconButton name="arrow_upward" />
+        <IconButton name="arrow_downward" />
       </div>
     </Card>
   );
