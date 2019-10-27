@@ -1,0 +1,48 @@
+@import 'color';
+
+$width: 36px;
+$height: 24px;
+$padding: 4px;
+
+// マップ選択ボタン
+.item {
+  cursor: pointer;
+  border: none;
+  padding: $padding;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  margin: 2px 0;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  outline: none;
+  transition: background-color 150ms ease-in-out;
+
+  &.selected {
+    background-color: $backgroundColor;
+  }
+}
+
+// マップ選択ボタンの数字
+.number {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+// マップ選択ボタンの画像
+.image {
+  width: $width;
+  height: $height;
+}
+
+// 追加ボタン
+.append {
+  position: absolute;
+  left: $padding;
+  bottom: $padding;
+  width: $width;
+  height: $height;
+  color: $alterColor;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}

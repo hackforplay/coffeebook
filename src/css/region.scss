@@ -3,11 +3,13 @@
 // .outer から .floorContainer を除いた領域
 .inner {
   flex: 1;
+  background-color: $backgroundColor;
 }
 
 // マップ選択領域
 .floor {
   flex: 0 0 32px;
+  padding-top: 32px;
 }
 
 // エディタ表示領域

@@ -3,6 +3,7 @@ import * as React from 'react';
 import 'requestidlecallback';
 import flex from './css/flex.scss';
 import region from './css/region.scss';
+import { Floors } from './floors';
 import { Pane } from './pane';
 
 export interface EditorProps {
@@ -12,7 +13,9 @@ export interface EditorProps {
 export function Editor({ code }: EditorProps) {
   return (
     <div className={classNames(region.outer, flex.horizontal, flex.stretch)}>
-      <div className={region.floor}></div>
+      <div className={region.floor}>
+        <Floors />
+      </div>
       <div className={classNames(region.inner, flex.horizontal, flex.stretch)}>
         <div className={region.editor}>
           <Pane code={code} />
