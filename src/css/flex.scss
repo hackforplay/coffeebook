@@ -9,6 +9,10 @@
   flex-direction: column;
 }
 
+.stretch {
+  align-items: stretch;
+}
+
 .blank {
   flex: 1;
 }

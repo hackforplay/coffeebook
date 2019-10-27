@@ -5,7 +5,7 @@ import { Card } from './card';
 import { htmlify, markdownify, md2html } from './cellify';
 import element from './css/element.scss';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
-import { OnUpdate } from './page';
+import { OnUpdate } from './pane';
 
 export interface TextCellProps {
   id: string;

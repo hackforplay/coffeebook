@@ -1,27 +1,34 @@
 @import 'cards';
 
+// コードセル全体
 .codeCell {
   margin: 8px;
 }
 
+// コードセルのエディタ部分
+.codeCellEditor {
+  margin: 4px 0px;
+}
+
+// コードセルの下部
+.codeCellFooter {
+}
+
+// コードセルの上部
 .codeCellHeader {
   span {
     margin: 4px;
   }
 }
 
-.code {
-  margin: 4px 0px;
-}
-
+// ヘッダー
 .header {
-  flex: 0;
-  height: 32px;
-  border-radius: 0;
-  border: none;
   @include shadow(1);
+  flex: 0 0 32px;
+  z-index: 1;
 }
 
+// テキストセル
 .textCell {
   margin: 8px;
 }

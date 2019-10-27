@@ -10,7 +10,7 @@ import { IconButton } from './icon';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { showLineAlter } from './monaco-line-alter';
 import { showSuggestButtons } from './monaco-suggest-button';
-import { OnUpdate } from './page';
+import { OnUpdate } from './pane';
 
 export interface CodeCellProps {
   id: string;
@@ -92,7 +92,6 @@ export function CodeCell({
       editor.dispose();
     };
   }, []);
-
   return (
     <Card elevated={floating} className={element.codeCell}>
       <div className={classNames(flex.horizontal, element.codeCellHeader)}>
@@ -103,11 +102,11 @@ export function CodeCell({
       <CardDivider />
       <div
         ref={rootRef}
-        className={element.code}
+        className={element.codeCellEditor}
         style={{ height: getInitialHeight(value) }}
       ></div>
       <CardDivider />
-      <div className={flex.horizontal}>
+      <div className={classNames(flex.horizontal, element.codeCellFooter)}>
         <IconButton disabled name="undo">
           Undo
         </IconButton>

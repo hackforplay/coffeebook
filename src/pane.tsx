@@ -8,15 +8,14 @@ import './completion';
 import { Sandbox } from './sandbox';
 import { TextCell } from './text-cell';
 
-export interface PageProps {
-  className?: string;
+export interface PaneProps {
   code: string;
 }
 
 export type OnUpdate = (payload: { id: string; value: string }) => void;
 
 let sandbox = new Sandbox();
-export function Page({ className, code }: PageProps) {
+export function Pane({ code }: PaneProps) {
   const cellsRef = React.useRef(cellify(code)); // Notice: mutable
 
   for (let cell of cellsRef.current) {
@@ -65,7 +64,7 @@ export function Page({ className, code }: PageProps) {
   }, []);
 
   return (
-    <div className={className} style={{ width: '50vw' }}>
+    <>
       {cellsRef.current.map(cell =>
         cell.type === 'code' ? (
           <CodeCell
@@ -85,7 +84,7 @@ export function Page({ className, code }: PageProps) {
           />
         )
       )}
-    </div>
+    </>
   );
 }
 

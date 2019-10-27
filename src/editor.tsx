@@ -1,7 +1,9 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import 'requestidlecallback';
-import editor from './css/editor.scss';
-import { Page } from './page';
+import flex from './css/flex.scss';
+import region from './css/region.scss';
+import { Pane } from './pane';
 
 export interface EditorProps {
   code: string;
@@ -9,14 +11,18 @@ export interface EditorProps {
 
 export function Editor({ code }: EditorProps) {
   return (
-    <div className={editor.container}>
-      <Page className={editor.code} code={code} />
-      <div className={editor.game}>
-        <iframe
-          className={editor.iframe}
-          src="https://hackforplay-sandbox.firebaseapp.com/compatible.html"
-          frameBorder="0"
-        ></iframe>
+    <div className={classNames(region.outer, flex.horizontal, flex.stretch)}>
+      <div className={region.floor}></div>
+      <div className={classNames(region.inner, flex.horizontal, flex.stretch)}>
+        <div className={region.editor}>
+          <Pane code={code} />
+        </div>
+        <div className={region.output}>
+          <iframe
+            src="https://hackforplay-sandbox.firebaseapp.com/compatible.html"
+            frameBorder="0"
+          ></iframe>
+        </div>
       </div>
     </div>
   );
