@@ -1,0 +1,60 @@
+@import 'color';
+
+$width: 32px;
+$height: 32px;
+$padding: 2px;
+$margin: 6px;
+
+%button {
+  cursor: pointer;
+  width: $width;
+  height: $height;
+  outline: none;
+  border: none;
+  border-radius: 2px;
+  background-color: $alterColor;
+  transition: background-color 150ms ease-in-out;
+  &:hover {
+    background-color: rgb(54, 72, 85);
+  }
+}
+
+.container {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.item {
+  @extend %button;
+  margin: $margin;
+  box-sizing: border-box;
+  padding: 2px;
+  border-radius: 2px;
+  &.selected {
+    background-color: rgb(54, 72, 85);
+  }
+
+  // img
+  * {
+    width: $width - $padding * 2;
+    height: $height - $padding * 2;
+  }
+}
+
+.search {
+  @extend %button;
+  margin: $margin $margin * 2 $margin $margin;
+  color: $accentColor;
+
+  i {
+    font-size: 24px;
+  }
+}
+
+.divider {
+  border-left: 1px solid $alterColor;
+  align-self: stretch;
+  margin: $margin;
+}

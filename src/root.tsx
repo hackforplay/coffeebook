@@ -3,6 +3,7 @@ import * as React from 'react';
 import flex from './css/flex.scss';
 import region from './css/region.scss';
 import { Editor } from './editor';
+import { Footer } from './footer';
 import { Header } from './header';
 
 export interface RootProps {
@@ -14,6 +15,7 @@ export function Root({ code }: RootProps) {
     <div className={classNames(region.root, flex.vertical)}>
       <Header />
       <Editor code={code} />
+      <Footer />
     </div>
   );
 }
