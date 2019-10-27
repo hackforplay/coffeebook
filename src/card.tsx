@@ -1,16 +1,21 @@
 import * as React from 'react';
 import cards from './css/cards.scss';
+import classNames from 'classnames';
+import element from './css/element.scss';
 
 export interface PaperProps {
   elevated: boolean;
   children: React.ReactNode;
+  className?: string;
 }
 
-export function Card({ elevated, children }: PaperProps) {
+export function Card({ elevated, children, className }: PaperProps) {
   return (
     <div
-      className={elevated ? cards.elevated : cards.outlined}
-      style={{ margin: 8 }}
+      className={classNames(
+        elevated ? cards.elevated : cards.outlined,
+        className
+      )}
     >
       {children}
     </div>

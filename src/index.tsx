@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Editor } from './editor';
+import { Root } from './root';
 
 let code = `
 まずは、プレイヤーをどこに出すかを決めましょう！
@@ -93,4 +93,4 @@ rule.タップされたとき ->
 `;
 
 let container = document.querySelector('#container');
-render(<Editor code={code}></Editor>, container);
+render(<Root code={code}></Root>, container);

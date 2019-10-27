@@ -94,7 +94,7 @@ export function CodeCell({
   }, []);
 
   return (
-    <Card elevated={floating}>
+    <Card elevated={floating} className={element.codeCell}>
       <div className={classNames(flex.horizontal, element.codeCellHeader)}>
         <span>{title || 'NO TITLE'}</span>
         <div className={flex.blank}></div>

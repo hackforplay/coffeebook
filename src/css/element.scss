@@ -1,3 +1,9 @@
+@import 'cards';
+
+.codeCell {
+  margin: 8px;
+}
+
 .codeCellHeader {
   span {
     margin: 4px;
@@ -6,4 +12,16 @@
 
 .code {
   margin: 4px 0px;
+}
+
+.header {
+  flex: 0;
+  height: 32px;
+  border-radius: 0;
+  border: none;
+  @include shadow(1);
+}
+
+.textCell {
+  margin: 8px;
 }

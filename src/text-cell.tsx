@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Node } from 'unist';
 import { Card } from './card';
 import { htmlify, markdownify, md2html } from './cellify';
+import element from './css/element.scss';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { OnUpdate } from './page';
 
@@ -44,7 +45,7 @@ export function TextCell({ id, nodes, onUpdate }: TextCellProps) {
   }, [editable]);
 
   return (
-    <Card elevated={editable}>
+    <Card elevated={editable} className={element.textCell}>
       <div
         dangerouslySetInnerHTML={editable ? undefined : html}
         onClick={() => setEditable(true)}
