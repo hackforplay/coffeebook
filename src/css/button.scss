@@ -44,7 +44,7 @@
     color: $alterColor;
     background-color: $primaryColor;
     margin: 0 4px;
-    padding: 4px 8px 4px 4px;
+    padding: 4px;
     &:hover {
       @include shadow(1);
       color: $alterColor;
@@ -54,6 +54,9 @@
 
   i {
     font-size: 18px;
+    & + span {
+      padding-right: 4px;
+    }
   }
   span {
     margin-left: 2px;
