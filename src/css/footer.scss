@@ -1,5 +1,6 @@
 @import 'shadow';
 @import 'color';
+@import 'transition';
 
 $width: 32px;
 $height: 32px;
@@ -7,6 +8,7 @@ $padding: 2px;
 $margin: 6px;
 
 %button {
+  @include transition(color, background-color, box-shadow);
   cursor: pointer;
   width: $width;
   height: $height;
@@ -14,9 +16,6 @@ $margin: 6px;
   border: none;
   border-radius: 2px;
   background-color: $alterColor;
-  transition-property: color, background-color, box-shadow;
-  transition-duration: 150ms;
-  transition-timing-function: ease-in-out;
   &:hover {
     @include shadow(1);
   }

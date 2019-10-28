@@ -1,13 +1,13 @@
 @import 'color';
 @import 'shadow';
+@import 'transition';
 
 %card {
+  @include transition(box-shadow);
   box-sizing: content-box;
   border: 1px solid $borderColor;
   border-radius: 2px;
   background-color: $paperColor;
-  transition-property: box-shadow;
-  transition-duration: 250ms;
 
   .divider {
     height: 0px;

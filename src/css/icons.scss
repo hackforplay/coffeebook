@@ -1,16 +1,15 @@
 @import 'shadow';
 @import 'color';
+@import 'transition';
 
 .button {
+  @include transition(color, box-shadow, background-color);
   background-color: transparent;
   border: none;
   border-radius: 2px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  transition-property: color, box-shadow, background-color;
-  transition-duration: 150ms;
-  transition-timing-function: ease-in-out;
   padding: 4px;
   color: $activeColor;
   &.disabled {

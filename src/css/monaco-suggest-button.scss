@@ -1,8 +1,10 @@
 @import 'color';
 @import 'shadow';
 @import 'text';
+@import 'transition';
 
 .line:after {
+  @include transition(background-color, box-shadow);
   color: $alterColor !important; /* Override color of .vs-whitespace" */
   background-color: $primaryColor;
   content: $insertCode;
@@ -12,9 +14,6 @@
   position: absolute;
   right: 16px;
   bottom: 0px;
-  transition-property: background-color, box-shadow;
-  transition-duration: 150ms;
-  transition-timing-function: ease-in-out;
 }
 
 .line:hover {
