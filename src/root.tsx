@@ -7,24 +7,36 @@ import region from './css/region.scss';
 import { FloorView } from './floor-view';
 import { Footer } from './footer';
 import { Header } from './header';
+import { MapView } from './map-view';
 
 export interface RootProps {
   code: string;
 }
 
 export function Root({ code }: RootProps) {
+  const [isCodeMode, setEditorMode] = React.useState(false);
+  const [floor, setFloor] = React.useState(1);
+
+  React.useEffect(() => {
+    setEditorMode(false);
+  }, [floor]);
+
   return (
     <div className={classNames(region.root, flex.vertical, font.main)}>
       <Header />
       <div className={classNames(region.outer, flex.horizontal, flex.stretch)}>
         <div className={region.floor}>
-          <FloorView />
+          <FloorView selected={floor} setSelected={setFloor} />
         </div>
         <div
           className={classNames(region.inner, flex.horizontal, flex.stretch)}
         >
           <div className={region.editor}>
-            <CodeView code={code} />
+            {isCodeMode ? (
+              <CodeView code={code} />
+            ) : (
+              <MapView selected={floor} setEditorMode={setEditorMode} />
+            )}
           </div>
           <div className={region.output}>
             <iframe

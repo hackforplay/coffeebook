@@ -4,6 +4,11 @@ import flex from './css/flex.scss';
 import floor from './css/floor-view.scss';
 import { Icon } from './icon';
 
+export interface FloorViewProps {
+  selected: number;
+  setSelected: React.Dispatch<React.SetStateAction<number>>;
+}
+
 export interface FloorItemProps {
   appendable?: boolean;
   color: string;
@@ -12,9 +17,7 @@ export interface FloorItemProps {
   setSelected: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export function FloorView() {
-  const [selected, setSelected] = React.useState(1);
-
+export function FloorView({ selected, setSelected }: FloorViewProps) {
   return (
     <>
       {['green', 'blue', 'pink', 'green'].map((color, i, array) => (
