@@ -19,6 +19,7 @@
 .codeCellHeader {
   span {
     margin: 4px;
+    color: $textColor;
   }
 }
 
@@ -27,9 +28,12 @@
   @include shadow(1);
   flex: 0 0 32px;
   z-index: 1;
+  color: $textColor;
+  background-color: $paperColor;
 }
 
 // テキストセル
 .textCell {
   margin: 8px 0px;
+  color: $textColor;
 }

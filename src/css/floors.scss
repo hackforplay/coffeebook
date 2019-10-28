@@ -27,6 +27,7 @@ $padding: 4px;
 .number {
   font-size: 0.8rem;
   font-weight: 600;
+  color: $textColor;
 }
 
 // マップ選択ボタンの画像
@@ -43,6 +44,6 @@ $padding: 4px;
   width: $width;
   height: $height;
   color: $alterColor;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba($textColorBase, 0.25);
   z-index: 1;
 }

@@ -1,8 +1,11 @@
-$primaryColor: #0c77f8;
-$accentColor: rgb(222, 65, 108);
-$alterColor: #ffffff;
-$borderColor: #ecf0f3;
-$backgroundColor: #ecf0f3;
-$activeColor: rgba(0, 0, 0, 0.54);
-$inactiveColor: rgba(0, 0, 0, 0.16);
-$hoverColor: rgba(0, 0, 0, 0.14);
+$primaryColor: #4a90e2;
+$accentColor: #ff2e63;
+$alterColor: #ffffff; // 色付きボタンの文字色
+$borderColor: #edf0f3; // セルなどの線の色
+$backgroundColor: #edf0f3; // .inner の背景色
+$paperColor: #ffffff; // ヘッダなどの背景色
+
+$textColorBase: #232f34;
+$textColor: rgba($textColorBase, 0.75);
+$activeColor: rgba($textColorBase, 0.5); // アクティブなボタンの文字色
+$inactiveColor: rgba($textColorBase, 0.16); // 非アクティブなボタンの文字色
