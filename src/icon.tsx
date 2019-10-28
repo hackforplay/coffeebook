@@ -10,6 +10,7 @@ export interface IconProps {
 export interface IconButtonProps extends IconProps {
   children?: string;
   disabled?: boolean;
+  primary?: boolean;
   vertical?: boolean;
 }
 
@@ -25,6 +26,7 @@ export function IconButton({
   className,
   disabled,
   name,
+  primary,
   vertical
 }: IconButtonProps) {
   return (
@@ -33,6 +35,7 @@ export function IconButton({
         className,
         icons.button,
         disabled && icons.disabled,
+        primary && icons.primary,
         vertical && icons.vertical
       )}
     >

@@ -21,6 +21,13 @@
   &:not(.disabled) {
     cursor: pointer;
   }
+  &.primary {
+    color: $alterColor;
+    background-color: $primaryColor;
+    margin: 0 4px;
+    border-radius: 2px;
+    padding: 4px 8px 4px 4px;
+  }
 
   i {
     font-size: 18px;

@@ -12,8 +12,12 @@ export function Header() {
       </IconButton>
       <span>TITLE</span>
       <div className={flex.blank}></div>
-      <IconButton name="publish">Publish</IconButton>
-      <IconButton name="close">Save and Exit</IconButton>
+      <IconButton name="publish" primary>
+        Publish
+      </IconButton>
+      <IconButton name="close" primary>
+        Save and Exit
+      </IconButton>
       <IconButton name="settings_applications" vertical>
         Settings
       </IconButton>
