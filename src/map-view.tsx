@@ -4,8 +4,13 @@ import flex from './css/flex.scss';
 import map from './css/map-view.scss';
 import selector from './css/selector.scss';
 import { Button } from './icon';
+import { Scroller } from './scroller';
 
 export type Tab = 'mine' | 'official' | 'others';
+type Refs = {
+  [tab in Tab]: React.RefObject<HTMLDivElement>;
+};
+export const tabs: Tab[] = ['mine', 'official', 'others'];
 
 export interface MapViewProps {
   selected: number;
@@ -14,9 +19,35 @@ export interface MapViewProps {
 
 export function MapView({ selected, setEditorMode }: MapViewProps) {
   const [tab, setTab] = React.useState<Tab>('mine');
+  const refs: Refs = {
+    mine: React.useRef(null),
+    official: React.useRef(null),
+    others: React.useRef(null)
+  };
 
   const set = React.useCallback(() => {
     setEditorMode(true);
+  }, []);
+
+  const handleScroll = React.useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    const margin = 20; // safety margin for smooth scroll [px]
+    const viewTop =
+      e.currentTarget.offsetTop + e.currentTarget.scrollTop + margin;
+    for (const tab of tabs) {
+      const element = refs[tab].current;
+      if (!element) return;
+      const groupBottom = element.offsetTop + element.offsetHeight;
+      if (viewTop < groupBottom) {
+        setTab(tab);
+        return;
+      }
+    }
+  }, []);
+
+  const scrollTo = React.useCallback((tab: Tab) => {
+    const element = refs[tab].current;
+    if (!element) return;
+    element.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
   return (
@@ -28,7 +59,7 @@ export function MapView({ selected, setEditorMode }: MapViewProps) {
             selector.item,
             tab === 'mine' && selector.selected
           )}
-          onClick={() => setTab('mine')}
+          onClick={() => scrollTo('mine')}
         >
           Mine
         </button>
@@ -37,7 +68,7 @@ export function MapView({ selected, setEditorMode }: MapViewProps) {
             selector.item,
             tab === 'official' && selector.selected
           )}
-          onClick={() => setTab('official')}
+          onClick={() => scrollTo('official')}
         >
           Official
         </button>
@@ -46,23 +77,20 @@ export function MapView({ selected, setEditorMode }: MapViewProps) {
             selector.item,
             tab === 'others' && selector.selected
           )}
-          onClick={() => setTab('others')}
+          onClick={() => scrollTo('others')}
         >
           Others
         </button>
       </div>
-      <div className={map.scroller}>
-        {['mine', 'official', 'others'].map(id => (
-          <div key={id} id={id} className={map.group}>
-            <MapViewItem onClick={set} />
-            <MapViewItem onClick={set} />
-            <MapViewItem onClick={set} />
-            <MapViewItem onClick={set} />
-            <MapViewItem onClick={set} />
-            <MapViewItem onClick={set} />
+      <Scroller ms={50} className={map.scroller} onScroll={handleScroll}>
+        {tabs.map(id => (
+          <div key={id} id={id} className={map.group} ref={refs[id]}>
+            {Array.from({ length: 15 }).map((_, i) => (
+              <MapViewItem key={i} onClick={set} />
+            ))}
           </div>
         ))}
-      </div>
+      </Scroller>
     </div>
   );
 }
