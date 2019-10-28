@@ -3,9 +3,9 @@ import * as React from 'react';
 import { Node } from 'unist';
 import { Card } from './card';
 import { htmlify, markdownify, md2html } from './cellify';
+import { OnUpdate } from './code-view';
 import element from './css/element.scss';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
-import { OnUpdate } from './pane';
 
 export interface TextCellProps {
   id: string;

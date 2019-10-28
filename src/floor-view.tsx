@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import flex from './css/flex.scss';
-import floors from './css/floors.scss';
+import floor from './css/floor-view.scss';
 import { Icon } from './icon';
 
 export interface FloorItemProps {
@@ -12,7 +12,7 @@ export interface FloorItemProps {
   setSelected: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export function Floors() {
+export function FloorView() {
   const [selected, setSelected] = React.useState(1);
 
   return (
@@ -45,15 +45,15 @@ export function FloorItem({
   return (
     <button
       className={classNames(
-        floors.item,
-        selected && floors.selected,
+        floor.item,
+        selected && floor.selected,
         flex.vertical
       )}
       onClick={onClick}
     >
-      <span className={floors.number}>{index}</span>
-      <div className={floors.image} style={{ backgroundColor: color }}></div>
-      {appendable ? <Icon name="add" className={floors.append} /> : null}
+      <span className={floor.number}>{index}</span>
+      <div className={floor.image} style={{ backgroundColor: color }}></div>
+      {appendable ? <Icon name="add" className={floor.append} /> : null}
     </button>
   );
 }

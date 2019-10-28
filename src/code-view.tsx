@@ -8,14 +8,14 @@ import './completion';
 import { Sandbox } from './sandbox';
 import { TextCell } from './text-cell';
 
-export interface PaneProps {
+export interface CodeViewProps {
   code: string;
 }
 
 export type OnUpdate = (payload: { id: string; value: string }) => void;
 
 let sandbox = new Sandbox();
-export function Pane({ code }: PaneProps) {
+export function CodeView({ code }: CodeViewProps) {
   const cellsRef = React.useRef(cellify(code)); // Notice: mutable
 
   for (let cell of cellsRef.current) {

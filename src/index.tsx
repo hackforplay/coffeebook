@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
+import 'requestidlecallback';
 import { Root } from './root';
 
 let code = `

@@ -10,7 +10,7 @@ import { IconButton } from './icon';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { showLineAlter } from './monaco-line-alter';
 import { showSuggestButtons } from './monaco-suggest-button';
-import { OnUpdate } from './pane';
+import { OnUpdate } from './code-view';
 
 export interface CodeCellProps {
   id: string;
