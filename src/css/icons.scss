@@ -1,3 +1,4 @@
+@import 'cards';
 @import 'color';
 
 .button {
@@ -7,7 +8,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  transition: color 150ms ease-in-out;
+  transition: color, box-shadow 150ms ease-in-out;
   padding: 4px;
   color: $activeColor;
   &.disabled {
@@ -32,6 +33,7 @@
     margin: 0 4px;
     padding: 4px 8px 4px 4px;
     &:hover {
+      @include shadow(1);
       color: $alterColor;
       background-color: $primaryHoverColor;
     }
