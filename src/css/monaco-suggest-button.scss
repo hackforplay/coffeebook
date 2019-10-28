@@ -1,18 +1,27 @@
-@import 'shadow';
 @import 'color';
+@import 'shadow';
 @import 'text';
 
 .line:after {
-  color: #ffffff !important; /* Override color of .vs-whitespace" */
+  color: $alterColor !important; /* Override color of .vs-whitespace" */
   background-color: $primaryColor;
   content: $insertCode;
   border-radius: 2px;
   cursor: pointer;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 0 8px;
   position: absolute;
   right: 16px;
   bottom: 0px;
+  transition-property: background-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+}
+
+.line:hover {
+  &:after {
+    @include shadow(1);
+    background-color: $primaryHoverColor;
+  }
 }
 
 .emphasized:after {

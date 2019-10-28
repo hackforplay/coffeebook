@@ -8,7 +8,9 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  transition: color, box-shadow 150ms ease-in-out;
+  transition-property: color, box-shadow, background-color;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
   padding: 4px;
   color: $activeColor;
   &.disabled {
