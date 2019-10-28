@@ -11,6 +11,7 @@ export interface IconButtonProps extends IconProps {
   children?: string;
   disabled?: boolean;
   primary?: boolean;
+  primaryOnHover?: boolean;
   vertical?: boolean;
 }
 
@@ -27,6 +28,7 @@ export function IconButton({
   disabled,
   name,
   primary,
+  primaryOnHover,
   vertical
 }: IconButtonProps) {
   return (
@@ -36,6 +38,7 @@ export function IconButton({
         icons.button,
         disabled && icons.disabled,
         primary && icons.primary,
+        primaryOnHover && icons.primaryOnHover,
         vertical && icons.vertical
       )}
     >

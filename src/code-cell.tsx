@@ -111,10 +111,10 @@ export function CodeCell({
           Undo
         </IconButton>
         <div className={flex.blank}></div>
-        <IconButton name="note_add" />
-        <IconButton name="file_copy" />
-        <IconButton name="arrow_upward" />
-        <IconButton name="arrow_downward" />
+        <IconButton name="note_add" primaryOnHover />
+        <IconButton name="file_copy" primaryOnHover />
+        <IconButton name="arrow_upward" primaryOnHover />
+        <IconButton name="arrow_downward" primaryOnHover />
       </div>
     </Card>
   );

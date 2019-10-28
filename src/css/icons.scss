@@ -3,6 +3,7 @@
 .button {
   background-color: transparent;
   border: none;
+  border-radius: 2px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -16,7 +17,11 @@
     flex-direction: column;
   }
   &:hover:not(.disabled) {
+    background-color: $hoverColor;
+  }
+  &.primaryOnHover:hover:not(.disabled) {
     color: $primaryColor;
+    background-color: transparent;
   }
   &:not(.disabled) {
     cursor: pointer;
@@ -25,8 +30,11 @@
     color: $alterColor;
     background-color: $primaryColor;
     margin: 0 4px;
-    border-radius: 2px;
     padding: 4px 8px 4px 4px;
+    &:hover {
+      color: $alterColor;
+      background-color: $primaryHoverColor;
+    }
   }
 
   i {
