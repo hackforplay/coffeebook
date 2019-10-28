@@ -19,6 +19,7 @@ export function Floors() {
     <>
       {['green', 'blue', 'pink', 'green'].map((color, i, array) => (
         <FloorItem
+          key={i}
           index={i + 1}
           color={color}
           setSelected={setSelected}
