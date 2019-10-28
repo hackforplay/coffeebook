@@ -1,0 +1,23 @@
+@import 'color';
+@import 'transition';
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.item {
+  @include transition(border);
+  padding: 2px 32px;
+  border: none;
+  border-bottom: 2px solid #d8d8d8;
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  font-size: 14px;
+  color: $textColor;
+  &.selected {
+    border-bottom-color: $accentColor;
+  }
+}
