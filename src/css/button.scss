@@ -2,31 +2,43 @@
 @import 'color';
 @import 'transition';
 
-.icon {
-  @include transition(color, box-shadow, background-color);
-  background-color: transparent;
+%base {
   border: none;
   border-radius: 2px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   padding: 4px;
   color: $activeColor;
   &.disabled {
     color: $inactiveColor;
   }
-  &.vertical {
-    flex-direction: column;
+  &:not(.disabled) {
+    cursor: pointer;
+    &:hover {
+      background-color: $hoverColor;
+    }
   }
-  &:hover:not(.disabled) {
-    background-color: $hoverColor;
-  }
-  &.primaryOnHover:hover:not(.disabled) {
+}
+
+.icon {
+  @extend %base;
+  @include transition(color, background-color);
+  &.primary:hover:not(.disabled) {
     color: $primaryColor;
     background-color: transparent;
   }
-  &:not(.disabled) {
-    cursor: pointer;
+
+  i {
+    font-size: 18px;
+  }
+}
+
+.label {
+  @extend %base;
+  @include transition(color, background-color, box-shadow);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  &.vertical {
+    flex-direction: column;
   }
   &.primary {
     color: $alterColor;

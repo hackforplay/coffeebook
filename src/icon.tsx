@@ -11,7 +11,6 @@ export interface IconButtonProps extends IconProps {
   children?: string;
   disabled?: boolean;
   primary?: boolean;
-  primaryOnHover?: boolean;
   vertical?: boolean;
 }
 
@@ -28,17 +27,15 @@ export function IconButton({
   disabled,
   name,
   primary,
-  primaryOnHover,
   vertical
 }: IconButtonProps) {
   return (
     <button
       className={classNames(
         className,
-        button.icon,
+        children ? button.label : button.icon,
         disabled && button.disabled,
         primary && button.primary,
-        primaryOnHover && button.primaryOnHover,
         vertical && button.vertical
       )}
     >
