@@ -15,6 +15,10 @@ export interface MapViewProps {
 export function MapView({ selected, setEditorMode }: MapViewProps) {
   const [tab, setTab] = React.useState<Tab>('mine');
 
+  const set = React.useCallback(() => {
+    setEditorMode(true);
+  }, []);
+
   return (
     <div className={map.container}>
       <h2>Choose background of map{selected}</h2>
@@ -50,12 +54,12 @@ export function MapView({ selected, setEditorMode }: MapViewProps) {
       <div className={map.scroller}>
         {['mine', 'official', 'others'].map(id => (
           <div key={id} id={id} className={map.group}>
-            <MapViewItem />
-            <MapViewItem />
-            <MapViewItem />
-            <MapViewItem />
-            <MapViewItem />
-            <MapViewItem />
+            <MapViewItem onClick={set} />
+            <MapViewItem onClick={set} />
+            <MapViewItem onClick={set} />
+            <MapViewItem onClick={set} />
+            <MapViewItem onClick={set} />
+            <MapViewItem onClick={set} />
           </div>
         ))}
       </div>
@@ -63,7 +67,11 @@ export function MapView({ selected, setEditorMode }: MapViewProps) {
   );
 }
 
-export function MapViewItem() {
+export interface MapViewItemProps {
+  onClick: () => void;
+}
+
+export function MapViewItem({ onClick }: MapViewItemProps) {
   return (
     <div className={map.responsive}>
       <div className={map.responsiveContent}>
@@ -73,7 +81,9 @@ export function MapViewItem() {
               <span>TITLE</span>
               <span>by Author</span>
             </div>
-            <Button primary>Apply</Button>
+            <Button primary onClick={onClick}>
+              Apply
+            </Button>
           </div>
         </div>
       </div>

@@ -18,6 +18,7 @@ export interface ButtonProps {
   children?: string;
   className?: string;
   disabled?: boolean;
+  onClick?: () => void;
   primary?: boolean;
 }
 
@@ -25,6 +26,7 @@ export function Button({
   children,
   className,
   disabled,
+  onClick,
   primary
 }: ButtonProps) {
   return (
@@ -35,6 +37,7 @@ export function Button({
         disabled && button.disabled,
         primary && button.primary
       )}
+      onClick={onClick}
     >
       {children ? <span>{children}</span> : null}
     </button>
@@ -50,6 +53,7 @@ export function IconButton({
   className,
   disabled,
   name,
+  onClick,
   primary,
   vertical
 }: IconButtonProps) {
@@ -62,6 +66,7 @@ export function IconButton({
         primary && button.primary,
         vertical && button.vertical
       )}
+      onClick={onClick}
     >
       <Icon name={name} />
       {children ? <span>{children}</span> : null}
