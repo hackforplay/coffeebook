@@ -1,7 +1,7 @@
 @import 'color';
 @import 'shadow';
 
-@mixin card() {
+%card {
   box-sizing: content-box;
   border: 1px solid $borderColor;
   border-radius: 2px;
@@ -17,11 +17,11 @@
 }
 
 .outlined {
-  @include card();
+  @extend %card;
   @include shadow(0);
 }
 
 .elevated {
-  @include card();
+  @extend %card;
   @include shadow(1);
 }
