@@ -2,7 +2,7 @@
 @import 'color';
 @import 'transition';
 
-.button {
+.icon {
   @include transition(color, box-shadow, background-color);
   background-color: transparent;
   border: none;

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import icons from './css/icons.scss';
+import button from './css/button.scss';
 
 export interface IconProps {
   name: string;
@@ -35,11 +35,11 @@ export function IconButton({
     <button
       className={classNames(
         className,
-        icons.button,
-        disabled && icons.disabled,
-        primary && icons.primary,
-        primaryOnHover && icons.primaryOnHover,
-        vertical && icons.vertical
+        button.icon,
+        disabled && button.disabled,
+        primary && button.primary,
+        primaryOnHover && button.primaryOnHover,
+        vertical && button.vertical
       )}
     >
       <Icon name={name} />
