@@ -12,7 +12,6 @@ $padding: 4px;
   display: inline-block;
   text-align: center;
   position: relative;
-  margin: 2px 0;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
   outline: none;
@@ -20,6 +19,9 @@ $padding: 4px;
 
   &.selected {
     background-color: $backgroundColor;
+  }
+  &:hover {
+    background-color: rgba($backgroundColor, 0.5);
   }
 }
 
