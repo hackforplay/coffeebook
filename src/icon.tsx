@@ -7,18 +7,42 @@ export interface IconProps {
   className?: string;
 }
 
-export interface IconButtonProps extends IconProps {
-  children?: string;
-  disabled?: boolean;
-  primary?: boolean;
-  vertical?: boolean;
-}
-
 /**
  * Material Icon Component
  */
 export function Icon({ className, name }: IconProps) {
   return <i className={classNames(className, 'material-icons')}>{name}</i>;
+}
+
+export interface ButtonProps {
+  children?: string;
+  className?: string;
+  disabled?: boolean;
+  primary?: boolean;
+}
+
+export function Button({
+  children,
+  className,
+  disabled,
+  primary
+}: ButtonProps) {
+  return (
+    <button
+      className={classNames(
+        className,
+        button.label,
+        disabled && button.disabled,
+        primary && button.primary
+      )}
+    >
+      {children ? <span>{children}</span> : null}
+    </button>
+  );
+}
+
+export interface IconButtonProps extends IconProps, ButtonProps {
+  vertical?: boolean;
 }
 
 export function IconButton({

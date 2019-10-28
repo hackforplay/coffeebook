@@ -19,13 +19,21 @@ $paddingBottom: 48px;
 }
 
 // エディタ表示領域
-.editor {
+.editorView {
   flex: 0 0 50%;
   width: 50%;
   box-sizing: border-box;
   padding: 8px;
   overflow: scroll;
   padding-bottom: $paddingBottom;
+}
+
+// マップ選択表示領域
+.mapView {
+  @extend .editorView;
+  height: 100%;
+  overflow: hidden;
+  padding-right: 0px;
 }
 
 // .header を除いた全領域

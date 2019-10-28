@@ -31,13 +31,15 @@ export function Root({ code }: RootProps) {
         <div
           className={classNames(region.inner, flex.horizontal, flex.stretch)}
         >
-          <div className={region.editor}>
-            {isCodeMode ? (
+          {isCodeMode ? (
+            <div className={region.editorView}>
               <CodeView code={code} />
-            ) : (
+            </div>
+          ) : (
+            <div className={region.mapView}>
               <MapView selected={floor} setEditorMode={setEditorMode} />
-            )}
-          </div>
+            </div>
+          )}
           <div className={region.output}>
             <iframe
               src="https://hackforplay-sandbox.firebaseapp.com/compatible.html"
