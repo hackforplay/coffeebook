@@ -1,0 +1,26 @@
+@import 'shadow';
+
+.installer {
+  width: 50%;
+
+  .header {
+    height: 64px;
+
+    img {
+      max-height: 100%;
+    }
+
+    .gif {
+      margin-left: 16px;
+    }
+  }
+
+  .description {
+    margin-bottom: 16px;
+  }
+
+  button {
+    @include shadow(1);
+    margin-left: 0px !important;
+  }
+}
