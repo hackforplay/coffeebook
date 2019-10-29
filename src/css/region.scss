@@ -10,7 +10,6 @@ $paddingBottom: 48px;
   flex: 1 0 50%;
   width: 50%;
   background-color: $backgroundColor;
-  overflow: hidden;
   position: relative;
 }
 
@@ -31,12 +30,17 @@ $paddingBottom: 48px;
   padding: 8px;
   overflow: scroll;
   padding-bottom: $paddingBottom;
-  width: 100%;
   height: 100%;
   left: 0px;
 
   &.hidden {
     left: 100%;
+  }
+
+  // HACK: Show the Suggestion Widget above of output
+  width: 200%;
+  & > * {
+    width: 50%;
   }
 }
 
