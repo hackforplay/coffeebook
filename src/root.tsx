@@ -9,12 +9,19 @@ import { Footer } from './footer';
 import { Header } from './header';
 import { MapView } from './map-view';
 
+export enum EditorMode {
+  Map,
+  Code
+}
+
 export interface RootProps {
   code: string;
 }
 
 export function Root({ code }: RootProps) {
-  const [isCodeMode, setEditorMode] = React.useState(false);
+  const [editorMode, setEditorMode] = React.useState<EditorMode>(
+    EditorMode.Map
+  );
   const [floor, setFloor] = React.useState(1);
 
   return (

@@ -3,10 +3,11 @@ import * as React from 'react';
 import flex from './css/flex.scss';
 import floor from './css/floor-view.scss';
 import { Icon } from './icon';
+import { EditorMode } from './root';
 
 export interface FloorViewProps {
   selected: number;
-  setEditorMode: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
   setSelected: React.Dispatch<React.SetStateAction<number>>;
 }
 
@@ -15,7 +16,7 @@ export interface FloorItemProps {
   color: string;
   index: number;
   selected?: boolean;
-  setEditorMode: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
   setSelected: React.Dispatch<React.SetStateAction<number>>;
 }
 
@@ -51,7 +52,7 @@ export function FloorItem({
 }: FloorItemProps) {
   const onClick = React.useCallback(() => {
     setSelected(index);
-    setEditorMode(false);
+    setEditorMode(EditorMode.Map);
   }, [index]);
 
   return (

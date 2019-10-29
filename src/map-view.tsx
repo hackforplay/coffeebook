@@ -4,6 +4,7 @@ import flex from './css/flex.scss';
 import map from './css/map-view.scss';
 import selector from './css/selector.scss';
 import { Button } from './icon';
+import { EditorMode } from './root';
 import { Scroller } from './scroller';
 
 export type Tab = 'mine' | 'official' | 'others';
@@ -14,7 +15,7 @@ export const tabs: Tab[] = ['mine', 'official', 'others'];
 
 export interface MapViewProps {
   selected: number;
-  setEditorMode: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
 }
 
 export function MapView({ selected, setEditorMode }: MapViewProps) {
@@ -26,7 +27,7 @@ export function MapView({ selected, setEditorMode }: MapViewProps) {
   };
 
   const set = React.useCallback(() => {
-    setEditorMode(true);
+    setEditorMode(EditorMode.Code);
   }, []);
 
   const handleScroll = React.useCallback((e: React.UIEvent<HTMLDivElement>) => {
