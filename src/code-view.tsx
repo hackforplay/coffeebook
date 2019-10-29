@@ -3,12 +3,12 @@ import { CoffeeScript } from 'coffeescript';
 import * as React from 'react';
 import { appendEmptyLine } from './append-empty-line';
 import { build } from './build';
+import { IconButton } from './button';
 import { blockify, cellify, ICodeCell } from './cellify';
 import { CodeCell } from './code-cell';
 import './completion';
 import view from './css/code-view.scss';
 import flex from './css/flex.scss';
-import { IconButton } from './icon';
 import { Sandbox } from './sandbox';
 import { TextCell } from './text-cell';
 

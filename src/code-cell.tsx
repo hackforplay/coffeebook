@@ -2,15 +2,15 @@ import classNames from 'classnames';
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import 'requestidlecallback';
+import { IconButton } from './button';
 import { Card, CardDivider } from './card';
+import { OnUpdate } from './code-view';
 import './completion';
 import element from './css/element.scss';
 import flex from './css/flex.scss';
-import { IconButton } from './icon';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { showLineAlter } from './monaco-line-alter';
 import { showSuggestButtons } from './monaco-suggest-button';
-import { OnUpdate } from './code-view';
 
 export interface CodeCellProps {
   id: string;

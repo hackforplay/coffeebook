@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { IconButton } from './button';
 import element from './css/element.scss';
 import flex from './css/flex.scss';
-import { IconButton } from './icon';
 
 export function Header() {
   return (

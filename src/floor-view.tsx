@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { Icon } from './button';
 import flex from './css/flex.scss';
 import floor from './css/floor-view.scss';
-import { Icon } from './icon';
 import { EditorMode } from './root';
 
 export interface FloorViewProps {

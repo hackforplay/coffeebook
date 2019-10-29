@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { IconButton } from './button';
 import flex from './css/flex.scss';
 import footer from './css/footer.scss';
-import { IconButton } from './icon';
 import { EditorMode } from './root';
 
 export interface FooterProps {

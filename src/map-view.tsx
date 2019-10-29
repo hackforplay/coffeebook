@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { Button } from './button';
 import flex from './css/flex.scss';
 import map from './css/map-view.scss';
 import selector from './css/selector.scss';
-import { Button } from './icon';
 import { EditorMode } from './root';
 import { Scroller } from './scroller';
 
