@@ -2,6 +2,7 @@
 
 .installer {
   width: 50%;
+  padding-left: 4px;
 
   .header {
     height: 64px;
@@ -16,7 +17,7 @@
   }
 
   .description {
-    margin-bottom: 16px;
+    margin: 6px 0px 16px 0px;
   }
 
   button {
