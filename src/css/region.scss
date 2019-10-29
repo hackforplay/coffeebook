@@ -1,9 +1,7 @@
 @import 'color';
 @import 'shadow';
+@import 'size';
 @import 'transition';
-
-// Footer と重ならないようにするための余白
-$paddingBottom: 48px;
 
 // .outer から .floor と .output を除いた領域
 .inner {
@@ -17,7 +15,7 @@ $paddingBottom: 48px;
 .floor {
   flex: 0 0 32px;
   padding-top: 32px;
-  padding-bottom: $paddingBottom;
+  padding-bottom: $footerHeight;
   background-color: $paperColor;
   z-index: 2;
 }
@@ -32,9 +30,8 @@ $paddingBottom: 48px;
 // エディタ表示部分
 .editorView {
   @extend %base;
-  padding: 8px;
+  padding: 8px 8px $footerHeight 8px;
   overflow: scroll;
-  padding-bottom: $paddingBottom;
 
   transform: translateX(0%);
   &.exiting {
@@ -53,7 +50,7 @@ $paddingBottom: 48px;
   @extend %base;
   width: 100%;
   height: 100%;
-  padding: 8px 0px 8px 8px;
+  padding: 8px 0px 0px 8px;
   overflow: hidden;
 
   transform: translateX(0%);
@@ -73,7 +70,7 @@ $paddingBottom: 48px;
   box-sizing: border-box;
   flex: 0 1 50%;
   width: 50%;
-  padding: 16px 16px $paddingBottom 8px;
+  padding: 16px 16px $footerHeight + 8px 8px;
   background-color: $backgroundColor;
   z-index: 1;
 
