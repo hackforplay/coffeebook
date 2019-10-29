@@ -8,6 +8,7 @@ import { FloorView } from './floor-view';
 import { Footer } from './footer';
 import { Header } from './header';
 import { MapView } from './map-view';
+import { Transition } from './transition';
 
 export enum EditorMode {
   Map,
@@ -36,19 +37,20 @@ export function Root({ code }: RootProps) {
           />
         </div>
         <div className={classNames(region.inner)}>
-          <div
-            className={classNames(region.mapView, isCodeMode && region.hidden)}
+          <Transition
+            in={editorMode === EditorMode.Map}
+            className={region.mapView}
+            exiting={region.exiting}
           >
             <MapView selected={floor} setEditorMode={setEditorMode} />
-          </div>
-          <div
-            className={classNames(
-              region.editorView,
-              isCodeMode || region.hidden
-            )}
+          </Transition>
+          <Transition
+            in={editorMode === EditorMode.Code}
+            className={region.editorView}
+            exiting={region.exiting}
           >
             <CodeView code={code} />
-          </div>
+          </Transition>
         </div>
         <div className={region.output}>
           <iframe
