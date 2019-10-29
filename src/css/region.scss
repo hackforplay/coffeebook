@@ -7,10 +7,9 @@ $paddingBottom: 48px;
 
 // .outer から .floor と .output を除いた領域
 .inner {
-  flex: 1;
-  background-color: $backgroundColor;
-  flex: 0 0 50%;
+  flex: 1 0 50%;
   width: 50%;
+  background-color: $backgroundColor;
   overflow: hidden;
   position: relative;
 }
@@ -63,7 +62,8 @@ $paddingBottom: 48px;
 // 出力結果表示領域
 .output {
   box-sizing: border-box;
-  flex: 0 0 50%;
+  flex: 0 1 50%;
+  width: 50%;
   padding: 16px 16px $paddingBottom 8px;
   background-color: $backgroundColor;
   z-index: 1;
