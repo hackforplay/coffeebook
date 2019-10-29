@@ -2,6 +2,7 @@ import * as monaco from 'monaco-editor';
 
 export const lineHeight = 18;
 export const paddingBottom = 2;
+export const estimatedTime = 5; // Threshold of execution [ms]
 
 export function getInitialHeight(code: string) {
   const lineCount = code.split('\n').length;
@@ -24,7 +25,11 @@ export function beFlexible(editor: monaco.editor.IStandaloneCodeEditor) {
   const relayout = () => {
     window.cancelIdleCallback(resizeTimerId);
     resizeTimerId = window.requestIdleCallback(
-      () => {
+      deadline => {
+        if (deadline.timeRemaining() < estimatedTime) {
+          // Because we don't have enough time to execute
+          return relayout();
+        }
         const root = editor.getDomNode();
         if (!root) return;
         const viewLines = root.querySelector('.view-lines');
@@ -38,7 +43,7 @@ export function beFlexible(editor: monaco.editor.IStandaloneCodeEditor) {
             : lineCount * lineHeight + paddingBottom; // 行が減ったとき => viewLines の高さは root の高さに依存する => 子要素の数と lineHeight から推測するしかない
         if (height <= 0) {
           // Because parent element maybe "display: none"
-          return;
+          return relayout();
         }
         previousLineCount = lineCount;
         root.style.height = `${height}px`;
@@ -51,7 +56,8 @@ export function beFlexible(editor: monaco.editor.IStandaloneCodeEditor) {
       { timeout: 2000 }
     );
   };
-  const disposer = editor.onDidChangeModelDecorations(relayout);
+  relayout(); // onDidChangeModelContent will not fire on mounted
+  const disposer = editor.onDidChangeModelContent(relayout);
 
   let previousWidth = window.innerWidth;
   const windowResized = () => {

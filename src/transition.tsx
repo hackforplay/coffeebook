@@ -22,7 +22,9 @@ enum Phase {
  * @param param
  */
 export function Transition(props: TransitionProps) {
-  const [phase, setPhase] = React.useState(props.in ? Phase.In : Phase.Out);
+  const [phase, setPhase] = React.useState(
+    props.in ? Phase.In : Phase.DisplayNone
+  );
   const timerRef = React.useRef(0);
 
   React.useEffect(() => {
