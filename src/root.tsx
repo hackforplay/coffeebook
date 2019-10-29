@@ -59,7 +59,7 @@ export function Root({ code }: RootProps) {
           ></iframe>
         </div>
       </div>
-      <Footer />
+      <Footer setEditorMode={setEditorMode} />
     </div>
   );
 }

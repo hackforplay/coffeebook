@@ -3,27 +3,40 @@ import * as React from 'react';
 import flex from './css/flex.scss';
 import footer from './css/footer.scss';
 import { IconButton } from './icon';
+import { EditorMode } from './root';
 
-export function Footer() {
+export interface FooterProps {
+  setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
+}
+
+export function Footer({ setEditorMode }: FooterProps) {
+  const onClick = React.useCallback(() => {
+    setEditorMode(EditorMode.Code);
+  }, []);
+
   return (
     <div className={classNames(footer.container, flex.horizontal)}>
       <IconButton name="search" className={footer.search} />
-      <FooterItem />
-      <FooterItem />
+      <FooterItem onClick={onClick} />
+      <FooterItem onClick={onClick} />
       <div className={footer.divider}></div>
-      <FooterItem />
-      <FooterItem />
-      <FooterItem />
-      <FooterItem />
-      <FooterItem />
-      <FooterItem />
+      <FooterItem onClick={onClick} />
+      <FooterItem onClick={onClick} />
+      <FooterItem onClick={onClick} />
+      <FooterItem onClick={onClick} />
+      <FooterItem onClick={onClick} />
+      <FooterItem onClick={onClick} />
     </div>
   );
 }
 
-export function FooterItem() {
+export interface FooterItemProps {
+  onClick: () => void;
+}
+
+export function FooterItem({ onClick }: FooterItemProps) {
   return (
-    <button className={footer.item}>
+    <button className={footer.item} onClick={onClick}>
       <div style={{ backgroundColor: 'blue' }}></div>
     </button>
   );
