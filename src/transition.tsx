@@ -32,10 +32,10 @@ export function Transition(props: TransitionProps) {
     }
     if (phase === Phase.Out && props.in) {
       window.clearTimeout(timerRef.current);
-      // HACK: [ DisplayNone -> Out --(10ms delay)--> In ] for waiting calucration
+      // HACK: [ DisplayNone -> Out --(enough delay)--> In ] for waiting calucration
       window.setTimeout(() => {
         setPhase(Phase.In);
-      }, 10);
+      }, 100);
       return;
     }
     if (phase === Phase.In && !props.in) {
