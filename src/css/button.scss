@@ -9,6 +9,7 @@
   color: $activeColor;
   &.disabled {
     color: $inactiveColor;
+    pointer-events: none;
   }
   &:not(.disabled) {
     cursor: pointer;
@@ -47,10 +48,15 @@
     background-color: $primaryColor;
     margin: 0 4px;
     padding: 4px;
-    &:hover {
+    &:hover:not(.disabled) {
       @include shadow(1);
       color: $alterColor;
       background-color: $primaryHoverColor;
+    }
+    &.disabled {
+      @include shadow(0);
+      color: $activeColor;
+      background-color: #b4c1cc;
     }
   }
   &.large {
