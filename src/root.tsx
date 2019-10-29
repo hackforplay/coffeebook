@@ -17,16 +17,16 @@ export function Root({ code }: RootProps) {
   const [isCodeMode, setEditorMode] = React.useState(false);
   const [floor, setFloor] = React.useState(1);
 
-  React.useEffect(() => {
-    setEditorMode(false);
-  }, [floor]);
-
   return (
     <div className={classNames(region.root, flex.vertical, font.main)}>
       <Header />
       <div className={classNames(region.outer, flex.horizontal, flex.stretch)}>
         <div className={region.floor}>
-          <FloorView selected={floor} setSelected={setFloor} />
+          <FloorView
+            selected={floor}
+            setEditorMode={setEditorMode}
+            setSelected={setFloor}
+          />
         </div>
         <div className={classNames(region.inner)}>
           <div

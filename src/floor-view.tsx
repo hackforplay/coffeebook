@@ -6,6 +6,7 @@ import { Icon } from './icon';
 
 export interface FloorViewProps {
   selected: number;
+  setEditorMode: React.Dispatch<React.SetStateAction<boolean>>;
   setSelected: React.Dispatch<React.SetStateAction<number>>;
 }
 
@@ -14,10 +15,15 @@ export interface FloorItemProps {
   color: string;
   index: number;
   selected?: boolean;
+  setEditorMode: React.Dispatch<React.SetStateAction<boolean>>;
   setSelected: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export function FloorView({ selected, setSelected }: FloorViewProps) {
+export function FloorView({
+  selected,
+  setEditorMode,
+  setSelected
+}: FloorViewProps) {
   return (
     <>
       {['green', 'blue', 'pink', 'green'].map((color, i, array) => (
@@ -25,6 +31,7 @@ export function FloorView({ selected, setSelected }: FloorViewProps) {
           key={i}
           index={i + 1}
           color={color}
+          setEditorMode={setEditorMode}
           setSelected={setSelected}
           selected={i + 1 === selected}
           appendable={i + 1 === array.length}
@@ -39,10 +46,12 @@ export function FloorItem({
   color,
   index,
   selected,
+  setEditorMode,
   setSelected
 }: FloorItemProps) {
   const onClick = React.useCallback(() => {
     setSelected(index);
+    setEditorMode(false);
   }, [index]);
 
   return (
