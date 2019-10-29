@@ -24,29 +24,11 @@ export interface ButtonProps {
   primary?: boolean;
 }
 
-export function Button({
-  accent,
-  children,
-  className,
-  disabled,
-  lg,
-  onClick,
-  primary
-}: ButtonProps) {
+export function Button(props: ButtonProps) {
   return (
-    <button
-      className={classNames(
-        className,
-        button.label,
-        disabled && button.disabled,
-        lg && button.large,
-        primary && button.primary,
-        accent && button.accent
-      )}
-      onClick={onClick}
-    >
-      {children ? <span>{children}</span> : null}
-    </button>
+    <IconButton name="" {...props}>
+      {props.children}
+    </IconButton>
   );
 }
 
@@ -78,7 +60,7 @@ export function IconButton({
       )}
       onClick={onClick}
     >
-      <Icon name={name} />
+      {name ? <Icon name={name} /> : null}
       {children ? <span>{children}</span> : null}
     </button>
   );
