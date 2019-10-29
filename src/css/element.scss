@@ -28,9 +28,9 @@
 .header {
   @include shadow(1);
   flex: 0 0 32px;
-  z-index: 1;
   color: $textColor;
   background-color: $paperColor;
+  z-index: 100;
 }
 
 // テキストセル

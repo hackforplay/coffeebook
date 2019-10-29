@@ -28,24 +28,26 @@ export function Root({ code }: RootProps) {
         <div className={region.floor}>
           <FloorView selected={floor} setSelected={setFloor} />
         </div>
-        <div
-          className={classNames(region.inner, flex.horizontal, flex.stretch)}
-        >
-          {isCodeMode ? (
-            <div className={region.editorView}>
-              <CodeView code={code} />
-            </div>
-          ) : (
-            <div className={region.mapView}>
-              <MapView selected={floor} setEditorMode={setEditorMode} />
-            </div>
-          )}
-          <div className={region.output}>
-            <iframe
-              src="https://hackforplay-sandbox.firebaseapp.com/compatible.html"
-              frameBorder="0"
-            ></iframe>
+        <div className={classNames(region.inner)}>
+          <div
+            className={classNames(region.mapView, isCodeMode && region.hidden)}
+          >
+            <MapView selected={floor} setEditorMode={setEditorMode} />
           </div>
+          <div
+            className={classNames(
+              region.editorView,
+              isCodeMode || region.hidden
+            )}
+          >
+            <CodeView code={code} />
+          </div>
+        </div>
+        <div className={region.output}>
+          <iframe
+            src="https://hackforplay-sandbox.firebaseapp.com/compatible.html"
+            frameBorder="0"
+          ></iframe>
         </div>
       </div>
       <Footer />
