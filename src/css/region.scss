@@ -16,7 +16,7 @@
   padding-top: 32px;
   padding-bottom: $footerHeight;
   background-color: $paperColor;
-  z-index: 2;
+  z-index: 3;
 }
 
 %base {
@@ -32,8 +32,10 @@
   padding: 8px 8px $footerHeight 8px;
   overflow: scroll;
 
+  z-index: 10;
   transform: translateX(0%);
   &.exiting {
+    z-index: 1;
     transform: translateX(50%); // because width: 200%
   }
 
@@ -71,7 +73,7 @@
   flex: 0 1 50%;
   width: 50%;
   padding: 16px 16px $footerHeight + 8px 8px;
-  z-index: 1;
+  z-index: 2;
 
   iframe {
     width: 100%;
