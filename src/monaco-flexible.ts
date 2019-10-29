@@ -51,7 +51,6 @@ export function beFlexible(editor: monaco.editor.IStandaloneCodeEditor) {
       { timeout: 2000 }
     );
   };
-  relayout();
   const disposer = editor.onDidChangeModelDecorations(relayout);
 
   let previousWidth = window.innerWidth;
