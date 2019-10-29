@@ -123,7 +123,7 @@ export function Installer({ setShowing }: Installer) {
       <div className={view.description}>
         ASSET DESCRIPTION ASSET DESCRIPTION ASSET DESCRIPTION ASSET DESCRIPTION
       </div>
-      <IconButton name="add" primary onClick={onClick}>
+      <IconButton name="add" lg primary onClick={onClick}>
         Install to the game
       </IconButton>
     </div>

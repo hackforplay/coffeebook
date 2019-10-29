@@ -53,6 +53,17 @@
       background-color: $primaryHoverColor;
     }
   }
+  &.large {
+    font-size: 20px;
+    padding: 12px 12px;
+
+    i {
+      font-size: 24px;
+      & + span {
+        padding: 0px 6px 0px 2px;
+      }
+    }
+  }
 
   i {
     font-size: 18px;
