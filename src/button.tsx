@@ -15,6 +15,7 @@ export function Icon({ className, name }: IconProps) {
 }
 
 export interface ButtonProps {
+  accent?: boolean;
   children?: string;
   className?: string;
   disabled?: boolean;
@@ -24,6 +25,7 @@ export interface ButtonProps {
 }
 
 export function Button({
+  accent,
   children,
   className,
   disabled,
@@ -38,7 +40,8 @@ export function Button({
         button.label,
         disabled && button.disabled,
         lg && button.large,
-        primary && button.primary
+        primary && button.primary,
+        accent && button.accent
       )}
       onClick={onClick}
     >
@@ -52,6 +55,7 @@ export interface IconButtonProps extends IconProps, ButtonProps {
 }
 
 export function IconButton({
+  accent,
   children,
   className,
   disabled,
@@ -69,6 +73,7 @@ export function IconButton({
         disabled && button.disabled,
         lg && button.large,
         primary && button.primary,
+        accent && button.accent,
         vertical && button.vertical
       )}
       onClick={onClick}

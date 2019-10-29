@@ -69,7 +69,7 @@ export function CodeView({ code }: CodeViewProps) {
   }, []);
 
   if (!showing) {
-    return <Installer setShowing={setShowing} />;
+    return <Installer needPayment={false} setShowing={setShowing} />;
   }
 
   return (
@@ -98,10 +98,11 @@ export function CodeView({ code }: CodeViewProps) {
 }
 
 export interface Installer {
+  needPayment: boolean;
   setShowing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function Installer({ setShowing }: Installer) {
+export function Installer({ needPayment, setShowing }: Installer) {
   const onClick = React.useCallback(() => {
     setShowing(true);
   }, []);
@@ -113,7 +114,8 @@ export function Installer({ setShowing }: Installer) {
           src="https://assets.hackforplay.xyz/img/93a1462a4800cccde0887f580ef46298.png"
           alt=""
         />
-        <h2>ASSET NAME</h2>
+        <h2 className={view.name}>ASSET NAME</h2>
+        <span className={view.paid}>PAID ITEM</span>
         <img
           src="https://i.gyazo.com/476dade56d5b2c344a83de22d66a7d17.gif"
           alt=""
@@ -123,9 +125,26 @@ export function Installer({ setShowing }: Installer) {
       <div className={view.description}>
         ASSET DESCRIPTION ASSET DESCRIPTION ASSET DESCRIPTION ASSET DESCRIPTION
       </div>
-      <IconButton name="add" lg primary onClick={onClick}>
+      <IconButton
+        name="add"
+        disabled={needPayment}
+        lg
+        primary
+        onClick={onClick}
+      >
         Install to the game
       </IconButton>
+      {needPayment ? (
+        <>
+          <h2>How can I use this item?</h2>
+          <div className={view.description}>
+            Join paid plan to get all items now
+          </div>
+          <IconButton name="open_in_new" lg accent>
+            Get this item
+          </IconButton>
+        </>
+      ) : null}
     </div>
   );
 }
