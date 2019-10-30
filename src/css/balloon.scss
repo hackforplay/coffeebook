@@ -1,0 +1,61 @@
+@import 'color';
+@import 'shadow';
+@import 'transition';
+
+$caretSize: 8px;
+$caretLeft: 8px;
+$borderWidth: 1px;
+$borderColor: #b4c1cc;
+
+.root {
+  @include transition(opacity);
+  @include shadow(1);
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  left: 0;
+  bottom: 100%;
+  margin: $caretSize + 4px 4px;
+  padding: 6px 10px;
+  min-width: 120px;
+  color: $textColor;
+  background-color: $paperColor;
+  border: $borderWidth solid $borderColor;
+  border-radius: 2px;
+  opacity: 1;
+  &.hidden {
+    opacity: 0;
+  }
+
+  & > i {
+    font-size: 18px;
+    margin-right: 8px;
+    color: $accentColor;
+  }
+
+  & > div {
+    white-space: nowrap;
+    font-size: 16px;
+    padding-right: 2px;
+  }
+}
+
+.root:before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: $caretLeft + $borderWidth * 2;
+  border: $caretSize solid transparent;
+  border-top-color: $paperColor;
+  z-index: 2;
+}
+
+.root:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: $caretLeft;
+  border: $caretSize + $borderWidth * 2 solid transparent;
+  border-top-color: $borderColor;
+  z-index: 1;
+}

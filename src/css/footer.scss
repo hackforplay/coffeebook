@@ -43,7 +43,7 @@ $margin: 6px;
   }
 
   // img
-  * {
+  & > * {
     width: $width - $padding * 2;
     height: $height - $padding * 2;
   }
@@ -59,7 +59,7 @@ $margin: 6px;
     background-color: $accentColor !important;
   }
 
-  i {
+  & > i {
     font-size: 24px;
   }
 }

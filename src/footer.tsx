@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { Balloon } from './balloon';
 import { IconButton } from './button';
 import flex from './css/flex.scss';
 import footer from './css/footer.scss';
@@ -16,7 +17,11 @@ export function Footer({ setEditorMode }: FooterProps) {
 
   return (
     <div className={classNames(footer.container, flex.horizontal)}>
-      <IconButton name="search" className={footer.search} />
+      <IconButton name="search" className={footer.search}>
+        <Balloon icon="info" delay={5000}>
+          Add charactor to the game
+        </Balloon>
+      </IconButton>
       <FooterItem onClick={onClick} />
       <FooterItem onClick={onClick} />
       <div className={footer.divider}></div>

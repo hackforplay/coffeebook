@@ -16,7 +16,7 @@ export function Icon({ className, name }: IconProps) {
 
 export interface ButtonProps {
   accent?: boolean;
-  children?: string;
+  children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
   lg?: boolean;
@@ -64,7 +64,7 @@ export function IconButton({
       onClick={onClick}
     >
       {name ? <Icon name={name} /> : null}
-      {children ? <span>{children}</span> : null}
+      {typeof children === 'object' ? children : <span>{children}</span>}
       {tooltip ? <div className={button.tooltip}>{tooltip}</div> : null}
     </button>
   );
