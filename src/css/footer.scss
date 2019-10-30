@@ -25,8 +25,23 @@ $margin: 6px;
   position: absolute;
   width: 100%;
   bottom: 0;
-  background-color: rgba(#0e3454, 0.3);
   z-index: 10;
+}
+
+.bar {
+  position: relative;
+  background-color: rgba(#0e3454, 0.3);
+
+  input {
+    align-self: stretch;
+    margin: 6px 8px 6px -4px;
+    border-radius: 2px;
+    border: none;
+    padding: 0px 16px;
+    font-size: 16px;
+    flex: 1;
+    max-width: 16em;
+  }
 }
 
 .item {
@@ -68,4 +83,40 @@ $margin: 6px;
   border-left: 1px solid $alterColor;
   align-self: stretch;
   margin: $margin;
+}
+
+.pane {
+  @include transition(transform);
+  position: relative;
+  min-height: 100px;
+  width: 100%;
+  overflow: hidden;
+  background-color: rgba(#0e3454, 0.3);
+  transform-origin: bottom center;
+  transform: scaleY(1);
+  &.hidden {
+    transform: scaleY(0);
+  }
+}
+
+.backdrop {
+  position: absolute;
+  bottom: 100%;
+  height: 100vh;
+  width: 100%;
+}
+
+.close {
+  background-color: transparent;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: $alterColor;
+  &:hover {
+    color: $textColor;
+  }
+
+  & > i {
+    font-size: 24px;
+  }
 }
