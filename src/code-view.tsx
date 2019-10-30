@@ -14,14 +14,15 @@ import { TextCell } from './text-cell';
 
 export interface CodeViewProps {
   code: string;
+  isInstalled: boolean;
+  setIsInstalled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export type OnUpdate = (payload: { id: string; value: string }) => void;
 
 let sandbox = new Sandbox();
-export function CodeView({ code }: CodeViewProps) {
+export function CodeView({ code, isInstalled, setIsInstalled }: CodeViewProps) {
   const cellsRef = React.useRef(cellify(code)); // Notice: mutable
-  const [showing, setShowing] = React.useState(false);
 
   for (let cell of cellsRef.current) {
     if (cell.type === 'code') {
@@ -68,8 +69,8 @@ export function CodeView({ code }: CodeViewProps) {
     onGame();
   }, []);
 
-  if (!showing) {
-    return <Installer needPayment={false} setShowing={setShowing} />;
+  if (!isInstalled) {
+    return <Installer needPayment={false} setIsInstalled={setIsInstalled} />;
   }
 
   return (
@@ -99,12 +100,12 @@ export function CodeView({ code }: CodeViewProps) {
 
 export interface Installer {
   needPayment: boolean;
-  setShowing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsInstalled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function Installer({ needPayment, setShowing }: Installer) {
+export function Installer({ needPayment, setIsInstalled }: Installer) {
   const onClick = React.useCallback(() => {
-    setShowing(true);
+    setIsInstalled(true);
   }, []);
 
   return (

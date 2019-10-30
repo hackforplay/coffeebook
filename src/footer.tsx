@@ -4,17 +4,12 @@ import { Balloon } from './balloon';
 import { IconButton } from './button';
 import flex from './css/flex.scss';
 import footer from './css/footer.scss';
-import { EditorMode } from './root';
 
 export interface FooterProps {
-  setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
+  onItemClick: () => void;
 }
 
-export function Footer({ setEditorMode }: FooterProps) {
-  const onClick = React.useCallback(() => {
-    setEditorMode(EditorMode.Code);
-  }, []);
-
+export function Footer({ onItemClick }: FooterProps) {
   return (
     <div className={classNames(footer.container, flex.horizontal)}>
       <IconButton name="search" className={footer.search}>
@@ -22,15 +17,15 @@ export function Footer({ setEditorMode }: FooterProps) {
           Add charactor to the game
         </Balloon>
       </IconButton>
-      <FooterItem onClick={onClick} />
-      <FooterItem onClick={onClick} />
+      <FooterItem onClick={onItemClick} />
+      <FooterItem onClick={onItemClick} />
       <div className={footer.divider}></div>
-      <FooterItem onClick={onClick} />
-      <FooterItem onClick={onClick} />
-      <FooterItem onClick={onClick} />
-      <FooterItem onClick={onClick} />
-      <FooterItem onClick={onClick} />
-      <FooterItem onClick={onClick} />
+      <FooterItem onClick={onItemClick} />
+      <FooterItem onClick={onItemClick} />
+      <FooterItem onClick={onItemClick} />
+      <FooterItem onClick={onItemClick} />
+      <FooterItem onClick={onItemClick} />
+      <FooterItem onClick={onItemClick} />
     </div>
   );
 }

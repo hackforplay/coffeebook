@@ -36,6 +36,12 @@ export function Root({ code }: RootProps) {
     setBringFront(false);
   }, []);
 
+  const [isInstalled, setIsInstalled] = React.useState(true)
+  const openNewAsset = React.useCallback(() => {
+    setIsInstalled(false)
+    setEditorMode(EditorMode.Code)
+  }, [])
+
   return (
     <div className={classNames(region.root, flex.vertical, font.main)}>
       <Header />
@@ -60,7 +66,7 @@ export function Root({ code }: RootProps) {
             className={region.editorView}
             exiting={region.exiting}
           >
-            <CodeView code={code} />
+            <CodeView code={code} isInstalled={isInstalled} setIsInstalled={setIsInstalled} />
             <div className={region.outputCover} onClick={focusGame}></div>
           </Transition>
         </div>
@@ -75,7 +81,7 @@ export function Root({ code }: RootProps) {
           ></iframe>
         </div>
       </div>
-      <Footer setEditorMode={setEditorMode} />
+      <Footer onItemClick={openNewAsset} />
     </div>
   );
 }
