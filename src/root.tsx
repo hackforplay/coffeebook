@@ -24,6 +24,17 @@ export function Root({ code }: RootProps) {
     EditorMode.Map
   );
   const [floor, setFloor] = React.useState(1);
+  const iframeRef = React.useRef<HTMLIFrameElement>(null);
+  const [bringFront, setBringFront] = React.useState(false);
+  const focusGame = React.useCallback(() => {
+    if (iframeRef.current) {
+      iframeRef.current.focus();
+    }
+    setBringFront(true);
+  }, []);
+  const unfocusGame = React.useCallback(() => {
+    setBringFront(false);
+  }, []);
 
   return (
     <div className={classNames(region.root, flex.vertical, font.main)}>
@@ -50,12 +61,17 @@ export function Root({ code }: RootProps) {
             exiting={region.exiting}
           >
             <CodeView code={code} />
+            <div className={region.outputCover} onClick={focusGame}></div>
           </Transition>
         </div>
-        <div className={region.output}>
+        <div
+          className={classNames(region.output, bringFront && region.bringFront)}
+        >
           <iframe
             src="https://hackforplay-sandbox.firebaseapp.com/compatible.html"
             frameBorder="0"
+            ref={iframeRef}
+            onBlur={unfocusGame}
           ></iframe>
         </div>
       </div>
