@@ -40,7 +40,7 @@
   &:hover:not(.disabled) {
     @include shadow(1);
     color: $alterColor;
-    background-color: adjust-color($color, $lightness: 10%);
+    background-color: adjust-color($color, $lightness: 4%);
   }
   &.disabled {
     @include shadow(0);

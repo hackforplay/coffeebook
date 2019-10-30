@@ -19,7 +19,7 @@
 .line:hover {
   &:after {
     @include shadow(1);
-    background-color: $primaryHoverColor;
+    background-color: adjust-color($primaryColor, $lightness: 4%);
   }
 }
 
