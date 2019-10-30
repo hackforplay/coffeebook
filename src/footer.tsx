@@ -17,13 +17,14 @@ export function Footer({ onItemClick }: FooterProps) {
     setOpened(false);
   }, []);
   const [assets] = React.useState(dummyAssets);
+  const [search, setSearch] = React.useState('');
 
   return (
     <div className={classNames(footer.container)}>
       {opened ? <div className={footer.backdrop} onClick={close}></div> : null}
       <Transition in={opened} className={footer.pane} exiting={footer.hidden}>
         <IconButton name="close" className={footer.close} onClick={close} />
-        <FooterPane assets={assets} search="" />
+        <FooterPane assets={assets} search={search} />
       </Transition>
       <div className={classNames(footer.bar, flex.horizontal)}>
         <IconButton
@@ -40,6 +41,8 @@ export function Footer({ onItemClick }: FooterProps) {
             type="text"
             autoFocus
             placeholder="Search monsters, people and items"
+            value={search}
+            onChange={e => setSearch(e.currentTarget.value)}
           />
         ) : (
           <>
@@ -76,9 +79,12 @@ export interface FooterPaneProps {
   search: string;
 }
 
-export function FooterPane({ assets }: FooterPaneProps) {
+export function FooterPane({ assets, search }: FooterPaneProps) {
   const [category, setCategory] = React.useState(0);
   assets = assets.filter(asset => asset.category === category);
+  if (search) {
+    assets = assets.filter(asset => asset.name.includes(search));
+  }
 
   return (
     <>
