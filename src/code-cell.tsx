@@ -97,7 +97,7 @@ export function CodeCell({
       <div className={classNames(flex.horizontal, element.codeCellHeader)}>
         <span>{title || 'NO TITLE'}</span>
         <div className={flex.blank}></div>
-        <IconButton name="clear" />
+        <IconButton name="clear" tooltip="Remove this cell" />
       </div>
       <CardDivider />
       <div
@@ -111,10 +111,10 @@ export function CodeCell({
           Undo
         </IconButton>
         <div className={flex.blank}></div>
-        <IconButton name="note_add" primary />
-        <IconButton name="file_copy" primary />
-        <IconButton name="arrow_upward" primary />
-        <IconButton name="arrow_downward" primary />
+        <IconButton name="note_add" primary tooltip="Create new cell" />
+        <IconButton name="file_copy" primary tooltip="Copy this cell" />
+        <IconButton name="arrow_upward" primary tooltip="Move up" />
+        <IconButton name="arrow_downward" primary tooltip="Move down" />
       </div>
     </Card>
   );

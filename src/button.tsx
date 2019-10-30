@@ -22,6 +22,7 @@ export interface ButtonProps {
   lg?: boolean;
   onClick?: () => void;
   primary?: boolean;
+  tooltip?: string;
 }
 
 export function Button(props: ButtonProps) {
@@ -45,6 +46,7 @@ export function IconButton({
   name,
   onClick,
   primary,
+  tooltip,
   vertical
 }: IconButtonProps) {
   return (
@@ -56,12 +58,14 @@ export function IconButton({
         lg && button.large,
         primary && button.primary,
         accent && button.accent,
+        tooltip && button.tooltipWrapper,
         vertical && button.vertical
       )}
       onClick={onClick}
     >
       {name ? <Icon name={name} /> : null}
       {children ? <span>{children}</span> : null}
+      {tooltip ? <div className={button.tooltip}>{tooltip}</div> : null}
     </button>
   );
 }
