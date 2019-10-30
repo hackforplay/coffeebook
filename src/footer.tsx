@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import Popper from 'popper.js';
 import * as React from 'react';
 import { Balloon } from './balloon';
 import { IconButton } from './button';
@@ -85,6 +86,35 @@ export function FooterPane({ assets, search }: FooterPaneProps) {
   if (search) {
     assets = assets.filter(asset => asset.name.includes(search));
   }
+  const [detail, setDetail] = React.useState<Asset>();
+
+  const detailRef = React.useRef<HTMLDivElement>(null);
+  const boundRef = React.useRef<HTMLDivElement>(null);
+  const popperRef = React.useRef<Popper>();
+  const pop = React.useCallback(
+    (asset: Asset) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      if (!detailRef.current || !boundRef.current) return null;
+      if (popperRef.current) {
+        popperRef.current.destroy();
+      }
+      popperRef.current = new Popper(e.currentTarget, detailRef.current, {
+        placement: 'bottom-start',
+        modifiers: {
+          flip: {
+            behavior: ['bottom', 'top']
+          },
+          preventOverflow: {
+            boundariesElement: boundRef.current
+          }
+        }
+      });
+      setDetail(asset);
+    },
+    []
+  );
+  React.useEffect(() => {
+    setDetail(undefined);
+  }, [category]);
 
   return (
     <>
@@ -103,11 +133,12 @@ export function FooterPane({ assets, search }: FooterPaneProps) {
           </button>
         ))}
       </div>
-      <div className={classNames(footer.asset)}>
+      <div className={classNames(footer.asset)} ref={boundRef}>
         {assets.map(asset => (
           <button
             key={asset.id}
             className={classNames(footer.button, flex.vertical)}
+            onClick={pop(asset)}
           >
             <div className={flex.blank}></div>
             <div
@@ -119,6 +150,31 @@ export function FooterPane({ assets, search }: FooterPaneProps) {
             <div className={flex.blank}></div>
           </button>
         ))}
+      </div>
+      <div
+        className={classNames(footer.detail, !detail && footer.hidden)}
+        ref={detailRef}
+      >
+        <IconButton
+          name="close"
+          className={footer.close}
+          onClick={() => setDetail(undefined)}
+        />
+        <div className={classNames(footer.header)}>
+          <div>{detail ? detail.name : ''}</div>
+        </div>
+        <div className={footer.description}>
+          {detail ? detail.description : ''}
+        </div>
+        <div className={classNames(footer.variation, flex.horizontal)}>
+          {['red', 'green', 'yellow', 'blue', 'black', 'white'].map(s => (
+            <button
+              key={s}
+              className={footer.button}
+              style={{ backgroundColor: s }}
+            ></button>
+          ))}
+        </div>
       </div>
     </>
   );

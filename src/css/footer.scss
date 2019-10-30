@@ -180,3 +180,51 @@ $margin: 6px;
     font-weight: 600;
   }
 }
+
+.detail {
+  @include shadow(1);
+  background-color: $paperColor;
+  padding: 16px;
+  &.hidden {
+    display: none;
+  }
+
+  .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .header {
+    padding: 0;
+  }
+
+  .name {
+    color: $textColor;
+    font-weight: 600;
+    padding-right: 4px;
+  }
+
+  .description {
+    color: $textColor;
+    font-size: 12px;
+  }
+
+  .variation {
+    padding: 0;
+  }
+
+  .button {
+    width: 48px;
+    height: 48px;
+    margin-right: 6px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $borderColor;
+    background-color: $borderColor;
+    cursor: pointer;
+  }
+  .button.paid {
+    border-color: $paidColor;
+  }
+}
