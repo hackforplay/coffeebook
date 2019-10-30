@@ -46,7 +46,7 @@
   &.disabled {
     @include shadow(0);
     color: $activeColor;
-    background-color: #b4c1cc;
+    background-color: $disableColor;
   }
 }
 

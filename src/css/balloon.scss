@@ -5,7 +5,6 @@
 $caretSize: 8px;
 $caretLeft: 8px;
 $borderWidth: 1px;
-$borderColor: #b4c1cc;
 
 .root {
   @include transition(opacity);
@@ -20,7 +19,7 @@ $borderColor: #b4c1cc;
   min-width: 120px;
   color: $textColor;
   background-color: $paperColor;
-  border: $borderWidth solid $borderColor;
+  border: $borderWidth solid $disableColor;
   border-radius: 2px;
   opacity: 1;
   &.hidden {
@@ -56,6 +55,6 @@ $borderColor: #b4c1cc;
   top: 100%;
   left: $caretLeft;
   border: $caretSize + $borderWidth * 2 solid transparent;
-  border-top-color: $borderColor;
+  border-top-color: $disableColor;
   z-index: 1;
 }
