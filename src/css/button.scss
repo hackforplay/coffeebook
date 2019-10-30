@@ -7,6 +7,7 @@
   border-radius: 2px;
   padding: 4px;
   color: $activeColor;
+  outline: none;
   &.disabled {
     color: $inactiveColor;
     pointer-events: none;
