@@ -21,12 +21,18 @@ export function Balloon({ children, className, delay, icon }: BalloonProps) {
         setHidden(false);
       }, delay);
     }
-    const handler = () => {
-      setClicked(true);
-    };
     const parent = ref.current && ref.current.parentElement;
+    const handler = () =>
+      requestAnimationFrame(() => {
+        // Because React event is very slow
+        setClicked(true);
+      });
     if (parent) {
-      parent.addEventListener('click', handler, { passive: true });
+      parent.addEventListener('click', handler, {
+        passive: true,
+        once: true,
+        capture: false
+      });
     }
     return () => {
       if (parent) {
