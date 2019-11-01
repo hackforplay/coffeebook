@@ -27,7 +27,13 @@ export function Footer({ onItemClick }: FooterProps) {
         <IconButton name="close" className={footer.close} onClick={close} />
         <FooterPane assets={assets} search={search} />
       </Transition>
-      <div className={classNames(footer.bar, flex.horizontal)}>
+      <div
+        className={classNames(
+          footer.bar,
+          opened && footer.opened,
+          flex.horizontal
+        )}
+      >
         <IconButton
           name="search"
           className={footer.search}

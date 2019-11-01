@@ -6,6 +6,10 @@ $width: 32px;
 $height: 32px;
 $padding: 2px;
 $margin: 6px;
+$column: 800px;
+$columnPadding: 16px;
+$buttonMargin: 8px;
+$paneColor: rgba(#344955, 0.9);
 
 %button {
   @include transition(color, background-color, box-shadow);
@@ -29,8 +33,9 @@ $margin: 6px;
 }
 
 .bar {
+  @include transition(background-color);
   position: relative;
-  background-color: rgba(#0e3454, 0.3);
+  background-color: $paneColor;
 
   .item {
     @extend %button;
@@ -62,6 +67,10 @@ $margin: 6px;
     flex: 1;
     max-width: 16em;
   }
+
+  &.opened {
+    background-color: change-color($color: $paneColor, $alpha: 1);
+  }
 }
 
 .search {
@@ -91,12 +100,11 @@ $margin: 6px;
   min-height: 100px;
   width: 100%;
   height: 500px; // TODO: flexible
-  padding: 16px 0px;
-  overflow: hidden;
+  padding-top: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgba(#0e3454, 0.3);
+  background-color: $paneColor;
   transform-origin: bottom center;
   transform: scaleY(1);
   &.hidden {
@@ -128,19 +136,30 @@ $margin: 6px;
 }
 
 .category {
-  padding-bottom: 12px;
+  position: absolute;
+  top: -84px;
+  height: 84px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: $column;
+  padding: 0px $columnPadding + $buttonMargin;
+  align-items: stretch;
   .item {
-    color: $alterColor;
+    color: $textColor;
+    background-color: $disableColor;
     padding: 8px 32px;
     cursor: pointer;
-    background-color: transparent;
     border: none;
     outline: none;
-    border-bottom: 2px solid $disableColor;
     font-size: 14px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin-right: 4px;
+    font-weight: 600;
   }
   .item.selected {
-    border-color: $paperColor;
+    color: $alterColor;
+    background-color: $paneColor;
   }
 }
 
@@ -148,9 +167,10 @@ $margin: 6px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-width: 800px;
-  padding: 0px 16px;
+  max-width: $column;
+  padding: 0px $columnPadding;
   overflow: scroll;
+  box-sizing: border-box;
 
   .button {
     @include transition(box-shadow);
@@ -159,7 +179,7 @@ $margin: 6px;
     border-radius: 2px;
     width: 64px;
     height: 64px;
-    margin: 8px 0px 0px 8px;
+    margin: $buttonMargin 0px 0px $buttonMargin;
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -178,6 +198,19 @@ $margin: 6px;
   .name {
     font-size: 10px;
     font-weight: 600;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 16px;
+    bottom: 0px;
+    left: 0;
+    background: linear-gradient(
+      adjust-color($paneColor, $alpha: -1),
+      adjust-color($paneColor, $alpha: 1)
+    );
   }
 }
 
