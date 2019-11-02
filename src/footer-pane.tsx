@@ -5,6 +5,7 @@ import { IconButton } from './button';
 import flex from './css/flex.scss';
 import footer from './css/footer.scss';
 import { Asset } from './dummy-assets';
+import { Scroller } from './scroller';
 
 export interface FooterPaneProps {
   assets: Asset[];
@@ -13,7 +14,6 @@ export interface FooterPaneProps {
 
 export function FooterPane({ assets, search }: FooterPaneProps) {
   const [category, setCategory] = React.useState(0);
-  assets = assets.filter(asset => asset.category === category);
   if (search) {
     assets = assets.filter(asset => asset.name.includes(search));
   }
@@ -47,41 +47,76 @@ export function FooterPane({ assets, search }: FooterPaneProps) {
     setDetail(undefined);
   }, [category]);
 
+  const [tab, setTab] = React.useState(0);
+  const refs = [0, 1, 2].map(() => React.useRef<HTMLDivElement>(null));
+
+  const handleScroll = React.useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    const margin = 20; // safety margin for smooth scroll [px]
+    const viewTop =
+      e.currentTarget.offsetTop + e.currentTarget.scrollTop + margin;
+    for (const tab of [0, 1, 2]) {
+      const element = refs[tab].current;
+      if (!element) return;
+      const groupBottom = element.offsetTop + element.offsetHeight;
+      if (viewTop < groupBottom) {
+        setTab(tab);
+        return;
+      }
+    }
+  }, []);
+
+  const scrollTo = React.useCallback((tab: number) => {
+    const element = refs[tab].current;
+    if (!element) return;
+    element.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
   return (
     <>
       <div className={classNames(footer.category, flex.horizontal)}>
-        {[0, 1, 2].map(i => (
+        {[0, 1, 2].map(cat => (
           <button
-            key={i}
+            key={cat}
             className={classNames(
               footer.item,
-              category === i && footer.selected,
+              tab === cat && footer.selected,
               flex.vertical
             )}
-            onClick={() => setCategory(i)}
+            onClick={() => scrollTo(cat)}
           >
-            Category {i}
+            Category {cat}
           </button>
         ))}
       </div>
-      <div className={classNames(footer.asset)} ref={boundRef}>
-        {assets.map(asset => (
-          <button
-            key={asset.id}
-            className={classNames(footer.button, flex.vertical)}
-            onClick={pop(asset)}
-          >
-            <div className={flex.blank}></div>
-            <div
-              className={footer.icon}
-              style={{ backgroundColor: asset.color }}
-            ></div>
-            <div className={flex.blank}></div>
-            <div className={footer.name}>{asset.name}</div>
-            <div className={flex.blank}></div>
-          </button>
+      <Scroller
+        ms={50}
+        className={classNames(footer.asset)}
+        onScroll={handleScroll}
+      >
+        {[0, 1, 2].map(cat => (
+          <div className={footer.group} ref={refs[cat]}>
+            <h3 className={footer.label}>Category {cat}</h3>
+            {assets
+              .filter(asset => asset.category === cat)
+              .map(asset => (
+                <button
+                  key={asset.id}
+                  className={classNames(footer.button, flex.vertical)}
+                  onClick={pop(asset)}
+                >
+                  <div className={flex.blank}></div>
+                  <div
+                    className={footer.icon}
+                    style={{ backgroundColor: asset.color }}
+                  ></div>
+                  <div className={flex.blank}></div>
+                  <div className={footer.name}>{asset.name}</div>
+                  <div className={flex.blank}></div>
+                </button>
+              ))}
+          </div>
         ))}
-      </div>
+      </Scroller>
       <div
         className={classNames(footer.detail, !detail && footer.hidden)}
         ref={detailRef}

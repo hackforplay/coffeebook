@@ -164,11 +164,8 @@ $paneColor: rgba(#344955, 0.9);
 }
 
 .asset {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   max-width: $column;
-  padding: 0px $columnPadding;
+  padding: 0px $columnPadding 16px $columnPadding;
   overflow: scroll;
   box-sizing: border-box;
 
@@ -211,6 +208,18 @@ $paneColor: rgba(#344955, 0.9);
       adjust-color($paneColor, $alpha: -1),
       adjust-color($paneColor, $alpha: 1)
     );
+  }
+
+  .group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .label {
+    width: 100%;
+    color: $alterColor;
+    margin: 28px 0px 12px $buttonMargin;
   }
 }
 
