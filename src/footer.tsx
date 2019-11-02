@@ -21,7 +21,7 @@ export function Footer({ onItemClick }: FooterProps) {
   const [search, setSearch] = React.useState('');
 
   return (
-    <div className={classNames(footer.container)}>
+    <div className={classNames(footer.container, flex.vertical)}>
       {opened ? <div className={footer.backdrop} onClick={close}></div> : null}
       <Transition in={opened} className={footer.pane} exiting={footer.hidden}>
         <IconButton name="close" className={footer.close} onClick={close} />

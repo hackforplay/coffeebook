@@ -28,14 +28,17 @@ $paneColor: rgba(#344955, 0.9);
 .container {
   position: absolute;
   width: 100%;
+  height: calc(100% - 128px);
   bottom: 0;
   z-index: 10;
+  justify-content: flex-end;
 }
 
 .bar {
   @include transition(background-color);
   position: relative;
   background-color: $paneColor;
+  flex: 0;
 
   .item {
     @extend %button;
@@ -98,8 +101,8 @@ $paneColor: rgba(#344955, 0.9);
   @include transition(transform);
   position: relative;
   min-height: 100px;
+  flex: 1;
   width: 100%;
-  height: 500px; // TODO: flexible
   padding-top: 16px;
   display: flex;
   flex-direction: column;
@@ -144,7 +147,9 @@ $paneColor: rgba(#344955, 0.9);
   max-width: $column;
   padding: 0px $columnPadding + $buttonMargin;
   align-items: stretch;
+  pointer-events: none;
   .item {
+    pointer-events: initial;
     color: $textColor;
     background-color: $disableColor;
     padding: 8px 32px;
@@ -165,7 +170,7 @@ $paneColor: rgba(#344955, 0.9);
 
 .asset {
   max-width: $column;
-  padding: 0px $columnPadding 16px $columnPadding;
+  padding: 0px $columnPadding 32px $columnPadding;
   overflow: scroll;
   box-sizing: border-box;
 
