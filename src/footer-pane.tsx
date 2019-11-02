@@ -9,10 +9,15 @@ import { Scroller } from './scroller';
 
 export interface FooterPaneProps {
   assets: Asset[];
+  onRequestClose: () => void;
   search: string;
 }
 
-export function FooterPane({ assets, search }: FooterPaneProps) {
+export function FooterPane({
+  assets,
+  onRequestClose,
+  search
+}: FooterPaneProps) {
   const [category, setCategory] = React.useState(0);
   if (search) {
     assets = assets.filter(asset => asset.name.includes(search));
@@ -74,72 +79,80 @@ export function FooterPane({ assets, search }: FooterPaneProps) {
   return (
     <>
       <div className={classNames(footer.category, flex.horizontal)}>
-        {[0, 1, 2].map(cat => (
-          <button
-            key={cat}
-            className={classNames(
-              footer.item,
-              tab === cat && footer.selected,
-              flex.vertical
-            )}
-            onClick={() => scrollTo(cat)}
-          >
-            Category {cat}
-          </button>
-        ))}
-      </div>
-      <Scroller
-        ms={50}
-        className={classNames(footer.asset)}
-        onScroll={handleScroll}
-      >
-        {[0, 1, 2].map(cat => (
-          <div className={footer.group} ref={refs[cat]}>
-            <h3 className={footer.label}>Category {cat}</h3>
-            {assets
-              .filter(asset => asset.category === cat)
-              .map(asset => (
-                <button
-                  key={asset.id}
-                  className={classNames(footer.button, flex.vertical)}
-                  onClick={pop(asset)}
-                >
-                  <div className={flex.blank}></div>
-                  <div
-                    className={footer.icon}
-                    style={{ backgroundColor: asset.color }}
-                  ></div>
-                  <div className={flex.blank}></div>
-                  <div className={footer.name}>{asset.name}</div>
-                  <div className={flex.blank}></div>
-                </button>
-              ))}
-          </div>
-        ))}
-      </Scroller>
-      <div
-        className={classNames(footer.detail, !detail && footer.hidden)}
-        ref={detailRef}
-      >
-        <IconButton
-          name="close"
-          className={footer.close}
-          onClick={() => setDetail(undefined)}
-        />
-        <div className={classNames(footer.header)}>
-          <div>{detail ? detail.name : ''}</div>
-        </div>
-        <div className={footer.description}>
-          {detail ? detail.description : ''}
-        </div>
-        <div className={classNames(footer.variation, flex.horizontal)}>
-          {['red', 'green', 'yellow', 'blue', 'black', 'white'].map(s => (
+        <div className={flex.blank} onClick={onRequestClose}></div>
+        <div className={classNames(footer.wrapper, flex.horizontal)}>
+          {[0, 1, 2].map(cat => (
             <button
-              key={s}
-              className={footer.button}
-              style={{ backgroundColor: s }}
-            ></button>
+              key={cat}
+              className={classNames(
+                footer.item,
+                tab === cat && footer.selected,
+                flex.vertical
+              )}
+              onClick={() => scrollTo(cat)}
+            >
+              Category {cat}
+            </button>
           ))}
+          <div className={flex.blank} onClick={onRequestClose}></div>
+        </div>
+        <div className={flex.blank} onClick={onRequestClose}></div>
+      </div>
+      <div className={footer.pane}>
+        <IconButton name="close" className={footer.close} onClick={close} />
+        <Scroller
+          ms={50}
+          className={classNames(footer.asset)}
+          onScroll={handleScroll}
+        >
+          {[0, 1, 2].map(cat => (
+            <div key={cat} className={footer.group} ref={refs[cat]}>
+              <h3 className={footer.label}>Category {cat}</h3>
+              {assets
+                .filter(asset => asset.category === cat)
+                .map(asset => (
+                  <button
+                    key={asset.id}
+                    className={classNames(footer.button, flex.vertical)}
+                    onClick={pop(asset)}
+                  >
+                    <div className={flex.blank}></div>
+                    <div
+                      className={footer.icon}
+                      style={{ backgroundColor: asset.color }}
+                    ></div>
+                    <div className={flex.blank}></div>
+                    <div className={footer.name}>{asset.name}</div>
+                    <div className={flex.blank}></div>
+                  </button>
+                ))}
+            </div>
+          ))}
+        </Scroller>
+        <div
+          className={classNames(footer.detail, !detail && footer.hidden)}
+          ref={detailRef}
+        >
+          <IconButton
+            name="close"
+            className={footer.close}
+            onClick={() => setDetail(undefined)}
+          />
+          <div className={classNames(footer.header)}>
+            <div>{detail ? detail.name : ''}</div>
+          </div>
+          <div className={footer.description}>
+            {detail ? detail.description : ''}
+          </div>
+          <div className={classNames(footer.variation, flex.horizontal)}>
+            {['red', 'green', 'yellow', 'blue', 'black', 'white'].map(s => (
+              <button
+                key={s}
+                className={footer.button}
+                style={{ backgroundColor: s }}
+              ></button>
+            ))}
+          </div>
         </div>
       </div>
     </>

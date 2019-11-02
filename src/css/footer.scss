@@ -26,12 +26,19 @@ $paneColor: rgba(#344955, 0.9);
 }
 
 .container {
+  @include transition(transform);
   position: absolute;
   width: 100%;
-  height: calc(100% - 128px);
-  bottom: 0;
-  z-index: 10;
+  bottom: 44px;
+  height: calc(100% - 44px);
+  z-index: 1000;
   justify-content: flex-end;
+  align-items: center;
+  transform-origin: bottom center;
+  transform: scaleY(1);
+  &.hidden {
+    transform: scaleY(0);
+  }
 }
 
 .bar {
@@ -98,7 +105,6 @@ $paneColor: rgba(#344955, 0.9);
 }
 
 .pane {
-  @include transition(transform);
   position: relative;
   min-height: 100px;
   flex: 1;
@@ -108,11 +114,6 @@ $paneColor: rgba(#344955, 0.9);
   flex-direction: column;
   align-items: center;
   background-color: $paneColor;
-  transform-origin: bottom center;
-  transform: scaleY(1);
-  &.hidden {
-    transform: scaleY(0);
-  }
 
   & > .close {
     background-color: transparent;
@@ -131,25 +132,25 @@ $paneColor: rgba(#344955, 0.9);
   }
 }
 
-.backdrop {
-  position: absolute;
-  bottom: 100%;
-  height: 100vh;
-  width: 100%;
-}
-
 .category {
-  position: absolute;
-  top: -84px;
-  height: 84px;
+  flex: 0;
   box-sizing: border-box;
   width: 100%;
-  max-width: $column;
-  padding: 0px $columnPadding + $buttonMargin;
   align-items: stretch;
-  pointer-events: none;
+
+  & > .wrapper {
+    box-sizing: border-box;
+    flex: 0 1 $column;
+    max-width: $column;
+    padding: 8px $columnPadding 0px $columnPadding;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
   .item {
-    pointer-events: initial;
+    height: 84px;
     color: $textColor;
     background-color: $disableColor;
     padding: 8px 32px;
@@ -159,7 +160,7 @@ $paneColor: rgba(#344955, 0.9);
     font-size: 14px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    margin-right: 4px;
+    margin-left: $buttonMargin;
     font-weight: 600;
   }
   .item.selected {

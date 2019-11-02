@@ -21,11 +21,13 @@ export function Footer({ onItemClick }: FooterProps) {
   const [search, setSearch] = React.useState('');
 
   return (
-    <div className={classNames(footer.container, flex.vertical)}>
-      {opened ? <div className={footer.backdrop} onClick={close}></div> : null}
-      <Transition in={opened} className={footer.pane} exiting={footer.hidden}>
-        <IconButton name="close" className={footer.close} onClick={close} />
-        <FooterPane assets={assets} search={search} />
+    <>
+      <Transition
+        in={opened}
+        className={classNames(footer.container, flex.vertical)}
+        exiting={footer.hidden}
+      >
+        <FooterPane assets={assets} onRequestClose={close} search={search} />
       </Transition>
       <div
         className={classNames(
@@ -65,7 +67,7 @@ export function Footer({ onItemClick }: FooterProps) {
           </>
         )}
       </div>
-    </div>
+    </>
   );
 }
 
