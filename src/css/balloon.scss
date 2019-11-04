@@ -21,6 +21,7 @@ $borderWidth: 1px;
   background-color: $paperColor;
   border: $borderWidth solid $disableColor;
   border-radius: 2px;
+  z-index: 1000;
   opacity: 1;
   &.hidden {
     opacity: 0;

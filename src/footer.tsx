@@ -9,10 +9,11 @@ import { FooterPane } from './footer-pane';
 import { Transition } from './transition';
 
 export interface FooterProps {
-  onItemClick: () => void;
+  onSelectAsset: () => void;
+  onSelectName: () => void;
 }
 
-export function Footer({ onItemClick }: FooterProps) {
+export function Footer({ onSelectAsset, onSelectName }: FooterProps) {
   const [opened, setOpened] = React.useState(false);
   const close = React.useCallback(() => {
     setOpened(false);
@@ -27,7 +28,12 @@ export function Footer({ onItemClick }: FooterProps) {
         className={classNames(footer.container, flex.vertical)}
         exiting={footer.hidden}
       >
-        <FooterPane assets={assets} onRequestClose={close} search={search} />
+        <FooterPane
+          assets={assets}
+          onRequestClose={close}
+          onSelectAsset={onSelectName}
+          search={search}
+        />
       </Transition>
       <div
         className={classNames(
@@ -55,15 +61,15 @@ export function Footer({ onItemClick }: FooterProps) {
           />
         ) : (
           <>
-            <FooterItem onClick={onItemClick} />
-            <FooterItem onClick={onItemClick} />
+            <FooterItem onClick={onSelectAsset} />
+            <FooterItem onClick={onSelectAsset} />
             <div className={footer.divider}></div>
-            <FooterItem onClick={onItemClick} />
-            <FooterItem onClick={onItemClick} />
-            <FooterItem onClick={onItemClick} />
-            <FooterItem onClick={onItemClick} />
-            <FooterItem onClick={onItemClick} />
-            <FooterItem onClick={onItemClick} />
+            <FooterItem onClick={onSelectAsset} />
+            <FooterItem onClick={onSelectAsset} />
+            <FooterItem onClick={onSelectAsset} />
+            <FooterItem onClick={onSelectAsset} />
+            <FooterItem onClick={onSelectAsset} />
+            <FooterItem onClick={onSelectAsset} />
           </>
         )}
       </div>

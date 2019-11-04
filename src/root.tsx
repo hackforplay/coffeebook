@@ -85,7 +85,7 @@ export function Root({ code }: RootProps) {
           ></iframe>
         </div>
       </div>
-      <Footer onItemClick={openNewAsset} />
+      <Footer onSelectAsset={openNewAsset} onSelectName={openNewAsset} />
     </div>
   );
 }
