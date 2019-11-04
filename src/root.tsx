@@ -8,10 +8,12 @@ import { FloorView } from './floor-view';
 import { Footer } from './footer';
 import { Header } from './header';
 import { MapView } from './map-view';
+import { StoreView } from './store-view';
 import { Transition } from './transition';
 
 export enum EditorMode {
   Map,
+  Store,
   Code
 }
 
@@ -36,10 +38,11 @@ export function Root({ code }: RootProps) {
     setBringFront(false);
   }, []);
 
-  const [isInstalled, setIsInstalled] = React.useState(true);
   const openNewAsset = React.useCallback(() => {
-    setIsInstalled(false);
     setEditorMode(EditorMode.Code);
+  }, []);
+  const openStore = React.useCallback(() => {
+    setEditorMode(EditorMode.Store);
   }, []);
 
   return (
@@ -62,15 +65,22 @@ export function Root({ code }: RootProps) {
             <MapView selected={floor} setEditorMode={setEditorMode} />
           </Transition>
           <Transition
+            in={editorMode === EditorMode.Store}
+            className={region.storeView}
+            exiting={
+              editorMode === EditorMode.Map
+                ? region.exitingRight
+                : region.exitingLeft
+            }
+          >
+            <StoreView setEditorMode={setEditorMode} />
+          </Transition>
+          <Transition
             in={editorMode === EditorMode.Code}
             className={region.editorView}
             exiting={region.exiting}
           >
-            <CodeView
-              code={code}
-              isInstalled={isInstalled}
-              setIsInstalled={setIsInstalled}
-            />
+            <CodeView code={code} />
             <div className={region.outputCover} onClick={focusGame}></div>
           </Transition>
         </div>
@@ -85,7 +95,7 @@ export function Root({ code }: RootProps) {
           ></iframe>
         </div>
       </div>
-      <Footer onSelectAsset={openNewAsset} onSelectName={openNewAsset} />
+      <Footer onSelectAsset={openNewAsset} onSelectName={openStore} />
     </div>
   );
 }

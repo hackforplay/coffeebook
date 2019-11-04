@@ -55,6 +55,22 @@
   }
 }
 
+// 色選択・購入部分
+.storeView {
+  @extend %base;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  transform: translateX(0%);
+  &.exitingLeft {
+    transform: translateX(-100%);
+  }
+  &.exitingRight {
+    transform: translateX(100%);
+  }
+}
+
 // マップ選択表示部分
 .mapView {
   @extend %base;

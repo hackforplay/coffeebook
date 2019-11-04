@@ -1,27 +1,21 @@
-import classNames from 'classnames';
 import { CoffeeScript } from 'coffeescript';
 import * as React from 'react';
 import { appendEmptyLine } from './append-empty-line';
 import { build } from './build';
-import { IconButton } from './button';
 import { blockify, cellify, ICodeCell } from './cellify';
 import { CodeCell } from './code-cell';
 import './completion';
-import view from './css/code-view.scss';
-import flex from './css/flex.scss';
 import { Sandbox } from './sandbox';
 import { TextCell } from './text-cell';
 
 export interface CodeViewProps {
   code: string;
-  isInstalled: boolean;
-  setIsInstalled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export type OnUpdate = (payload: { id: string; value: string }) => void;
 
 let sandbox = new Sandbox();
-export function CodeView({ code, isInstalled, setIsInstalled }: CodeViewProps) {
+export function CodeView({ code }: CodeViewProps) {
   const cellsRef = React.useRef(cellify(code)); // Notice: mutable
 
   for (let cell of cellsRef.current) {
@@ -69,10 +63,6 @@ export function CodeView({ code, isInstalled, setIsInstalled }: CodeViewProps) {
     onGame();
   }, []);
 
-  if (!isInstalled) {
-    return <Installer needPayment={false} setIsInstalled={setIsInstalled} />;
-  }
-
   return (
     <>
       {cellsRef.current.map(cell =>
@@ -95,58 +85,6 @@ export function CodeView({ code, isInstalled, setIsInstalled }: CodeViewProps) {
         )
       )}
     </>
-  );
-}
-
-export interface Installer {
-  needPayment: boolean;
-  setIsInstalled: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export function Installer({ needPayment, setIsInstalled }: Installer) {
-  const onClick = React.useCallback(() => {
-    setIsInstalled(true);
-  }, []);
-
-  return (
-    <div className={view.installer}>
-      <div className={classNames(view.header, flex.horizontal)}>
-        <img
-          src="https://assets.hackforplay.xyz/img/93a1462a4800cccde0887f580ef46298.png"
-          alt=""
-        />
-        <h2 className={view.name}>ASSET NAME</h2>
-        <span className={view.paid}>PAID ITEM</span>
-        <img
-          src="https://i.gyazo.com/476dade56d5b2c344a83de22d66a7d17.gif"
-          alt=""
-          className={view.gif}
-        />
-      </div>
-      <div className={view.description}>
-        ASSET DESCRIPTION ASSET DESCRIPTION ASSET DESCRIPTION ASSET DESCRIPTION
-      </div>
-      <IconButton
-        name="add"
-        disabled={needPayment}
-        lg
-        primary
-        onClick={onClick}
-      >
-        Install to the game
-      </IconButton>
-      {needPayment ? (
-        <>
-          <h2>How can I use this item?</h2>
-          <div className={view.description}>
-            Join paid plan to get all items now
-          </div>
-          <IconButton name="open_in_new" lg accent>
-            Get this item
-          </IconButton>
-        </>
-      ) : null}
-    </div>
   );
 }
 
