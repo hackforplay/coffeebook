@@ -26,6 +26,10 @@ export function Transition(props: TransitionProps) {
     props.in ? Phase.In : Phase.DisplayNone
   );
   const timerRef = React.useRef(0);
+  /**
+   * props.out になった時点の props.exiting を保持 => 次に props.in になった時に適用する
+   */
+  const [exiting, setExiting] = React.useState(props.exiting);
 
   React.useEffect(() => {
     if (phase === Phase.DisplayNone && props.in) {
@@ -41,6 +45,7 @@ export function Transition(props: TransitionProps) {
       return;
     }
     if (phase === Phase.In && !props.in) {
+      setExiting(props.exiting);
       setPhase(Phase.Out);
       timerRef.current = window.setTimeout(() => {
         setPhase(Phase.DisplayNone);
@@ -52,7 +57,7 @@ export function Transition(props: TransitionProps) {
     <div
       className={classNames(
         props.className,
-        phase === Phase.Out && props.exiting,
+        phase === Phase.Out && exiting,
         phase === Phase.DisplayNone && region.displayNone
       )}
     >
