@@ -70,7 +70,11 @@ export function FooterPane({
         <div className={flex.blank} onClick={onRequestClose}></div>
       </div>
       <div className={footer.pane}>
-        <IconButton name="close" className={footer.close} onClick={close} />
+        <IconButton
+          name="close"
+          className={footer.close}
+          onClick={onRequestClose}
+        />
         <Scroller
           ms={50}
           className={classNames(footer.asset)}
