@@ -45,6 +45,11 @@ export function CodeCell({
       },
       renderWhitespace: 'all'
     });
+    if (process.env.NODE_ENV !== 'production') {
+      editor.updateOptions({
+        contextmenu: false
+      });
+    }
     const model = editor.getModel();
     model &&
       model.updateOptions({
