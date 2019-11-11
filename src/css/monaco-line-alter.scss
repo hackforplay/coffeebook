@@ -1,5 +1,8 @@
 .widget {
   z-index: 100;
+  // do not overlap glyph margin
+  left: 18px !important;
+  width: calc(100% - 18px) !important;
 }
 
 .widget:hover {

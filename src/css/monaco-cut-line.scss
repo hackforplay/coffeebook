@@ -1,0 +1,19 @@
+@import 'color';
+@import 'transition';
+
+.widget:before {
+  content: ' \2702';
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: $textColor;
+}
+
+.widget:hover {
+  @include transition(color);
+  &:before {
+    color: $primaryHoverColor;
+  }
+}

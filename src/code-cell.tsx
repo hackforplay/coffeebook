@@ -8,6 +8,7 @@ import { OnUpdate } from './code-view';
 import './completion';
 import element from './css/element.scss';
 import flex from './css/flex.scss';
+import { showCutLine } from './monaco-cut-line';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { showLineAlter } from './monaco-line-alter';
 import { showSuggestButtons } from './monaco-suggest-button';
@@ -62,6 +63,7 @@ export function CodeCell({
     beFlexible(editor);
     showLineAlter(editor);
     showSuggestButtons(editor);
+    showCutLine(editor);
 
     editor.onDidFocusEditorText(() => {
       setFloating(true);
