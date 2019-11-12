@@ -35,6 +35,9 @@ export function showCutLine(editor: monaco.editor.IStandaloneCodeEditor) {
   editor.onDidChangeCursorPosition(e => {
     moveButton(e.position.lineNumber);
   });
+  editor.onDidBlurEditorText(() => {
+    moveButton(0);
+  });
 
   editor.onMouseDown(e => {
     const { element, position, type } = e.target;
