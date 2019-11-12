@@ -31,6 +31,7 @@ export function CodeCell({
   const rootRef = React.useRef<HTMLDivElement>(null);
   const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor>();
   const [floating, setFloating] = React.useState(false);
+  const [undoable, setUndoable] = React.useState(false);
 
   React.useEffect(() => {
     if (!rootRef.current) return;
@@ -95,10 +96,22 @@ export function CodeCell({
       }, 250);
     });
 
+    editor.onDidChangeModelContent(() => {
+      if (model) {
+        setUndoable(model.getAlternativeVersionId() > 1);
+      }
+    });
+
     return () => {
       editor.dispose();
     };
   }, []);
+
+  const undo = React.useCallback(() => {
+    if (!editorRef.current) return;
+    editorRef.current.trigger('', 'undo', {});
+  }, []);
+
   return (
     <Card elevated={floating} className={element.codeCell}>
       <div className={classNames(flex.horizontal, element.codeCellHeader)}>
@@ -114,7 +127,7 @@ export function CodeCell({
       ></div>
       <CardDivider />
       <div className={classNames(flex.horizontal, element.codeCellFooter)}>
-        <IconButton disabled name="undo">
+        <IconButton name="undo" disabled={!undoable} onClick={undo}>
           Undo
         </IconButton>
         <div className={flex.blank}></div>
