@@ -29,9 +29,6 @@
   },
   "author": "teramotodaiki",
   "license": "ISC",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "devDependencies": {
     "ava": "^2.4.0",
     "gh-pages": "^2.1.1",
