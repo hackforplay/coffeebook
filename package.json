@@ -1,5 +1,5 @@
 {
-  "name": "@hackforplay/coffeebook",
+  "name": "gamebook",
   "version": "1.0.0",
   "description": "[Experimental] HackforPlay IDE, CoffeeScript, Notebook and Smart Snippets",
   "main": "lib/index.js",
