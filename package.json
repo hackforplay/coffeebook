@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "[Experimental] HackforPlay IDE, CoffeeScript, Notebook and Smart Snippets",
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "npm run build:editor && npm run build:html",
     "build:editor": "parcel build $PWD/node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps --log-level 1",
     "build:html": "parcel build --public-url /coffeebook index.html",
     "gh-pages": "npm run build && gh-pages -d dist",
-    "semantic-release": "semantic-release",
+    "semantic-release": "semantic-release --allow-same-version",
     "start": "parcel index.html",
     "test": "prettier -c 'src/**/*.{ts,tsx}' && ava && tsc --outDir lib"
   },
