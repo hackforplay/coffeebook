@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import 'requestidlecallback';
-import { Root } from './root';
+import { Gamebook } from '../src/index';
 
 let code = `
 まずは、プレイヤーをどこに出すかを決めましょう！
@@ -94,4 +94,4 @@ rule.タップされたとき ->
 `;
 
 let container = document.querySelector('#container');
-render(<Root code={code}></Root>, container);
+render(<Gamebook code={code}></Gamebook>, container);
