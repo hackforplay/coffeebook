@@ -20,3 +20,6 @@ jobs:
       run: npm it
     - name: release package
       run: npm run semantic-release
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
