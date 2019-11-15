@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import 'requestidlecallback';
-import { Gamebook } from '../src/index';
+import { Gamebook } from './index';
 
 let code = `
 まずは、プレイヤーをどこに出すかを決めましょう！
