@@ -18,6 +18,8 @@ jobs:
           ${{ runner.os }}-node-:
     - name: npm it
       run: npm it
+    - name: build
+      run: npm run build:lib
     - name: release package
       run: npm run semantic-release
       env:
