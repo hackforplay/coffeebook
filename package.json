@@ -10,7 +10,7 @@
     "build": "npm run build:editor && npm run build:html",
     "build:editor": "parcel build $PWD/node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps --log-level 1",
     "build:html": "parcel build --public-url /coffeebook index.html",
-    "build:lib": "parcel build --out-dir lib src/index.ts",
+    "build:lib": "npx webpack -p",
     "gh-pages": "npm run build && gh-pages -d dist",
     "semantic-release": "semantic-release --allow-same-version",
     "start": "parcel index.html",
@@ -32,14 +32,20 @@
   "license": "ISC",
   "devDependencies": {
     "ava": "^2.4.0",
+    "css-loader": "^3.2.0",
     "gh-pages": "^2.1.1",
     "parcel-bundler": "^1.12.4",
     "postcss-modules": "^1.4.1",
     "prettier": "^1.18.2",
     "sass": "^1.23.1",
+    "sass-loader": "^8.0.0",
     "semantic-release": "^15.13.30",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.2.1",
     "ts-node": "^8.4.1",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "dependencies": {
     "@hackforplay/babel-worker": "^1.0.0",
