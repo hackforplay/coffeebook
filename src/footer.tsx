@@ -3,8 +3,8 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Balloon } from './Balloon';
 import { IconButton } from './Button';
-import flex from './css/flex.scss';
-import footer from './css/footer.scss';
+import flex from './styles/flex.scss';
+import footer from './styles/footer.scss';
 import { dummyAssets } from './dummy-assets';
 import { FooterPane } from './FooterPane';
 import { actions, EditorMode } from './store';
@@ -37,19 +37,19 @@ export function Footer({  }: FooterProps) {
         )}
       >
         <IconButton
-          name='search'
+          name="search"
           className={footer.search}
           onClick={() => setOpened(!opened)}
         >
-          <Balloon icon='info' delay={5000}>
+          <Balloon icon="info" delay={5000}>
             Add charactor to the game
           </Balloon>
         </IconButton>
         {opened ? (
           <input
-            type='text'
+            type="text"
             autoFocus
-            placeholder='Search monsters, people and items'
+            placeholder="Search monsters, people and items"
             value={search}
             onChange={e => setSearch(e.currentTarget.value)}
           />

@@ -2,9 +2,9 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { CodeView } from './CodeView';
-import flex from './css/flex.scss';
-import font from './css/font.scss';
-import region from './css/region.scss';
+import flex from './styles/flex.scss';
+import font from './styles/font.scss';
+import region from './styles/region.scss';
 import { FloorView } from './FloorView';
 import { Footer } from './Footer';
 import { Header } from './Header';
@@ -71,8 +71,8 @@ export function Root({ code }: RootProps) {
           className={classNames(region.output, bringFront && region.bringFront)}
         >
           <iframe
-            src='https://hackforplay-sandbox.firebaseapp.com/compatible.html'
-            frameBorder='0'
+            src="https://hackforplay-sandbox.firebaseapp.com/compatible.html"
+            frameBorder="0"
             ref={iframeRef}
             onBlur={unfocusGame}
           ></iframe>

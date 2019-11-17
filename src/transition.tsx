@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import region from './css/region.scss';
+import region from './styles/region.scss';
 
 export interface TransitionProps {
   children: React.ReactNode;

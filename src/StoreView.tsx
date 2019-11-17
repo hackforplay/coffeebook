@@ -3,8 +3,8 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { IconButton } from './Button';
 import './completion';
-import view from './css/code-view.scss';
-import flex from './css/flex.scss';
+import view from './styles/code-view.scss';
+import flex from './styles/flex.scss';
 import { actions, EditorMode } from './store';
 
 export interface StoreViewProps {}
@@ -32,14 +32,14 @@ export function Installer({ needPayment }: Installer) {
     <div className={view.installer}>
       <div className={classNames(view.header, flex.horizontal)}>
         <img
-          src='https://assets.hackforplay.xyz/img/93a1462a4800cccde0887f580ef46298.png'
-          alt=''
+          src="https://assets.hackforplay.xyz/img/93a1462a4800cccde0887f580ef46298.png"
+          alt=""
         />
         <h2 className={view.name}>ASSET NAME</h2>
         <span className={view.paid}>PAID ITEM</span>
         <img
-          src='https://i.gyazo.com/476dade56d5b2c344a83de22d66a7d17.gif'
-          alt=''
+          src="https://i.gyazo.com/476dade56d5b2c344a83de22d66a7d17.gif"
+          alt=""
           className={view.gif}
         />
       </div>
@@ -47,7 +47,7 @@ export function Installer({ needPayment }: Installer) {
         ASSET DESCRIPTION ASSET DESCRIPTION ASSET DESCRIPTION ASSET DESCRIPTION
       </div>
       <IconButton
-        name='add'
+        name="add"
         disabled={needPayment}
         lg
         primary
@@ -61,7 +61,7 @@ export function Installer({ needPayment }: Installer) {
           <div className={view.description}>
             Join paid plan to get all items now
           </div>
-          <IconButton name='open_in_new' lg accent>
+          <IconButton name="open_in_new" lg accent>
             Get this item
           </IconButton>
         </>

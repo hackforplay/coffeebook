@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from './Button';
-import flex from './css/flex.scss';
-import floor from './css/floor-view.scss';
+import flex from './styles/flex.scss';
+import floor from './styles/floor-view.scss';
 import { actions, EditorMode, SS } from './store';
 
 export interface FloorViewProps {}
@@ -57,7 +57,7 @@ export function FloorItem({
     >
       <span className={floor.number}>{index}</span>
       <div className={floor.image} style={{ backgroundColor: color }}></div>
-      {appendable ? <Icon name='add' className={floor.append} /> : null}
+      {appendable ? <Icon name="add" className={floor.append} /> : null}
     </button>
   );
 }

@@ -1,5 +1,5 @@
 import * as monaco from 'monaco-editor';
-import styles from './css/monaco-cut-line.scss';
+import styles from './styles/monaco-cut-line.scss';
 
 export function showCutLine(editor: monaco.editor.IStandaloneCodeEditor) {
   const model = editor.getModel();

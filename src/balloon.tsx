@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Icon } from './Button';
-import balloon from './css/balloon.scss';
+import balloon from './styles/balloon.scss';
 
 export interface BalloonProps {
   children?: string;

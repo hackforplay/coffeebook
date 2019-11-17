@@ -2,9 +2,9 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from './Button';
-import flex from './css/flex.scss';
-import map from './css/map-view.scss';
-import selector from './css/selector.scss';
+import flex from './styles/flex.scss';
+import map from './styles/map-view.scss';
+import selector from './styles/selector.scss';
 import { Scroller } from './Scroller';
 import { actions, EditorMode, SS } from './store';
 

@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { IconButton } from './Button';
-import flex from './css/flex.scss';
-import footer from './css/footer.scss';
+import flex from './styles/flex.scss';
+import footer from './styles/footer.scss';
 import { Asset } from './dummy-assets';
 import { Scroller } from './Scroller';
 import { actions, EditorMode } from './store';
@@ -71,7 +71,7 @@ export function FooterPane({
       </div>
       <div className={footer.pane}>
         <IconButton
-          name='close'
+          name="close"
           className={footer.close}
           onClick={onRequestClose}
         />

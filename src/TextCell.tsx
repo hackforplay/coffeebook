@@ -4,7 +4,7 @@ import { Node } from 'unist';
 import { Card } from './Card';
 import { htmlify, markdownify, md2html } from './cellify';
 import { OnUpdate } from './CodeView';
-import element from './css/element.scss';
+import element from './styles/element.scss';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 
 export interface TextCellProps {

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import button from './css/button.scss';
+import button from './styles/button.scss';
 
 export interface IconProps {
   name: string;
