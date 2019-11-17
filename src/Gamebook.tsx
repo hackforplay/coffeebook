@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { Root, RootProps } from './root';
+import { Root, RootProps } from './Root';
 import { createGamebookStore } from './store';
 
 export interface GamebookProps extends RootProps {

@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { Button } from './button';
+import { Button } from './Button';
 import flex from './css/flex.scss';
 import map from './css/map-view.scss';
 import selector from './css/selector.scss';
-import { EditorMode } from './root';
-import { Scroller } from './scroller';
+import { EditorMode } from './Root';
+import { Scroller } from './Scroller';
 import { SS } from './store';
 
 export type Tab = 'mine' | 'official' | 'others';

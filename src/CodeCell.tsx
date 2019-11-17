@@ -2,9 +2,9 @@ import classNames from 'classnames';
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import 'requestidlecallback';
-import { IconButton } from './button';
-import { Card, CardDivider } from './card';
-import { OnUpdate } from './code-view';
+import { IconButton } from './Button';
+import { Card, CardDivider } from './Card';
+import { OnUpdate } from './CodeView';
 import './completion';
 import element from './css/element.scss';
 import flex from './css/flex.scss';
@@ -117,7 +117,7 @@ export function CodeCell({
       <div className={classNames(flex.horizontal, element.codeCellHeader)}>
         <span>{title || 'NO TITLE'}</span>
         <div className={flex.blank}></div>
-        <IconButton name="clear" tooltip="Remove this cell" />
+        <IconButton name='clear' tooltip='Remove this cell' />
       </div>
       <CardDivider />
       <div
@@ -127,14 +127,14 @@ export function CodeCell({
       ></div>
       <CardDivider />
       <div className={classNames(flex.horizontal, element.codeCellFooter)}>
-        <IconButton name="undo" disabled={!undoable} onClick={undo}>
+        <IconButton name='undo' disabled={!undoable} onClick={undo}>
           Undo
         </IconButton>
         <div className={flex.blank}></div>
-        <IconButton name="note_add" primary tooltip="Create new cell" />
-        <IconButton name="file_copy" primary tooltip="Copy this cell" />
-        <IconButton name="arrow_upward" primary tooltip="Move up" />
-        <IconButton name="arrow_downward" primary tooltip="Move down" />
+        <IconButton name='note_add' primary tooltip='Create new cell' />
+        <IconButton name='file_copy' primary tooltip='Copy this cell' />
+        <IconButton name='arrow_upward' primary tooltip='Move up' />
+        <IconButton name='arrow_downward' primary tooltip='Move down' />
       </div>
     </Card>
   );

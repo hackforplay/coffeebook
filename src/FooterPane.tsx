@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { IconButton } from './button';
+import { IconButton } from './Button';
 import flex from './css/flex.scss';
 import footer from './css/footer.scss';
 import { Asset } from './dummy-assets';
-import { Scroller } from './scroller';
+import { Scroller } from './Scroller';
 
 export interface FooterPaneProps {
   assets: Asset[];
@@ -71,7 +71,7 @@ export function FooterPane({
       </div>
       <div className={footer.pane}>
         <IconButton
-          name="close"
+          name='close'
           className={footer.close}
           onClick={onRequestClose}
         />

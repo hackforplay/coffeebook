@@ -3,10 +3,10 @@ import * as React from 'react';
 import { appendEmptyLine } from './append-empty-line';
 import { build } from './build';
 import { blockify, cellify, ICodeCell } from './cellify';
-import { CodeCell } from './code-cell';
+import { CodeCell } from './CodeCell';
 import './completion';
 import { Sandbox } from './sandbox';
-import { TextCell } from './text-cell';
+import { TextCell } from './TextCell';
 
 export interface CodeViewProps {
   code: string;

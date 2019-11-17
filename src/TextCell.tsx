@@ -1,9 +1,9 @@
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import { Node } from 'unist';
-import { Card } from './card';
+import { Card } from './Card';
 import { htmlify, markdownify, md2html } from './cellify';
-import { OnUpdate } from './code-view';
+import { OnUpdate } from './CodeView';
 import element from './css/element.scss';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 

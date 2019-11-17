@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Icon } from './button';
+import { Icon } from './Button';
 import flex from './css/flex.scss';
 import floor from './css/floor-view.scss';
-import { EditorMode } from './root';
+import { EditorMode } from './Root';
 import { actions, SS } from './store';
 
 export interface FloorViewProps {

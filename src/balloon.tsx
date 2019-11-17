@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { Icon } from './button';
+import { Icon } from './Button';
 import balloon from './css/balloon.scss';
 
 export interface BalloonProps {

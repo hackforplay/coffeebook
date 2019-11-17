@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { Balloon } from './balloon';
-import { IconButton } from './button';
+import { Balloon } from './Balloon';
+import { IconButton } from './Button';
 import flex from './css/flex.scss';
 import footer from './css/footer.scss';
 import { dummyAssets } from './dummy-assets';
-import { FooterPane } from './footer-pane';
-import { Transition } from './transition';
+import { FooterPane } from './FooterPane';
+import { Transition } from './Transition';
 
 export interface FooterProps {
   onSelectAsset: () => void;
@@ -43,19 +43,19 @@ export function Footer({ onSelectAsset, onSelectName }: FooterProps) {
         )}
       >
         <IconButton
-          name="search"
+          name='search'
           className={footer.search}
           onClick={() => setOpened(!opened)}
         >
-          <Balloon icon="info" delay={5000}>
+          <Balloon icon='info' delay={5000}>
             Add charactor to the game
           </Balloon>
         </IconButton>
         {opened ? (
           <input
-            type="text"
+            type='text'
             autoFocus
-            placeholder="Search monsters, people and items"
+            placeholder='Search monsters, people and items'
             value={search}
             onChange={e => setSearch(e.currentTarget.value)}
           />

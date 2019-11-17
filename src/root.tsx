@@ -1,15 +1,15 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { CodeView } from './code-view';
+import { CodeView } from './CodeView';
 import flex from './css/flex.scss';
 import font from './css/font.scss';
 import region from './css/region.scss';
-import { FloorView } from './floor-view';
-import { Footer } from './footer';
-import { Header } from './header';
-import { MapView } from './map-view';
-import { StoreView } from './store-view';
-import { Transition } from './transition';
+import { FloorView } from './FloorView';
+import { Footer } from './Footer';
+import { Header } from './Header';
+import { MapView } from './MapView';
+import { StoreView } from './StoreView';
+import { Transition } from './Transition';
 
 export enum EditorMode {
   Map,
