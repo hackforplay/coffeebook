@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from './button';
 import flex from './css/flex.scss';
 import floor from './css/floor-view.scss';
 import { EditorMode } from './root';
+import { actions, SS } from './store';
 
 export interface FloorViewProps {
-  selected: number;
   setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
-  setSelected: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface FloorItemProps {
@@ -17,14 +17,11 @@ export interface FloorItemProps {
   index: number;
   selected?: boolean;
   setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
-  setSelected: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export function FloorView({
-  selected,
-  setEditorMode,
-  setSelected
-}: FloorViewProps) {
+export function FloorView({ setEditorMode }: FloorViewProps) {
+  const selected = useSelector((state: SS) => state.floor.selected);
+
   return (
     <>
       {['green', 'blue', 'pink', 'green'].map((color, i, array) => (
@@ -33,7 +30,6 @@ export function FloorView({
           index={i + 1}
           color={color}
           setEditorMode={setEditorMode}
-          setSelected={setSelected}
           selected={i + 1 === selected}
           appendable={i + 1 === array.length}
         />
@@ -47,11 +43,12 @@ export function FloorItem({
   color,
   index,
   selected,
-  setEditorMode,
-  setSelected
+  setEditorMode
 }: FloorItemProps) {
+  const dispatch = useDispatch();
+
   const onClick = React.useCallback(() => {
-    setSelected(index);
+    dispatch(actions.setFloor(index));
     setEditorMode(EditorMode.Map);
   }, [index]);
 
@@ -66,7 +63,7 @@ export function FloorItem({
     >
       <span className={floor.number}>{index}</span>
       <div className={floor.image} style={{ backgroundColor: color }}></div>
-      {appendable ? <Icon name="add" className={floor.append} /> : null}
+      {appendable ? <Icon name='add' className={floor.append} /> : null}
     </button>
   );
 }

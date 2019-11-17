@@ -1,11 +1,13 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { Button } from './button';
 import flex from './css/flex.scss';
 import map from './css/map-view.scss';
 import selector from './css/selector.scss';
 import { EditorMode } from './root';
 import { Scroller } from './scroller';
+import { SS } from './store';
 
 export type Tab = 'mine' | 'official' | 'others';
 type Refs = {
@@ -14,11 +16,10 @@ type Refs = {
 export const tabs: Tab[] = ['mine', 'official', 'others'];
 
 export interface MapViewProps {
-  selected: number;
   setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
 }
 
-export function MapView({ selected, setEditorMode }: MapViewProps) {
+export function MapView({ setEditorMode }: MapViewProps) {
   const [tab, setTab] = React.useState<Tab>('mine');
   const refs: Refs = {
     mine: React.useRef(null),
@@ -50,6 +51,8 @@ export function MapView({ selected, setEditorMode }: MapViewProps) {
     if (!element) return;
     element.scrollIntoView({ behavior: 'smooth' });
   }, []);
+
+  const selected = useSelector((state: SS) => state.floor.selected);
 
   return (
     <div className={map.container}>

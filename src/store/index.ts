@@ -1,27 +1,19 @@
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import { NEVER } from 'rxjs';
-import { filter, mergeMap } from 'rxjs/operators';
-import actionCreatorFactory from 'typescript-fsa';
-import { reducerWithImmer } from './reducerWithImmer';
+import * as floor from './floor';
 
-export interface StoreState {}
+export interface StoreState extends floor.States {}
+export type SS = StoreState; // alias
 
-const actionCreator = actionCreatorFactory('gamebook');
-export const sampleAction = actionCreator<{}>('SAMPLE');
+export const rootReducer = combineReducers({
+  ...floor.reducers
+});
 
-export const rootEpic = combineEpics(action$ =>
-  action$.pipe(
-    filter(sampleAction.match),
-    mergeMap(() => NEVER)
-  )
-);
+export const actions = {
+  ...floor.actions
+};
 
-export const initialState: StoreState = {};
-
-export const rootReducer = reducerWithImmer(initialState)
-  .case(sampleAction, () => {})
-  .toReducer();
+export const rootEpic = combineEpics(floor.epic);
 
 export function createGamebookStore() {
   const epicMiddleware = createEpicMiddleware();
@@ -30,3 +22,5 @@ export function createGamebookStore() {
   epicMiddleware.run(rootEpic);
   return store;
 }
+
+export type Store = ReturnType<typeof createGamebookStore>;

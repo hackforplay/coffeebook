@@ -25,7 +25,6 @@ export function Root({ code }: RootProps) {
   const [editorMode, setEditorMode] = React.useState<EditorMode>(
     EditorMode.Map
   );
-  const [floor, setFloor] = React.useState(1);
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const [bringFront, setBringFront] = React.useState(false);
   const focusGame = React.useCallback(() => {
@@ -50,11 +49,7 @@ export function Root({ code }: RootProps) {
       <Header />
       <div className={classNames(region.outer, flex.horizontal, flex.stretch)}>
         <div className={region.floor}>
-          <FloorView
-            selected={floor}
-            setEditorMode={setEditorMode}
-            setSelected={setFloor}
-          />
+          <FloorView setEditorMode={setEditorMode} />
         </div>
         <div className={classNames(region.inner)}>
           <Transition
@@ -62,7 +57,7 @@ export function Root({ code }: RootProps) {
             className={region.mapView}
             exiting={region.exiting}
           >
-            <MapView selected={floor} setEditorMode={setEditorMode} />
+            <MapView setEditorMode={setEditorMode} />
           </Transition>
           <Transition
             in={editorMode === EditorMode.Store}
@@ -88,8 +83,8 @@ export function Root({ code }: RootProps) {
           className={classNames(region.output, bringFront && region.bringFront)}
         >
           <iframe
-            src="https://hackforplay-sandbox.firebaseapp.com/compatible.html"
-            frameBorder="0"
+            src='https://hackforplay-sandbox.firebaseapp.com/compatible.html'
+            frameBorder='0'
             ref={iframeRef}
             onBlur={unfocusGame}
           ></iframe>
