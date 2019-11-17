@@ -1,32 +1,31 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 import { IconButton } from './Button';
 import './completion';
 import view from './css/code-view.scss';
 import flex from './css/flex.scss';
-import { EditorMode } from './Root';
+import { actions, EditorMode } from './store';
 
-export interface StoreViewProps {
-  setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
-}
+export interface StoreViewProps {}
 
-export function StoreView({ setEditorMode }: StoreViewProps) {
+export function StoreView({  }: StoreViewProps) {
   return (
     <>
       <h1>STORE VIEW</h1>
-      <Installer needPayment={false} setEditorMode={setEditorMode} />
+      <Installer needPayment={false} />
     </>
   );
 }
 
 export interface Installer {
   needPayment: boolean;
-  setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
 }
 
-export function Installer({ needPayment, setEditorMode }: Installer) {
+export function Installer({ needPayment }: Installer) {
+  const dispatch = useDispatch();
   const onClick = React.useCallback(() => {
-    setEditorMode(EditorMode.Code);
+    dispatch(actions.setEditorMode(EditorMode.Code));
   }, []);
 
   return (

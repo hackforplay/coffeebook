@@ -1,13 +1,12 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from './Button';
 import flex from './css/flex.scss';
 import map from './css/map-view.scss';
 import selector from './css/selector.scss';
-import { EditorMode } from './Root';
 import { Scroller } from './Scroller';
-import { SS } from './store';
+import { actions, EditorMode, SS } from './store';
 
 export type Tab = 'mine' | 'official' | 'others';
 type Refs = {
@@ -15,21 +14,15 @@ type Refs = {
 };
 export const tabs: Tab[] = ['mine', 'official', 'others'];
 
-export interface MapViewProps {
-  setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
-}
+export interface MapViewProps {}
 
-export function MapView({ setEditorMode }: MapViewProps) {
+export function MapView({  }: MapViewProps) {
   const [tab, setTab] = React.useState<Tab>('mine');
   const refs: Refs = {
     mine: React.useRef(null),
     official: React.useRef(null),
     others: React.useRef(null)
   };
-
-  const set = React.useCallback(() => {
-    setEditorMode(EditorMode.Code);
-  }, []);
 
   const handleScroll = React.useCallback((e: React.UIEvent<HTMLDivElement>) => {
     const margin = 20; // safety margin for smooth scroll [px]
@@ -90,7 +83,7 @@ export function MapView({ setEditorMode }: MapViewProps) {
         {tabs.map(id => (
           <div key={id} id={id} className={map.group} ref={refs[id]}>
             {Array.from({ length: 15 }).map((_, i) => (
-              <MapViewItem key={i} onClick={set} />
+              <MapViewItem key={i} />
             ))}
           </div>
         ))}
@@ -99,11 +92,14 @@ export function MapView({ setEditorMode }: MapViewProps) {
   );
 }
 
-export interface MapViewItemProps {
-  onClick: () => void;
-}
+export interface MapViewItemProps {}
 
-export function MapViewItem({ onClick }: MapViewItemProps) {
+export function MapViewItem({  }: MapViewItemProps) {
+  const dispatch = useDispatch();
+  const onClick = React.useCallback(() => {
+    dispatch(actions.setEditorMode(EditorMode.Code));
+  }, []);
+
   return (
     <div className={map.responsive}>
       <div className={map.responsiveContent}>

@@ -4,22 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from './Button';
 import flex from './css/flex.scss';
 import floor from './css/floor-view.scss';
-import { EditorMode } from './Root';
-import { actions, SS } from './store';
+import { actions, EditorMode, SS } from './store';
 
-export interface FloorViewProps {
-  setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
-}
+export interface FloorViewProps {}
 
 export interface FloorItemProps {
   appendable?: boolean;
   color: string;
   index: number;
   selected?: boolean;
-  setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
 }
 
-export function FloorView({ setEditorMode }: FloorViewProps) {
+export function FloorView({  }: FloorViewProps) {
   const selected = useSelector((state: SS) => state.floor.selected);
 
   return (
@@ -29,7 +25,6 @@ export function FloorView({ setEditorMode }: FloorViewProps) {
           key={i}
           index={i + 1}
           color={color}
-          setEditorMode={setEditorMode}
           selected={i + 1 === selected}
           appendable={i + 1 === array.length}
         />
@@ -42,14 +37,13 @@ export function FloorItem({
   appendable,
   color,
   index,
-  selected,
-  setEditorMode
+  selected
 }: FloorItemProps) {
   const dispatch = useDispatch();
 
   const onClick = React.useCallback(() => {
     dispatch(actions.setFloor(index));
-    setEditorMode(EditorMode.Map);
+    dispatch(actions.setEditorMode(EditorMode.Map));
   }, [index]);
 
   return (
