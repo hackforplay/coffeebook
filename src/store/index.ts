@@ -2,7 +2,11 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import * as floor from './floor';
 
-export interface StoreState extends floor.States {}
+type ReducersStates<R extends { [key: string]: (...args: any) => any }> = {
+  [key in keyof R]: ReturnType<R[key]>;
+};
+
+export interface StoreState extends ReducersStates<typeof floor.reducers> {}
 export type SS = StoreState; // alias
 
 export const rootReducer = combineReducers({

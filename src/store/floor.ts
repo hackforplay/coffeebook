@@ -2,34 +2,26 @@ import { combineEpics } from 'redux-observable';
 import actionCreatorFactory from 'typescript-fsa';
 import { reducerWithImmer } from './reducerWithImmer';
 
-const name = 'floor';
-
-export interface State {
-  selected: number;
-}
-
-export interface States {
-  [name]: State;
-}
-
-export const initialState: State = {
+export const initialState = {
   selected: 1
 };
 
-const actionCreator = actionCreatorFactory('gamebook/floor');
+const actionCreator = actionCreatorFactory('gamebook');
 
 export const actions = {
   setFloor: actionCreator<number>('SET_FLOOR')
 };
 
-export const reducer = reducerWithImmer(initialState)
+const floor = reducerWithImmer(initialState)
   .case(actions.setFloor, (draft, payload) => {
     draft.selected = payload;
   })
   .toReducer();
 
+export default floor;
+
 export const reducers = {
-  [name]: reducer
+  floor
 };
 
 export const epic = combineEpics();
