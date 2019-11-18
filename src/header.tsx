@@ -21,7 +21,6 @@ export function Header() {
       <IconButton name="settings_applications" vertical>
         Settings
       </IconButton>
-      <IconButton name="person" />
     </header>
   );
 }
