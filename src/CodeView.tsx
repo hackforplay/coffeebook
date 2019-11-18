@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { CoffeeScript } from 'coffeescript';
 import * as React from 'react';
 import { appendEmptyLine } from './append-empty-line';
@@ -6,7 +7,9 @@ import { blockify, cellify, ICodeCell } from './cellify';
 import { CodeCell } from './CodeCell';
 import './completion';
 import { Sandbox } from './sandbox';
+import style from './styles/code-view.scss';
 import { TextCell } from './TextCell';
+import flex from './styles/flex.scss';
 
 export interface CodeViewProps {
   code: string;
@@ -63,8 +66,20 @@ export function CodeView({ code }: CodeViewProps) {
     onGame();
   }, []);
 
+  const fileInfo = {
+    iconUrl:
+      'https://assets.hackforplay.xyz/img/6d152a956071fc7b2e7ec0c8590146e4.png',
+    name: {
+      ja: 'プレイヤー'
+    }
+  };
+
   return (
     <>
+      <div className={classNames(style.header, flex.horizontal)}>
+        <img src={fileInfo.iconUrl} alt="" className={style.icon} />
+        <div className={style.name}>{fileInfo.name.ja}</div>
+      </div>
       {cellsRef.current.map(cell =>
         cell.type === 'code' ? (
           <CodeCell
