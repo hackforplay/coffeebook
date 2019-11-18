@@ -4,18 +4,11 @@ import 'requestidlecallback';
 import { Gamebook } from './index';
 
 let code = `
-まずは、プレイヤーをどこに出すかを決めましょう！
-
----
-
 \`\`\`coffeescript キャラクターをステージに出す
+window.__sandbox_context_name = 'プレイヤー' # おまじない
 rule.ゲームがはじまったとき ->
   await Hack.changeMap 'map1'
   rule.つくる 'プレイヤー', 3, 5, 'map1', Dir.した
-\`\`\`
-\`\`\`coffeescript
-require '../game'
-window.__sandbox_context_name = 'プレイヤー' # おまじない
 \`\`\`
 
 ---
@@ -26,7 +19,7 @@ window.__sandbox_context_name = 'プレイヤー' # おまじない
 
 ---
 
-\`\`\`coffeescript
+\`\`\`coffeescript つくられたとき
 rule.つくられたとき ->
   Player.set @
   await @costume 'ゆうしゃ男' # 見た目をきめる
@@ -42,54 +35,58 @@ rule.つくられたとき ->
   else
     @family
 \`\`\`
-\`\`\`coffeescript
+\`\`\`coffeescript たおされたとき
 rule.たおされたとき ->
   # たおされたとき
 \`\`\`
-\`\`\`coffeescript
+\`\`\`coffeescript こうげきするとき
 rule.こうげきするとき ->
   # こうげきするとき
 \`\`\`
-\`\`\`coffeescript
+\`\`\`coffeescript じかんがすすんだとき
 rule.じかんがすすんだとき ->
   # じかんがすすんだとき
 \`\`\`
-\`\`\`coffeescript
+\`\`\`coffeescript こうげきされたとき
 rule.item = Rule.Anyone
 rule.こうげきされたとき (item) ->
   # こうげきされたとき
 \`\`\`
-\`\`\`coffeescript
+\`\`\`coffeescript ぶつかったとき
 rule.item = Rule.Anyone
 rule.ぶつかったとき (item) ->
   # ぶつかったとき
 \`\`\`
-\`\`\`coffeescript
+\`\`\`coffeescript メッセージされたとき
 rule.item = Rule.Anyone
 rule.メッセージされたとき (item) ->
   # メッセージされたとき
 \`\`\`
-\`\`\`coffeescript
+\`\`\`coffeescript すすめなかったとき
 rule.すすめなかったとき ->
   # すすめなかったとき
 \`\`\`
-\`\`\`coffeescript
+\`\`\`coffeescript みつけたとき
 rule.item = Rule.Anyone
 rule.みつけたとき (item) ->
   # みつけたとき
 \`\`\`
-\`\`\`coffeescript
+\`\`\`coffeescript しょうかんされたとき
 rule.item = Rule.Anyone
 rule.しょうかんされたとき (item) ->
   # しょうかんされたとき
 \`\`\`
-\`\`\`coffeescript
+\`\`\`coffeescript つねに
 rule.つねに ->
   # つねに
 \`\`\`
-\`\`\`coffeescript
+\`\`\`coffeescript タップされたとき
 rule.タップされたとき ->
   # タップされたとき
+\`\`\`
+
+\`\`\`coffeescript おまじない
+require '../game'
 \`\`\`
 `;
 
