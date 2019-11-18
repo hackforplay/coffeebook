@@ -12,6 +12,7 @@ $padding: 4px;
   z-index: 10;
   align-items: center;
   height: 32px;
+  border: 1px solid $backgroundColor; // adjust to cell
 
   .icon {
     height: 100%;
