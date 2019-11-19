@@ -1,0 +1,46 @@
+@import 'color';
+@import 'shadow';
+
+$padding: 4px;
+
+.installer {
+  width: 50%;
+  padding-left: $padding;
+
+  .header {
+    height: 64px;
+    margin-left: -$padding;
+
+    img {
+      max-height: 100%;
+    }
+
+    .name {
+      flex-shrink: 0;
+    }
+
+    .paid {
+      color: $alterColor;
+      background-color: $paidColor;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
+
+    .gif {
+      flex-shrink: 100;
+      margin-left: 16px;
+    }
+  }
+
+  .description {
+    margin: 6px 0px 16px 0px;
+  }
+
+  button {
+    @include shadow(1);
+    margin-left: 0px !important;
+  }
+}
