@@ -50,17 +50,17 @@ export function GameView({ iframeRef }: GameViewProps) {
         {version <= rv ? (
           <div className={banner.black}>
             <img src={require('./resources/paperPlane.svg')} alt="✈︎" />
-            <span>{'This is the latest version'}</span>
+            <span>{'Playing the latest version'}</span>
           </div>
         ) : version === lv ? (
           <div className={banner.black}>
             <img src={require('./resources/paperPlane.svg')} alt="✈︎" />
-            <span>{'New version by you'}</span>
+            <span>{'Updated by you'}</span>
           </div>
         ) : (
           <div style={{ backgroundColor: '#F1C40F' }}>
             <img src={require('./resources/paperPlane.svg')} alt="✈︎" />
-            <span>{'New version by Teramoto'}</span>
+            <span>{'Updated by Teramoto'}</span>
           </div>
         )}
       </Transition>
