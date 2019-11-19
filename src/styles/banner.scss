@@ -1,0 +1,30 @@
+@import 'color';
+@import 'shadow';
+@import 'transition';
+
+.wrapper {
+  position: absolute;
+  color: $alterColor;
+  overflow: hidden;
+
+  & > * {
+    @include transition(transform, background-color);
+    transform: translateX(0);
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    &.black {
+      background-color: $textColor;
+    }
+  }
+
+  &.exiting > * {
+    transform: translateX(-100%);
+  }
+
+  img {
+    height: 16px;
+    margin-right: 8px;
+  }
+}

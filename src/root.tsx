@@ -1,32 +1,29 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { CodeView } from './CodeView';
 import { FloorView } from './FloorView';
 import { Footer } from './Footer';
+import { GameView } from './GameView';
 import { Header } from './Header';
 import { MapView } from './MapView';
-import { actions, EditorMode, SS } from './store';
+import { EditorMode, SS } from './store';
 import { StoreView } from './StoreView';
 import flex from './styles/flex.scss';
 import font from './styles/font.scss';
 import region from './styles/region.scss';
 import { Transition } from './Transition';
-import { GameView } from './GameView';
 
 export interface RootProps {
   code: string;
 }
 
 export function Root({ code }: RootProps) {
-  const dispatch = useDispatch();
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const focusGame = React.useCallback(() => {
     if (iframeRef.current) {
       iframeRef.current.focus();
     }
-    dispatch(actions.bringGameFront(true));
-    dispatch(actions.runSanbox());
   }, []);
 
   const editorMode = useSelector((state: SS) => state.mode.editorMode);
