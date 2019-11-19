@@ -60,7 +60,7 @@ export function Root({ code }: RootProps) {
           </Transition>
           <Transition
             in={editorMode === EditorMode.Code}
-            className={region.editorView}
+            className={region.codeView}
             exiting={region.exiting}
           >
             <CodeView code={code} />
