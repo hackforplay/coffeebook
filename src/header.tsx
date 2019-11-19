@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { IconButton } from './Button';
+import { CollaboratorIcons } from './CollaboratorIcons';
 import { actions } from './store';
 import element from './styles/element.scss';
 import flex from './styles/flex.scss';
@@ -19,6 +20,7 @@ export function Header() {
       </IconButton>
       <span>TITLE</span>
       <div className={flex.blank}></div>
+      <CollaboratorIcons />
       <IconButton name="cloud" onClick={debug}>
         Debug
       </IconButton>
