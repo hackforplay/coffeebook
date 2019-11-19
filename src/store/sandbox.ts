@@ -31,11 +31,15 @@ export const initialState = {
 const actionCreator = actionCreatorFactory('gamebook');
 
 export const actions = {
+  incrementVersion: actionCreator<void>('INCREMENT_VERSION'),
   runSanbox: actionCreator<void>('RUN_SANDBOX'),
   writeFiles: actionCreator<IFile[]>('WRITE_FILES')
 };
 
 const sandbox = reducerWithImmer(initialState)
+  .case(actions.incrementVersion, draft => {
+    draft.version += 1;
+  })
   .case(actions.runSanbox, draft => {
     draft.runningVersion = draft.version;
   })
