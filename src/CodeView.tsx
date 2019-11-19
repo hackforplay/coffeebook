@@ -79,6 +79,7 @@ export function CodeView({ code }: CodeViewProps) {
       <div className={classNames(style.header, flex.horizontal)}>
         <img src={fileInfo.iconUrl} alt="" className={style.icon} />
         <div className={style.name}>{fileInfo.name.ja}</div>
+        <PaperPlane />
       </div>
       {cellsRef.current.map(cell =>
         cell.type === 'code' ? (
@@ -105,4 +106,32 @@ export function CodeView({ code }: CodeViewProps) {
 
 function formatCodeCell(codeCell: ICodeCell) {
   codeCell.value = appendEmptyLine(codeCell.value);
+}
+
+function PaperPlane({}) {
+  const [sent, setSent] = React.useState(false);
+  const [edited, setEdited] = React.useState(true);
+
+  const onClick = React.useCallback(() => {
+    setSent(true);
+    setTimeout(() => {
+      setSent(false);
+    }, 2000);
+  }, []);
+
+  return (
+    <div
+      className={classNames(
+        style.plane,
+        sent && style.sent,
+        !edited && style.hidden
+      )}
+    >
+      <img
+        src={require('./resources/paperPlane.svg')}
+        alt="✈"
+        onClick={onClick}
+      />
+    </div>
+  );
 }
