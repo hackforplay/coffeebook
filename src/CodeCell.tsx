@@ -1,17 +1,19 @@
 import classNames from 'classnames';
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 import 'requestidlecallback';
 import { IconButton } from './Button';
 import { Card, CardDivider } from './Card';
 import { OnUpdate } from './CodeView';
 import './completion';
-import element from './styles/element.scss';
-import flex from './styles/flex.scss';
 import { showCutLine } from './monaco-cut-line';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { showLineAlter } from './monaco-line-alter';
 import { showSuggestButtons } from './monaco-suggest-button';
+import { actions } from './store';
+import element from './styles/element.scss';
+import flex from './styles/flex.scss';
 
 export interface CodeCellProps {
   id: string;
@@ -21,6 +23,7 @@ export interface CodeCellProps {
 }
 
 export function CodeCell({ id, value, title, onUpdate }: CodeCellProps) {
+  const dispatch = useDispatch();
   const rootRef = React.useRef<HTMLDivElement>(null);
   const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor>();
   const [floating, setFloating] = React.useState(false);
@@ -61,10 +64,12 @@ export function CodeCell({ id, value, title, onUpdate }: CodeCellProps) {
 
     editor.onDidFocusEditorText(() => {
       setFloating(true);
+      dispatch(actions.bringGameFront(false));
     });
 
     editor.onDidBlurEditorText(() => {
       setFloating(false);
+      dispatch(actions.bringGameFront(true));
     });
 
     let replTimerId = 0;

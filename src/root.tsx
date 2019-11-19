@@ -12,6 +12,7 @@ import flex from './styles/flex.scss';
 import font from './styles/font.scss';
 import region from './styles/region.scss';
 import { Transition } from './Transition';
+import { GameView } from './GameView';
 
 export interface RootProps {
   code: string;
@@ -20,16 +21,12 @@ export interface RootProps {
 export function Root({ code }: RootProps) {
   const dispatch = useDispatch();
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
-  const [bringFront, setBringFront] = React.useState(false);
   const focusGame = React.useCallback(() => {
     if (iframeRef.current) {
       iframeRef.current.focus();
     }
-    setBringFront(true);
+    dispatch(actions.bringGameFront(true));
     dispatch(actions.runSanbox());
-  }, []);
-  const unfocusGame = React.useCallback(() => {
-    setBringFront(false);
   }, []);
 
   const editorMode = useSelector((state: SS) => state.mode.editorMode);
@@ -69,16 +66,7 @@ export function Root({ code }: RootProps) {
             <div className={region.outputCover} onClick={focusGame}></div>
           </Transition>
         </div>
-        <div
-          className={classNames(region.output, bringFront && region.bringFront)}
-        >
-          <iframe
-            src="https://hackforplay-sandbox.firebaseapp.com/compatible.html"
-            frameBorder="0"
-            ref={iframeRef}
-            onBlur={unfocusGame}
-          ></iframe>
-        </div>
+        <GameView iframeRef={iframeRef} />
       </div>
       <Footer />
     </div>
