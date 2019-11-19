@@ -18,16 +18,9 @@ export interface CodeCellProps {
   value: string;
   title?: string;
   onUpdate: OnUpdate;
-  onGame: () => void;
 }
 
-export function CodeCell({
-  id,
-  value,
-  title,
-  onUpdate,
-  onGame
-}: CodeCellProps) {
+export function CodeCell({ id, value, title, onUpdate }: CodeCellProps) {
   const rootRef = React.useRef<HTMLDivElement>(null);
   const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor>();
   const [floating, setFloating] = React.useState(false);
@@ -70,21 +63,7 @@ export function CodeCell({
       setFloating(true);
     });
 
-    let previousCode = value;
-    let blurTimerHandle = 0;
     editor.onDidBlurEditorText(() => {
-      window.cancelIdleCallback(blurTimerHandle);
-      blurTimerHandle = window.requestIdleCallback(
-        () => {
-          const e = document.activeElement;
-          if (!e || e.tagName !== 'IFRAME') return;
-          const coffee = editor.getValue();
-          if (previousCode === coffee) return;
-          onGame();
-          previousCode = coffee;
-        },
-        { timeout: 2000 }
-      );
       setFloating(false);
     });
 

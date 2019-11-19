@@ -1,16 +1,16 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CodeView } from './CodeView';
-import flex from './styles/flex.scss';
-import font from './styles/font.scss';
-import region from './styles/region.scss';
 import { FloorView } from './FloorView';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { MapView } from './MapView';
-import { EditorMode, SS } from './store';
+import { actions, EditorMode, SS } from './store';
 import { StoreView } from './StoreView';
+import flex from './styles/flex.scss';
+import font from './styles/font.scss';
+import region from './styles/region.scss';
 import { Transition } from './Transition';
 
 export interface RootProps {
@@ -18,6 +18,7 @@ export interface RootProps {
 }
 
 export function Root({ code }: RootProps) {
+  const dispatch = useDispatch();
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const [bringFront, setBringFront] = React.useState(false);
   const focusGame = React.useCallback(() => {
@@ -25,6 +26,7 @@ export function Root({ code }: RootProps) {
       iframeRef.current.focus();
     }
     setBringFront(true);
+    dispatch(actions.runSanbox());
   }, []);
   const unfocusGame = React.useCallback(() => {
     setBringFront(false);
@@ -63,7 +65,7 @@ export function Root({ code }: RootProps) {
             className={region.codeView}
             exiting={region.exiting}
           >
-            <CodeView code={code} />
+            <CodeView code={code} handleRun={focusGame} />
             <div className={region.outputCover} onClick={focusGame}></div>
           </Transition>
         </div>

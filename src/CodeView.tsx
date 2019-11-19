@@ -1,24 +1,26 @@
 import classNames from 'classnames';
 import { CoffeeScript } from 'coffeescript';
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { appendEmptyLine } from './append-empty-line';
 import { build } from './build';
 import { blockify, cellify, ICodeCell } from './cellify';
 import { CodeCell } from './CodeCell';
 import './completion';
-import { Sandbox } from './sandbox';
+import { actions, SS } from './store';
 import style from './styles/code-view.scss';
-import { TextCell } from './TextCell';
 import flex from './styles/flex.scss';
+import { TextCell } from './TextCell';
 
 export interface CodeViewProps {
   code: string;
+  handleRun: () => void;
 }
 
 export type OnUpdate = (payload: { id: string; value: string }) => void;
 
-let sandbox = new Sandbox();
-export function CodeView({ code }: CodeViewProps) {
+export function CodeView({ code, handleRun }: CodeViewProps) {
+  const dispatch = useDispatch();
   const cellsRef = React.useRef(cellify(code)); // Notice: mutable
 
   for (let cell of cellsRef.current) {
@@ -48,22 +50,28 @@ export function CodeView({ code }: CodeViewProps) {
       cell.value = value;
       cell.nodes = blockify(value);
     }
-  }, []);
 
-  const onGame = React.useCallback(() => {
-    // Build && Run
-    sandbox.update([
-      {
-        name: 'modules/プレイヤー.js',
-        type: 'application/javascript',
-        code: build(cellsRef.current)
-      }
-    ]);
-    sandbox.run();
+    dispatch(
+      actions.writeFiles([
+        {
+          name: 'modules/プレイヤー.js',
+          type: 'application/javascript',
+          code: build(cells)
+        }
+      ])
+    );
   }, []);
 
   React.useEffect(() => {
-    onGame();
+    dispatch(
+      actions.writeFiles([
+        {
+          name: 'modules/プレイヤー.js',
+          type: 'application/javascript',
+          code: build(cellsRef.current)
+        }
+      ])
+    );
   }, []);
 
   const fileInfo = {
@@ -79,7 +87,7 @@ export function CodeView({ code }: CodeViewProps) {
       <div className={classNames(style.header, flex.horizontal)}>
         <img src={fileInfo.iconUrl} alt="" className={style.icon} />
         <div className={style.name}>{fileInfo.name.ja}</div>
-        <PaperPlane />
+        <PaperPlane handleRun={handleRun} />
       </div>
       {cellsRef.current.map(cell =>
         cell.type === 'code' ? (
@@ -89,7 +97,6 @@ export function CodeView({ code }: CodeViewProps) {
             value={cell.value}
             title={cell.meta}
             onUpdate={onUpdate}
-            onGame={onGame}
           />
         ) : (
           <TextCell
@@ -108,29 +115,20 @@ function formatCodeCell(codeCell: ICodeCell) {
   codeCell.value = appendEmptyLine(codeCell.value);
 }
 
-function PaperPlane({}) {
-  const [sent, setSent] = React.useState(false);
-  const [edited, setEdited] = React.useState(true);
+interface PaperPlaneProps {
+  handleRun: () => void;
+}
 
-  const onClick = React.useCallback(() => {
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
-    }, 2000);
-  }, []);
+function PaperPlane({ handleRun }: PaperPlaneProps) {
+  const version = useSelector((state: SS) => state.sandbox.version);
+  const rv = useSelector((state: SS) => state.sandbox.runningVersion);
 
   return (
-    <div
-      className={classNames(
-        style.plane,
-        sent && style.sent,
-        !edited && style.hidden
-      )}
-    >
+    <div className={classNames(style.plane, version === rv && style.sent)}>
       <img
         src={require('./resources/paperPlane.svg')}
         alt="✈"
-        onClick={onClick}
+        onClick={handleRun}
       />
     </div>
   );
