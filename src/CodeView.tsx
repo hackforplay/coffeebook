@@ -72,6 +72,7 @@ export function CodeView({ code, handleRun }: CodeViewProps) {
         }
       ])
     );
+    dispatch(actions.runSanbox());
   }, []);
 
   const fileInfo = {
@@ -120,11 +121,11 @@ interface PaperPlaneProps {
 }
 
 function PaperPlane({ handleRun }: PaperPlaneProps) {
-  const version = useSelector((state: SS) => state.sandbox.version);
+  const lv = useSelector((state: SS) => state.sandbox.localVersion);
   const rv = useSelector((state: SS) => state.sandbox.runningVersion);
 
   return (
-    <div className={classNames(style.plane, version === rv && style.sent)}>
+    <div className={classNames(style.plane, lv <= rv && style.sent)}>
       <img
         src={require('./resources/paperPlane.svg')}
         alt="✈"

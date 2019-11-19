@@ -14,7 +14,17 @@ import { reducerWithImmer } from './reducerWithImmer';
 
 export const initialState = {
   instance: new Sandbox(),
+  /**
+   * 最後に自分がファイルを書き換えた時の version の値
+   */
+  localVersion: 0,
+  /**
+   * Sandbox が最後に実行した version の値
+   */
   runningVersion: 0,
+  /**
+   * 自分または誰かがファイルが変更した時に 1 ずつ増加するバージョン
+   */
   version: 0
 };
 
@@ -31,6 +41,7 @@ const sandbox = reducerWithImmer(initialState)
   })
   .case(actions.writeFiles, draft => {
     draft.version += 1;
+    draft.localVersion = draft.version;
   })
   .toReducer();
 
@@ -52,6 +63,7 @@ export const epic = combineEpics(
   (action$, store$: S$) =>
     store$.pipe(
       map(state => state.sandbox.runningVersion),
+      filter(v => v > 0),
       distinctUntilChanged(),
       tap(() => {
         store$.value.sandbox.instance.run();
