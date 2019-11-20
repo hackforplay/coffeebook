@@ -19,7 +19,6 @@ export function Header() {
         Menu
       </IconButton>
       <span>TITLE</span>
-      <div className={flex.blank}></div>
       <CollaboratorIcons />
       <IconButton name="cloud" onClick={debug}>
         Debug
