@@ -17,7 +17,7 @@ $gap: 5px;
   justify-content: flex-start;
   flex-direction: row-reverse;
   padding: 4px $overlap;
-  margin-right: 8px;
+  margin-right: 4px;
   overflow: hidden;
 }
 
@@ -89,5 +89,22 @@ $gap: 5px;
   img {
     width: $size - ($border + $gap) * 2;
     height: $size - ($border + $gap) * 2;
+  }
+}
+
+.shrink {
+  @include transition(background-color);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: $alterColor;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: $inactiveColor;
+  &:hover {
+    background-color: $activeColor;
   }
 }

@@ -55,17 +55,40 @@ export function CollaboratorIcons({}) {
     }
   ];
   const [selected, setSelected] = React.useState('1');
+  const wrapperRef = React.useRef<HTMLDivElement>(null);
+  const [shrink, setShrink] = React.useState(false);
+
+  const needSpace = (users.length - 1) * (36 - 8) + (160 - 8) + 8;
+
+  React.useEffect(() => {
+    const resize = () => {
+      if (!wrapperRef.current) return;
+      setShrink(needSpace > wrapperRef.current.offsetWidth);
+    };
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+    return () => {
+      window.removeEventListener('resize', resize);
+    };
+  }, [needSpace]);
 
   return (
-    <div className={classNames(style.wrapper, flex.horizontal)}>
-      {users.map(user => (
-        <Item
-          key={user.id}
-          user={user}
-          open={user.id === selected}
-          onSelect={setSelected}
-        />
-      ))}
+    <div
+      ref={wrapperRef}
+      className={classNames(style.wrapper, flex.horizontal)}
+    >
+      {shrink ? (
+        <div className={style.shrink}>{users.length}</div>
+      ) : (
+        users.map(user => (
+          <Item
+            key={user.id}
+            user={user}
+            open={user.id === selected}
+            onSelect={setSelected}
+          />
+        ))
+      )}
     </div>
   );
 }
