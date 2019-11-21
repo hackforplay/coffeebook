@@ -1,67 +1,20 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { Icon } from './Button';
+import { SS, User } from './store';
 import card from './styles/cards.scss';
 import style from './styles/collaborator-icons.scss';
 import flex from './styles/flex.scss';
 import { Transition } from './Transition';
 
-export interface User {
-  id: string;
-  name: string;
-  iconUrl: string;
-  color: string;
-  asset?: {
-    name: {
-      ja: string;
-    };
-    iconUrl: string;
-  };
-}
-
 export function CollaboratorIcons({}) {
-  const users: User[] = [
-    {
-      id: '1',
-      name: '名無し',
-      iconUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f603.svg',
-      color: '#E74C3C',
-      asset: {
-        name: {
-          ja: 'プレイヤー'
-        },
-        iconUrl:
-          'https://assets.hackforplay.xyz/img/6d152a956071fc7b2e7ec0c8590146e4.png'
-      }
-    },
-    {
-      id: '2',
-      name: 'ボルトナット',
-      iconUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f529.svg',
-      color: '#3498DB'
-    },
-    {
-      id: '3',
-      name: 'プロ司会者',
-      iconUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f574-1f3fb.svg',
-      color: '#F1C40F'
-    },
-    {
-      id: '4',
-      name: 'モンキー',
-      iconUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f64a.svg',
-      color: '#1ABC9C'
-    }
-  ];
+  const collaborators = useSelector((state: SS) => state.user.collaborators);
   const [selected, setSelected] = React.useState('1');
   const wrapperRef = React.useRef<HTMLDivElement>(null);
   const [shrink, setShrink] = React.useState(false);
 
-  const needSpace = (users.length - 1) * (36 - 8) + (160 - 8) + 8;
+  const needSpace = (collaborators.length - 1) * (36 - 8) + (160 - 8) + 8;
 
   React.useEffect(() => {
     const resize = () => {
@@ -85,20 +38,20 @@ export function CollaboratorIcons({}) {
       {shrink ? (
         <>
           <div className={style.shrink} onClick={() => setOpen(!open)}>
-            {open ? <Icon name="arrow_drop_up" /> : users.length}
+            {open ? <Icon name="arrow_drop_up" /> : collaborators.length}
           </div>
           <Transition
             in={open}
             className={classNames(style.popout, flex.vertical, card.elevated)}
             exiting={style.exiting}
           >
-            {users.map(user => (
+            {collaborators.map(user => (
               <Item key={user.id} open user={user} />
             ))}
           </Transition>
         </>
       ) : (
-        users.map(user => (
+        collaborators.map(user => (
           <Item
             key={user.id}
             user={user}

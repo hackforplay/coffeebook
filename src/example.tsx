@@ -2,6 +2,7 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import 'requestidlecallback';
 import { Gamebook } from './index';
+import { User, createGamebookStore, actions } from './store';
 
 let code = `
 \`\`\`coffeescript キャラクターをステージに出す
@@ -90,5 +91,46 @@ require '../game'
 \`\`\`
 `;
 
+const store = createGamebookStore();
+store.dispatch(
+  actions.setCollaborators([
+    {
+      id: '1',
+      name: '名無し',
+      iconUrl:
+        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f603.svg',
+      color: '#E74C3C',
+      asset: {
+        name: {
+          ja: 'プレイヤー'
+        },
+        iconUrl:
+          'https://assets.hackforplay.xyz/img/6d152a956071fc7b2e7ec0c8590146e4.png'
+      }
+    },
+    {
+      id: '2',
+      name: 'ボルトナット',
+      iconUrl:
+        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f529.svg',
+      color: '#3498DB'
+    },
+    {
+      id: '3',
+      name: 'プロ司会者',
+      iconUrl:
+        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f574-1f3fb.svg',
+      color: '#F1C40F'
+    },
+    {
+      id: '4',
+      name: 'モンキー',
+      iconUrl:
+        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f64a.svg',
+      color: '#1ABC9C'
+    }
+  ])
+);
+
 let container = document.querySelector('#container');
-render(<Gamebook code={code}></Gamebook>, container);
+render(<Gamebook code={code} store={store}></Gamebook>, container);
