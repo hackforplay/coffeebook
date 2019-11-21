@@ -1,7 +1,10 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { Icon } from './Button';
+import card from './styles/cards.scss';
 import style from './styles/collaborator-icons.scss';
 import flex from './styles/flex.scss';
+import { Transition } from './Transition';
 
 export interface User {
   id: string;
@@ -72,13 +75,28 @@ export function CollaboratorIcons({}) {
     };
   }, [needSpace]);
 
+  const [open, setOpen] = React.useState(false);
+
   return (
     <div
       ref={wrapperRef}
       className={classNames(style.wrapper, flex.horizontal)}
     >
       {shrink ? (
-        <div className={style.shrink}>{users.length}</div>
+        <>
+          <div className={style.shrink} onClick={() => setOpen(!open)}>
+            {open ? <Icon name="arrow_drop_up" /> : users.length}
+          </div>
+          <Transition
+            in={open}
+            className={classNames(style.popout, flex.vertical, card.elevated)}
+            exiting={style.exiting}
+          >
+            {users.map(user => (
+              <Item key={user.id} open user={user} />
+            ))}
+          </Transition>
+        </>
       ) : (
         users.map(user => (
           <Item
@@ -96,7 +114,7 @@ export function CollaboratorIcons({}) {
 interface ItemProps {
   user: User;
   open: boolean;
-  onSelect: (id: string) => void;
+  onSelect?: (id: string) => void;
 }
 
 function Item({ user, open, onSelect }: ItemProps) {
@@ -108,7 +126,7 @@ function Item({ user, open, onSelect }: ItemProps) {
         !user.asset && style.nothing
       )}
       style={{ backgroundColor: user.color }}
-      onClick={() => onSelect(user.id)}
+      onClick={() => onSelect && onSelect(user.id)}
     >
       {open ? (
         <div className={style.asset}>

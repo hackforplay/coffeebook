@@ -19,6 +19,7 @@ $gap: 5px;
   padding: 4px $overlap;
   margin-right: 4px;
   overflow: hidden;
+  position: static; // for .popout
 }
 
 .item {
@@ -103,8 +104,21 @@ $gap: 5px;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: $inactiveColor;
+  background-color: $activeColor;
   &:hover {
-    background-color: $activeColor;
+    background-color: $textColor;
+  }
+}
+
+.popout {
+  @include transition(transform);
+  position: absolute;
+  top: 42px;
+  padding: 8px;
+  max-height: 224;
+  overflow: scroll;
+  transform-origin: top center;
+  &.exiting {
+    transform: scaleY(0);
   }
 }
