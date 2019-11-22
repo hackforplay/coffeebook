@@ -9,7 +9,8 @@ export const initialState = {
    * [stage1, stage2, ...]
    */
   stages: [] as GameMap[],
-  maps: [] as GameMap[]
+  mine: [] as GameMap[],
+  ours: [] as GameMap[]
 };
 
 const actionCreator = actionCreatorFactory('gamebook');
@@ -17,7 +18,8 @@ const actionCreator = actionCreatorFactory('gamebook');
 export const actions = {
   setFloor: actionCreator<number>('SET_FLOOR'),
   setStages: actionCreator<GameMap[]>('SET_STAGES'),
-  setMaps: actionCreator<GameMap[]>('SET_MAPS')
+  setMine: actionCreator<GameMap[]>('SET_MINE'),
+  setOurs: actionCreator<GameMap[]>('SET_OURS')
 };
 
 const floor = reducerWithImmer(initialState)
@@ -27,8 +29,11 @@ const floor = reducerWithImmer(initialState)
   .case(actions.setStages, (draft, payload) => {
     draft.stages = payload;
   })
-  .case(actions.setMaps, (draft, payload) => {
-    draft.maps = payload;
+  .case(actions.setMine, (draft, payload) => {
+    draft.mine = payload;
+  })
+  .case(actions.setOurs, (draft, payload) => {
+    draft.ours = payload;
   })
   .toReducer();
 

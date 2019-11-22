@@ -1,7 +1,7 @@
 export interface GameMap {
   id: string;
   name: string;
-  color: string;
+  thumbnailUrl: string;
   authorName: string;
 }
 

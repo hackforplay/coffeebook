@@ -36,6 +36,7 @@ $padding: 4px;
 .image {
   width: $width;
   height: $height;
+  background-size: contain;
 }
 
 // 追加ボタン

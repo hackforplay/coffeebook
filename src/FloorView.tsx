@@ -51,7 +51,10 @@ export function FloorItem({ map, stage, selected }: FloorItemProps) {
       onClick={onClick}
     >
       <span className={floor.number}>{stage}</span>
-      <div className={floor.image} style={{ backgroundColor: map.color }}></div>
+      <div
+        className={floor.image}
+        style={{ backgroundImage: `url(${map.thumbnailUrl})` }}
+      ></div>
     </button>
   );
 }

@@ -95,7 +95,8 @@ require '../game'
 const store = createGamebookStore();
 store.dispatch(actions.setCollaborators(users(4)));
 store.dispatch(actions.setStages(gameMaps(4)));
-store.dispatch(actions.setMaps(gameMaps(50)));
+store.dispatch(actions.setMine(gameMaps(15)));
+store.dispatch(actions.setOurs(gameMaps(15)));
 
 let container = document.querySelector('#container');
 render(<Gamebook code={code} store={store}></Gamebook>, container);
@@ -138,7 +139,20 @@ function gameMaps(length: number) {
     id: uniqueId(),
     name: random('Forest', 'Town', 'Dangeon', 'Field'),
     authorName: random('Kou', 'Tsune', 'Gino', 'Maki'),
-    color: random('red', 'green', 'blue', 'yellow')
+    thumbnailUrl: random(
+      'https://i.gyazo.com/98fde90a98cdbeb43bafd9e5acdc474d.png',
+      'https://i.gyazo.com/cbc899cfac1cabf3ba7724dd0a019b00.png',
+      'https://i.gyazo.com/a089d89a0cb0370099e8019c7ebdee14.png',
+      'https://i.gyazo.com/e0dc8b3ac3c8f605f649e04ac6c71b63.png',
+      'https://i.gyazo.com/193fc217409486e12b574b8127c30e7e.png',
+      'https://i.gyazo.com/ab4a2796943232e4d881c0600de1a3e2.png',
+      'https://i.gyazo.com/a2f3d26060e11efb54181654d2b3625f.png',
+      'https://i.gyazo.com/347c267072badea20467f241466d6b13.png',
+      'https://i.gyazo.com/ce0ffb5f018be7b015ebdbd7e099a1a4.png',
+      'https://i.gyazo.com/63354acfcba8ad93203933b29300f9e7.png',
+      'https://i.gyazo.com/8dbe0bc20ead1913bfb5d1b3334d9227.png',
+      'https://i.gyazo.com/c6f8041fd06ec240505b2207fc8b0264.png'
+    )
   }));
 }
 
