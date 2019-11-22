@@ -1,3 +1,10 @@
+export interface GameMap {
+  id: string;
+  name: string;
+  color: string;
+  authorName: string;
+}
+
 export interface User {
   id: string;
   name: string;

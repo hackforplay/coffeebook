@@ -2,49 +2,44 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from './Button';
+import { actions, EditorMode, GameMap, SS } from './store';
 import flex from './styles/flex.scss';
 import floor from './styles/floor-view.scss';
-import { actions, EditorMode, SS } from './store';
 
 export interface FloorViewProps {}
 
 export interface FloorItemProps {
-  appendable?: boolean;
-  color: string;
-  index: number;
+  map: GameMap;
+  stage: number;
   selected?: boolean;
 }
 
 export function FloorView({  }: FloorViewProps) {
   const selected = useSelector((state: SS) => state.floor.selected);
+  const stages = useSelector((state: SS) => state.floor.stages);
 
   return (
     <>
-      {['green', 'blue', 'pink', 'green'].map((color, i, array) => (
+      {stages.map((map, i) => (
         <FloorItem
           key={i}
-          index={i + 1}
-          color={color}
+          stage={i + 1}
+          map={map}
           selected={i + 1 === selected}
-          appendable={i + 1 === array.length}
         />
       ))}
+      <AppendButton stage={stages.length + 1} />
     </>
   );
 }
 
-export function FloorItem({
-  appendable,
-  color,
-  index,
-  selected
-}: FloorItemProps) {
+export function FloorItem({ map, stage, selected }: FloorItemProps) {
   const dispatch = useDispatch();
 
   const onClick = React.useCallback(() => {
-    dispatch(actions.setFloor(index));
+    dispatch(actions.setFloor(stage));
     dispatch(actions.setEditorMode(EditorMode.Map));
-  }, [index]);
+  }, [stage]);
 
   return (
     <button
@@ -55,9 +50,24 @@ export function FloorItem({
       )}
       onClick={onClick}
     >
-      <span className={floor.number}>{index}</span>
-      <div className={floor.image} style={{ backgroundColor: color }}></div>
-      {appendable ? <Icon name="add" className={floor.append} /> : null}
+      <span className={floor.number}>{stage}</span>
+      <div className={floor.image} style={{ backgroundColor: map.color }}></div>
+    </button>
+  );
+}
+
+interface AppendButtonProps {
+  stage: number;
+}
+
+function AppendButton({ stage }: AppendButtonProps) {
+  const onClick = React.useCallback(() => {}, []);
+
+  return (
+    <button className={classNames(floor.item, flex.vertical)} onClick={onClick}>
+      <span className={floor.number}>{stage}</span>
+      <div className={floor.image} style={{ backgroundColor: 'green' }}></div>
+      <Icon name="add" className={floor.append} />
     </button>
   );
 }

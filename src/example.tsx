@@ -1,8 +1,9 @@
+import { uniqueId } from 'lodash-es';
 import * as React from 'react';
 import { render } from 'react-dom';
 import 'requestidlecallback';
 import { Gamebook } from './index';
-import { User, createGamebookStore, actions } from './store';
+import { actions, createGamebookStore, GameMap, User } from './store';
 
 let code = `
 \`\`\`coffeescript キャラクターをステージに出す
@@ -92,45 +93,55 @@ require '../game'
 `;
 
 const store = createGamebookStore();
-store.dispatch(
-  actions.setCollaborators([
-    {
-      id: '1',
-      name: '名無し',
-      iconUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f603.svg',
-      color: '#E74C3C',
-      asset: {
+store.dispatch(actions.setCollaborators(users(4)));
+store.dispatch(actions.setStages(gameMaps(4)));
+store.dispatch(actions.setMaps(gameMaps(50)));
+
+let container = document.querySelector('#container');
+render(<Gamebook code={code} store={store}></Gamebook>, container);
+
+function users(length: number) {
+  return Array.from({ length }).map<User>(() => ({
+    id: uniqueId(),
+    name: random('Kou', 'Tsune', 'Gino', 'Maki'),
+    color: random('#E74C3C', '#3498DB', '#F1C40F', '#1ABC9C'),
+    iconUrl: `https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/${random(
+      '2764',
+      '270f',
+      '1f529',
+      '1f64a',
+      '1f64a',
+      '1f574'
+    )}.svg`,
+    asset: random(
+      {
         name: {
           ja: 'プレイヤー'
         },
         iconUrl:
           'https://assets.hackforplay.xyz/img/6d152a956071fc7b2e7ec0c8590146e4.png'
-      }
-    },
-    {
-      id: '2',
-      name: 'ボルトナット',
-      iconUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f529.svg',
-      color: '#3498DB'
-    },
-    {
-      id: '3',
-      name: 'プロ司会者',
-      iconUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f574-1f3fb.svg',
-      color: '#F1C40F'
-    },
-    {
-      id: '4',
-      name: 'モンキー',
-      iconUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/svg/1f64a.svg',
-      color: '#1ABC9C'
-    }
-  ])
-);
+      },
+      {
+        name: {
+          ja: '青色のスライム'
+        },
+        iconUrl:
+          'https://assets.hackforplay.xyz/img/93a1462a4800cccde0887f580ef46298.png'
+      },
+      undefined
+    )
+  }));
+}
 
-let container = document.querySelector('#container');
-render(<Gamebook code={code} store={store}></Gamebook>, container);
+function gameMaps(length: number) {
+  return Array.from({ length }).map<GameMap>(() => ({
+    id: uniqueId(),
+    name: random('Forest', 'Town', 'Dangeon', 'Field'),
+    authorName: random('Kou', 'Tsune', 'Gino', 'Maki'),
+    color: random('red', 'green', 'blue', 'yellow')
+  }));
+}
+
+function random<T>(...args: T[]): T {
+  return args[(args.length * Math.random()) >> 0];
+}
