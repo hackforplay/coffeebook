@@ -1,6 +1,8 @@
 name: Release
 
-on: [push]
+on:
+  push:
+    branches: master
 
 jobs:
   build:
@@ -16,8 +18,8 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-:
-    - name: npm it
-      run: npm it
+    - name: npm ci
+      run: npm ci
     - name: build
       run: npm run build:lib
     - name: release package
