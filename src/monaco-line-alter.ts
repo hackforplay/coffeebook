@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor';
 import { indent } from './append-empty-line';
-import styles from './css/monaco-line-alter.scss';
+import styles from './styles/monaco-line-alter.scss';
 
 export function showLineAlter(editor: monaco.editor.IStandaloneCodeEditor) {
   const model = editor.getModel();

@@ -1,33 +1,29 @@
 import classNames from 'classnames';
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 import 'requestidlecallback';
 import { IconButton } from './Button';
 import { Card, CardDivider } from './Card';
 import { OnUpdate } from './CodeView';
 import './completion';
-import element from './css/element.scss';
-import flex from './css/flex.scss';
 import { showCutLine } from './monaco-cut-line';
 import { beFlexible, getInitialHeight } from './monaco-flexible';
 import { showLineAlter } from './monaco-line-alter';
 import { showSuggestButtons } from './monaco-suggest-button';
+import { actions } from './store';
+import element from './styles/element.scss';
+import flex from './styles/flex.scss';
 
 export interface CodeCellProps {
   id: string;
   value: string;
   title?: string;
   onUpdate: OnUpdate;
-  onGame: () => void;
 }
 
-export function CodeCell({
-  id,
-  value,
-  title,
-  onUpdate,
-  onGame
-}: CodeCellProps) {
+export function CodeCell({ id, value, title, onUpdate }: CodeCellProps) {
+  const dispatch = useDispatch();
   const rootRef = React.useRef<HTMLDivElement>(null);
   const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor>();
   const [floating, setFloating] = React.useState(false);
@@ -68,24 +64,12 @@ export function CodeCell({
 
     editor.onDidFocusEditorText(() => {
       setFloating(true);
+      dispatch(actions.bringGameFront(false));
     });
 
-    let previousCode = value;
-    let blurTimerHandle = 0;
     editor.onDidBlurEditorText(() => {
-      window.cancelIdleCallback(blurTimerHandle);
-      blurTimerHandle = window.requestIdleCallback(
-        () => {
-          const e = document.activeElement;
-          if (!e || e.tagName !== 'IFRAME') return;
-          const coffee = editor.getValue();
-          if (previousCode === coffee) return;
-          onGame();
-          previousCode = coffee;
-        },
-        { timeout: 2000 }
-      );
       setFloating(false);
+      dispatch(actions.bringGameFront(true));
     });
 
     let replTimerId = 0;
@@ -117,7 +101,7 @@ export function CodeCell({
       <div className={classNames(flex.horizontal, element.codeCellHeader)}>
         <span>{title || 'NO TITLE'}</span>
         <div className={flex.blank}></div>
-        <IconButton name='clear' tooltip='Remove this cell' />
+        <IconButton name="clear" tooltip="Remove this cell" />
       </div>
       <CardDivider />
       <div
@@ -127,14 +111,14 @@ export function CodeCell({
       ></div>
       <CardDivider />
       <div className={classNames(flex.horizontal, element.codeCellFooter)}>
-        <IconButton name='undo' disabled={!undoable} onClick={undo}>
+        <IconButton name="undo" disabled={!undoable} onClick={undo}>
           Undo
         </IconButton>
         <div className={flex.blank}></div>
-        <IconButton name='note_add' primary tooltip='Create new cell' />
-        <IconButton name='file_copy' primary tooltip='Copy this cell' />
-        <IconButton name='arrow_upward' primary tooltip='Move up' />
-        <IconButton name='arrow_downward' primary tooltip='Move down' />
+        <IconButton name="note_add" primary tooltip="Create new cell" />
+        <IconButton name="file_copy" primary tooltip="Copy this cell" />
+        <IconButton name="arrow_upward" primary tooltip="Move up" />
+        <IconButton name="arrow_downward" primary tooltip="Move down" />
       </div>
     </Card>
   );

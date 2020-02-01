@@ -1,55 +1,39 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { CodeView } from './CodeView';
-import flex from './css/flex.scss';
-import font from './css/font.scss';
-import region from './css/region.scss';
 import { FloorView } from './FloorView';
 import { Footer } from './Footer';
+import { GameView } from './GameView';
 import { Header } from './Header';
 import { MapView } from './MapView';
+import { EditorMode, SS } from './store';
 import { StoreView } from './StoreView';
+import flex from './styles/flex.scss';
+import font from './styles/font.scss';
+import region from './styles/region.scss';
 import { Transition } from './Transition';
-
-export enum EditorMode {
-  Map,
-  Store,
-  Code
-}
 
 export interface RootProps {
   code: string;
 }
 
 export function Root({ code }: RootProps) {
-  const [editorMode, setEditorMode] = React.useState<EditorMode>(
-    EditorMode.Map
-  );
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
-  const [bringFront, setBringFront] = React.useState(false);
   const focusGame = React.useCallback(() => {
     if (iframeRef.current) {
       iframeRef.current.focus();
     }
-    setBringFront(true);
-  }, []);
-  const unfocusGame = React.useCallback(() => {
-    setBringFront(false);
   }, []);
 
-  const openNewAsset = React.useCallback(() => {
-    setEditorMode(EditorMode.Code);
-  }, []);
-  const openStore = React.useCallback(() => {
-    setEditorMode(EditorMode.Store);
-  }, []);
+  const editorMode = useSelector((state: SS) => state.mode.editorMode);
 
   return (
     <div className={classNames(region.root, flex.vertical, font.main)}>
       <Header />
       <div className={classNames(region.outer, flex.horizontal, flex.stretch)}>
         <div className={region.floor}>
-          <FloorView setEditorMode={setEditorMode} />
+          <FloorView />
         </div>
         <div className={classNames(region.inner)}>
           <Transition
@@ -57,7 +41,7 @@ export function Root({ code }: RootProps) {
             className={region.mapView}
             exiting={region.exiting}
           >
-            <MapView setEditorMode={setEditorMode} />
+            <MapView />
           </Transition>
           <Transition
             in={editorMode === EditorMode.Store}
@@ -68,29 +52,20 @@ export function Root({ code }: RootProps) {
                 : region.exitingLeft
             }
           >
-            <StoreView setEditorMode={setEditorMode} />
+            <StoreView />
           </Transition>
           <Transition
             in={editorMode === EditorMode.Code}
-            className={region.editorView}
+            className={region.codeView}
             exiting={region.exiting}
           >
-            <CodeView code={code} />
+            <CodeView code={code} handleRun={focusGame} />
             <div className={region.outputCover} onClick={focusGame}></div>
           </Transition>
         </div>
-        <div
-          className={classNames(region.output, bringFront && region.bringFront)}
-        >
-          <iframe
-            src='https://hackforplay-sandbox.firebaseapp.com/compatible.html'
-            frameBorder='0'
-            ref={iframeRef}
-            onBlur={unfocusGame}
-          ></iframe>
-        </div>
+        <GameView iframeRef={iframeRef} />
       </div>
-      <Footer onSelectAsset={openNewAsset} onSelectName={openStore} />
+      <Footer />
     </div>
   );
 }

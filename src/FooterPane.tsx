@@ -1,22 +1,22 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 import { IconButton } from './Button';
-import flex from './css/flex.scss';
-import footer from './css/footer.scss';
+import flex from './styles/flex.scss';
+import footer from './styles/footer.scss';
 import { Asset } from './dummy-assets';
 import { Scroller } from './Scroller';
+import { actions, EditorMode } from './store';
 
 export interface FooterPaneProps {
   assets: Asset[];
   onRequestClose: () => void;
-  onSelectAsset: () => void;
   search: string;
 }
 
 export function FooterPane({
   assets,
   onRequestClose,
-  onSelectAsset,
   search
 }: FooterPaneProps) {
   if (search) {
@@ -71,7 +71,7 @@ export function FooterPane({
       </div>
       <div className={footer.pane}>
         <IconButton
-          name='close'
+          name="close"
           className={footer.close}
           onClick={onRequestClose}
         />
@@ -90,7 +90,6 @@ export function FooterPane({
                     key={asset.id}
                     asset={asset}
                     onRequestClose={onRequestClose}
-                    onSelectAsset={onSelectAsset}
                   />
                 ))}
             </div>
@@ -104,16 +103,12 @@ export function FooterPane({
 export interface AssetButtonProps {
   asset: Asset;
   onRequestClose: () => void;
-  onSelectAsset: () => void;
 }
 
-export function AssetButton({
-  asset,
-  onRequestClose,
-  onSelectAsset
-}: AssetButtonProps) {
+export function AssetButton({ asset, onRequestClose }: AssetButtonProps) {
+  const dispatch = useDispatch();
   const click = React.useCallback(() => {
-    onSelectAsset();
+    dispatch(actions.setEditorMode(EditorMode.Store));
     onRequestClose();
   }, []);
 

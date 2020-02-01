@@ -1,0 +1,56 @@
+@import 'color';
+@import 'shadow';
+
+$space: 8px;
+
+.header {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  padding-top: 15px;
+  background-color: $backgroundColor;
+  z-index: 10;
+  align-items: center;
+  height: 32px;
+  border: 1px solid $backgroundColor; // adjust to cell
+
+  .icon {
+    height: 100%;
+    margin-right: $space;
+  }
+
+  .name {
+    font-size: 21px;
+    font-weight: 600;
+    color: $textColor;
+    margin-right: $space;
+  }
+}
+
+.plane {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  &.sent {
+    animation: moveRight 250ms ease-in forwards;
+  }
+  &.hidden {
+    visibility: hidden;
+  }
+
+  & > img {
+    cursor: pointer;
+  }
+}
+
+@keyframes moveRight {
+  0% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

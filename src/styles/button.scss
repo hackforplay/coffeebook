@@ -88,6 +88,9 @@
   span {
     margin-left: 2px;
     padding: 2px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

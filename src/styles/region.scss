@@ -27,9 +27,9 @@
   height: 100%;
 }
 // エディタ表示部分
-.editorView {
+.codeView {
   @extend %base;
-  padding: 8px 8px $footerHeight 8px;
+  padding: 0px 8px $footerHeight 8px;
   overflow: scroll;
 
   z-index: 9;

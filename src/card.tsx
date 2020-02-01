@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import cards from './css/cards.scss';
+import cards from './styles/cards.scss';
 
 export interface PaperProps {
   elevated: boolean;

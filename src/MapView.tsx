@@ -1,35 +1,27 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from './Button';
-import flex from './css/flex.scss';
-import map from './css/map-view.scss';
-import selector from './css/selector.scss';
-import { EditorMode } from './Root';
 import { Scroller } from './Scroller';
-import { SS } from './store';
+import { actions, EditorMode, GameMap, SS } from './store';
+import flex from './styles/flex.scss';
+import style from './styles/map-view.scss';
+import selector from './styles/selector.scss';
 
-export type Tab = 'mine' | 'official' | 'others';
+export type Tab = 'mine' | 'ours';
 type Refs = {
   [tab in Tab]: React.RefObject<HTMLDivElement>;
 };
-export const tabs: Tab[] = ['mine', 'official', 'others'];
+export const tabs: Tab[] = ['mine', 'ours'];
 
-export interface MapViewProps {
-  setEditorMode: React.Dispatch<React.SetStateAction<EditorMode>>;
-}
+export interface MapViewProps {}
 
-export function MapView({ setEditorMode }: MapViewProps) {
+export function MapView({  }: MapViewProps) {
   const [tab, setTab] = React.useState<Tab>('mine');
   const refs: Refs = {
     mine: React.useRef(null),
-    official: React.useRef(null),
-    others: React.useRef(null)
+    ours: React.useRef(null)
   };
-
-  const set = React.useCallback(() => {
-    setEditorMode(EditorMode.Code);
-  }, []);
 
   const handleScroll = React.useCallback((e: React.UIEvent<HTMLDivElement>) => {
     const margin = 20; // safety margin for smooth scroll [px]
@@ -54,8 +46,13 @@ export function MapView({ setEditorMode }: MapViewProps) {
 
   const selected = useSelector((state: SS) => state.floor.selected);
 
+  const maps: { [key in Tab]: GameMap[] } = {
+    mine: useSelector((state: SS) => state.floor.mine),
+    ours: useSelector((state: SS) => state.floor.ours)
+  };
+
   return (
-    <div className={map.container}>
+    <div className={style.container}>
       <h2>Choose background of map{selected}</h2>
       <div className={selector.container}>
         <button
@@ -70,27 +67,18 @@ export function MapView({ setEditorMode }: MapViewProps) {
         <button
           className={classNames(
             selector.item,
-            tab === 'official' && selector.selected
+            tab === 'ours' && selector.selected
           )}
-          onClick={() => scrollTo('official')}
+          onClick={() => scrollTo('ours')}
         >
-          Official
-        </button>
-        <button
-          className={classNames(
-            selector.item,
-            tab === 'others' && selector.selected
-          )}
-          onClick={() => scrollTo('others')}
-        >
-          Others
+          Ours
         </button>
       </div>
-      <Scroller ms={50} className={map.scroller} onScroll={handleScroll}>
+      <Scroller ms={50} className={style.scroller} onScroll={handleScroll}>
         {tabs.map(id => (
-          <div key={id} id={id} className={map.group} ref={refs[id]}>
-            {Array.from({ length: 15 }).map((_, i) => (
-              <MapViewItem key={i} onClick={set} />
+          <div key={id} id={id} className={style.group} ref={refs[id]}>
+            {maps[id].map(map => (
+              <MapViewItem key={map.id} map={map} />
             ))}
           </div>
         ))}
@@ -100,18 +88,26 @@ export function MapView({ setEditorMode }: MapViewProps) {
 }
 
 export interface MapViewItemProps {
-  onClick: () => void;
+  map: GameMap;
 }
 
-export function MapViewItem({ onClick }: MapViewItemProps) {
+export function MapViewItem({ map }: MapViewItemProps) {
+  const dispatch = useDispatch();
+  const onClick = React.useCallback(() => {
+    dispatch(actions.setEditorMode(EditorMode.Code));
+  }, []);
+
   return (
-    <div className={map.responsive}>
-      <div className={map.responsiveContent}>
-        <div className={map.item} style={{ backgroundColor: 'green' }}>
-          <div className={classNames(map.footer, flex.horizontal)}>
+    <div className={style.responsive}>
+      <div className={style.responsiveContent}>
+        <div
+          className={style.item}
+          style={{ backgroundImage: `url(${map.thumbnailUrl})` }}
+        >
+          <div className={classNames(style.footer, flex.horizontal)}>
             <div className={flex.vertical}>
-              <span>TITLE</span>
-              <span>by Author</span>
+              <span>{map.name}</span>
+              <span>by {map.authorName}</span>
             </div>
             <Button primary onClick={onClick}>
               Apply

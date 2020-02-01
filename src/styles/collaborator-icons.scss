@@ -1,0 +1,124 @@
+@import 'color';
+@import 'transition';
+
+$overlap: 4px;
+$size: 36px;
+$border: 2px;
+$gap: 5px;
+
+%ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wrapper {
+  flex: 1;
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+  padding: 4px $overlap;
+  margin-right: 4px;
+  overflow: hidden;
+  position: static; // for .popout
+}
+
+.item {
+  @include transition(width);
+  height: $size;
+  width: $size;
+  box-sizing: border-box;
+  border: $border solid $alterColor;
+  border-radius: $size / 2;
+  margin: 0 (-$overlap);
+  padding: $gap;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  &.open {
+    cursor: auto;
+    width: 160px;
+  }
+
+  .asset {
+    margin-left: 1px;
+    width: $size - ($border + 2px) * 2;
+    height: $size - ($border + 2px) * 2;
+    background-color: $paperColor;
+    margin: 0 6px 0 8px;
+  }
+  &:not(.nothing) .asset {
+    cursor: pointer;
+  }
+  &.nothing .asset:before {
+    content: '／';
+    font-size: 26px;
+    padding-top: 2px;
+    line-height: 1;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    color: $textColor;
+  }
+
+  .asset img {
+    width: 100%;
+    height: 100%;
+    padding: 1px;
+    box-sizing: border-box;
+  }
+
+  .text {
+    flex: 1;
+    color: $alterColor;
+    margin: -2px 4px 0 0;
+    overflow: hidden;
+
+    .userName {
+      @extend %ellipsis;
+      font-size: 12px;
+    }
+    .assetName {
+      @extend %ellipsis;
+      font-size: 10px;
+    }
+  }
+  &:not(.nothing) .text {
+    cursor: pointer;
+  }
+
+  img {
+    width: $size - ($border + $gap) * 2;
+    height: $size - ($border + $gap) * 2;
+  }
+}
+
+.shrink {
+  @include transition(background-color);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: $alterColor;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: $activeColor;
+  &:hover {
+    background-color: $textColor;
+  }
+}
+
+.popout {
+  @include transition(transform);
+  position: absolute;
+  top: 42px;
+  padding: 8px;
+  max-height: 224;
+  overflow: scroll;
+  transform-origin: top center;
+  &.exiting {
+    transform: scaleY(0);
+  }
+}

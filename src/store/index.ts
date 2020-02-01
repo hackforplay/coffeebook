@@ -1,19 +1,46 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { combineEpics, createEpicMiddleware } from 'redux-observable';
+import { applyMiddleware, combineReducers, createStore, Reducer } from 'redux';
+import {
+  combineEpics,
+  createEpicMiddleware,
+  StateObservable
+} from 'redux-observable';
 import * as floor from './floor';
+import * as mode from './mode';
+import * as sandbox from './sandbox';
+import * as user from './user';
 
-export interface StoreState extends floor.States {}
+export * from './enums';
+export * from './types';
+
+type ReducersStates<R extends Reducer> = R extends Reducer<infer S> ? S : never;
+
+export type StoreState = ReducersStates<typeof rootReducer>;
 export type SS = StoreState; // alias
 
+export type Store = ReturnType<typeof createGamebookStore>;
+
+export type S$ = StateObservable<SS>;
+
 export const rootReducer = combineReducers({
-  ...floor.reducers
+  ...floor.reducers,
+  ...mode.reducers,
+  ...sandbox.reducers,
+  ...user.reducers
 });
 
 export const actions = {
-  ...floor.actions
+  ...floor.actions,
+  ...mode.actions,
+  ...sandbox.actions,
+  ...user.actions
 };
 
-export const rootEpic = combineEpics(floor.epic);
+export const rootEpic = combineEpics(
+  floor.epic,
+  mode.epic,
+  sandbox.epic,
+  user.epic
+);
 
 export function createGamebookStore() {
   const epicMiddleware = createEpicMiddleware();
@@ -22,5 +49,3 @@ export function createGamebookStore() {
   epicMiddleware.run(rootEpic);
   return store;
 }
-
-export type Store = ReturnType<typeof createGamebookStore>;

@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor';
 import { isEmptyLine, indent } from './append-empty-line';
-import styles from './css/monaco-suggest-button.scss';
+import styles from './styles/monaco-suggest-button.scss';
 
 let isFirstButton = true;
 
