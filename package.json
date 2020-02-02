@@ -20,7 +20,6 @@
     "last 1 Chrome version"
   ],
   "ava": {
-    "compileEnhancements": false,
     "extensions": [
       "ts"
     ],
