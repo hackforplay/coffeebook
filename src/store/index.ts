@@ -12,9 +12,7 @@ import * as user from './user';
 export * from './enums';
 export * from './types';
 
-type ReducersStates<R extends Reducer> = R extends Reducer<infer S> ? S : never;
-
-export type StoreState = ReducersStates<typeof rootReducer>;
+export type StoreState = ReturnType<typeof rootReducer>;
 export type SS = StoreState; // alias
 
 export type Store = ReturnType<typeof createGamebookStore>;
