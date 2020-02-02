@@ -12,7 +12,7 @@ import { Transition } from './Transition';
 
 export interface FooterProps {}
 
-export function Footer({  }: FooterProps) {
+export function Footer({}: FooterProps) {
   const [opened, setOpened] = React.useState(false);
   const close = React.useCallback(() => {
     setOpened(false);
@@ -73,7 +73,7 @@ export function Footer({  }: FooterProps) {
 
 export interface FooterItemProps {}
 
-export function FooterItem({  }: FooterItemProps) {
+export function FooterItem({}: FooterItemProps) {
   const dispatch = useDispatch();
   const onClick = React.useCallback(() => {
     dispatch(actions.setEditorMode(EditorMode.Code));

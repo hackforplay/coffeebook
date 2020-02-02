@@ -9,7 +9,7 @@ import style from './styles/store-view.scss';
 
 export interface StoreViewProps {}
 
-export function StoreView({  }: StoreViewProps) {
+export function StoreView({}: StoreViewProps) {
   return (
     <>
       <h1>STORE VIEW</h1>

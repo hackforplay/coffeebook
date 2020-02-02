@@ -16,7 +16,7 @@ export const tabs: Tab[] = ['mine', 'ours'];
 
 export interface MapViewProps {}
 
-export function MapView({  }: MapViewProps) {
+export function MapView({}: MapViewProps) {
   const [tab, setTab] = React.useState<Tab>('mine');
   const refs: Refs = {
     mine: React.useRef(null),
