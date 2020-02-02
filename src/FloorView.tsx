@@ -14,7 +14,7 @@ export interface FloorItemProps {
   selected?: boolean;
 }
 
-export function FloorView({  }: FloorViewProps) {
+export function FloorView({}: FloorViewProps) {
   const selected = useSelector((state: SS) => state.floor.selected);
   const stages = useSelector((state: SS) => state.floor.stages);
 
