@@ -74,6 +74,6 @@
     "requestidlecallback": "^0.3.0",
     "rxjs": "^6.5.3",
     "typescript-fsa": "^3.0.0",
-    "unified": "^8.4.0"
+    "unified": "^9.0.0"
   }
 }
